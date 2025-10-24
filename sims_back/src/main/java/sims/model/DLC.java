@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class DLC {
 	
 	// Attributs
+	private Integer id;
 	private String nom;
 	private LocalDate dateSortie;
 	private String description;
@@ -13,8 +14,8 @@ public class DLC {
 	
 	
 	// Constructeurs
-	public DLC(String nom, LocalDate dateSortie, String description, String img, TypeDLC typeDLC) {
-		super();
+	public DLC(Integer id, String nom, LocalDate dateSortie, String description, String img, TypeDLC typeDLC) {
+		this.id = id;
 		this.nom = nom;
 		this.dateSortie = dateSortie;
 		this.description = description;
