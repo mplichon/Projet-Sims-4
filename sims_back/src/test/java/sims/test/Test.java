@@ -4,11 +4,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import sims.model.Aspiration;
 import sims.model.Carriere;
 import sims.model.CategorieSim;
 import sims.model.Competence;
 import sims.model.DLC;
+import sims.model.EtapeAspiration;
 import sims.model.RangCarriere;
+import sims.model.TypeAspiration;
 import sims.model.TypeCarriere;
 import sims.model.TypeDLC;
 
@@ -18,7 +21,8 @@ public class Test {
 		
 		// DLC
 		DLC jeuDeBase = new DLC(1, "Les Sims 4", LocalDate.parse("2014-09-05"), "C'est un jeu super cool !", "img/test", TypeDLC.BASE);
-		DLC auTravail = new DLC(1, "Au Travail", LocalDate.parse("2015-04-02"), "Commencez des carrières délirantes !", "img/test", TypeDLC.EXTENSION);
+		DLC auTravail = new DLC(2, "Au Travail", LocalDate.parse("2015-04-02"), "Commencez des carrières délirantes !", "img/test", TypeDLC.EXTENSION);
+		DLC loupsGarous = new DLC(3, "Loups-Garous", LocalDate.parse("2022-06-16"), "Devenez lycanthrope !", "img/test", TypeDLC.JEU);
 		
 		System.out.println(jeuDeBase);
 		
@@ -43,7 +47,23 @@ public class Test {
 		Collections.addAll(carriereScientifique.getRangs(), rang1, rang2);
 		
 		System.out.println(carriereScientifique);
-
+		
+		// Aspirations
+		
+		EtapeAspiration etape1 = new EtapeAspiration(1, 1, "Jeune loup");
+		etape1.setSousEtapes(new ArrayList<String>());
+		Collections.addAll(etape1.getSousEtapes(), "Devenir un Loup-garou");
+		
+		EtapeAspiration etape2 = new EtapeAspiration(2, 2, "Vieux loup");
+		etape2.setSousEtapes(new ArrayList<String>());
+		Collections.addAll(etape2.getSousEtapes(), "Atteindre le rang vieux loup", "Effrayer d'autres Sims");
+		
+		Aspiration loupGarouUltime = new Aspiration(1, "Loup-garou ultime", "Être un simple loup-garou ne vous suffit pas", "img/test", TypeAspiration.LYCANTHROPIE);
+		loupGarouUltime.setEtapes(new ArrayList<EtapeAspiration>());
+		Collections.addAll(loupGarouUltime.getEtapes(), etape1, etape2);
+		loupGarouUltime.setDlc(loupsGarous);
+		
+		System.out.println(loupGarouUltime);
 	}
 
 }
