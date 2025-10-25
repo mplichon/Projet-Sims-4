@@ -10,17 +10,17 @@ public class DLC {
 	private LocalDate dateSortie;
 	private String description;
 	private String img;
-	private TypeDLC typeDLC;
+	private TypeDLC type;
 	
 	
 	// Constructeurs
-	public DLC(Integer id, String nom, LocalDate dateSortie, String description, String img, TypeDLC typeDLC) {
+	public DLC(Integer id, String nom, LocalDate dateSortie, String description, String img, TypeDLC type) {
 		this.id = id;
 		this.nom = nom;
 		this.dateSortie = dateSortie;
 		this.description = description;
 		this.img = img;
-		this.typeDLC = typeDLC;
+		this.type = type;
 	}
 
 
@@ -75,13 +75,13 @@ public class DLC {
 	}
 
 
-	public TypeDLC getTypeDLC() {
-		return typeDLC;
+	public TypeDLC getType() {
+		return type;
 	}
 
 
-	public void setTypeDLC(TypeDLC typeDLC) {
-		this.typeDLC = typeDLC;
+	public void setType(TypeDLC type) {
+		this.type = type;
 	}
 
 
@@ -89,6 +89,6 @@ public class DLC {
 	@Override
 	public String toString() {
 		return "DLC [nom=" + nom + ", dateSortie=" + dateSortie + ", description=" + description + ", img=" + img
-				+ ", typeDLC=" + typeDLC.getNom() + "]";
+				+ ", typeDLC=" + type.getNom() + "]";
 	}
 }
