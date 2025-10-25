@@ -12,6 +12,7 @@ import sims.model.DLC;
 import sims.model.EtapeAspiration;
 import sims.model.RangCarriere;
 import sims.model.TraitAspiration;
+import sims.model.TraitBonus;
 import sims.model.TraitDeCaractere;
 import sims.model.TypeAspiration;
 import sims.model.TypeCarriere;
@@ -80,6 +81,12 @@ public class Test {
 		genie.setDlc(jeuDeBase);
 		
 		System.out.println(genie);
+		
+		// Trait Bonus
+		TraitBonus collectionneur = new TraitBonus(3, "Collectionneur", "Ils trouvent des trésors plus facilement", "img/test", CategorieSim.ADULTE, TypeAspiration.NATURE);
+		collectionneur.setDlc(jeuDeBase);
+		
+		System.out.println(collectionneur);
 	}
 
 }
