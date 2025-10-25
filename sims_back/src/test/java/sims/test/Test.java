@@ -11,9 +11,11 @@ import sims.model.Competence;
 import sims.model.DLC;
 import sims.model.EtapeAspiration;
 import sims.model.RangCarriere;
+import sims.model.TraitDeCaractere;
 import sims.model.TypeAspiration;
 import sims.model.TypeCarriere;
 import sims.model.TypeDLC;
+import sims.model.TypeTrait;
 
 public class Test {
 
@@ -48,8 +50,7 @@ public class Test {
 		
 		System.out.println(carriereScientifique);
 		
-		// Aspirations
-		
+		// Aspiration
 		EtapeAspiration etape1 = new EtapeAspiration(1, 1, "Jeune loup");
 		etape1.setSousEtapes(new ArrayList<String>());
 		Collections.addAll(etape1.getSousEtapes(), "Devenir un Loup-garou");
@@ -64,6 +65,12 @@ public class Test {
 		loupGarouUltime.setDlc(loupsGarous);
 		
 		System.out.println(loupGarouUltime);
+		
+		// Trait de caractère
+		TraitDeCaractere genie = new TraitDeCaractere(1, "Génie", "Ces Sims sont des génies", "img/test", TypeTrait.BASE, CategorieSim.ADULTE);
+		genie.setDlc(jeuDeBase);
+		
+		System.out.println(genie);
 	}
 
 }
