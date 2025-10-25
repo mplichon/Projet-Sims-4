@@ -11,6 +11,8 @@ import sims.model.Competence;
 import sims.model.DLC;
 import sims.model.EtapeAspiration;
 import sims.model.RangCarriere;
+import sims.model.TraitACondition;
+import sims.model.TraitAEffets;
 import sims.model.TraitAspiration;
 import sims.model.TraitBonus;
 import sims.model.TraitDeCaractere;
@@ -27,6 +29,7 @@ public class Test {
 		DLC jeuDeBase = new DLC(1, "Les Sims 4", LocalDate.parse("2014-09-05"), "C'est un jeu super cool !", "img/test", TypeDLC.BASE);
 		DLC auTravail = new DLC(2, "Au Travail", LocalDate.parse("2015-04-02"), "Commencez des carrières délirantes !", "img/test", TypeDLC.EXTENSION);
 		DLC loupsGarous = new DLC(3, "Loups-Garous", LocalDate.parse("2022-06-16"), "Devenez lycanthrope !", "img/test", TypeDLC.JEU);
+		DLC saisons = new DLC(4, "Saisons", LocalDate.parse("2018-06-22"), "Les saisons font leur grand retour !", "img/test", TypeDLC.EXTENSION);
 		
 		System.out.println(jeuDeBase);
 		
@@ -87,6 +90,20 @@ public class Test {
 		collectionneur.setDlc(jeuDeBase);
 		
 		System.out.println(collectionneur);
+		
+		// Trait à condition
+		TraitACondition resistanceALaMaladie = new TraitACondition(4, "Résistance à la maladie", "Ces Sims ne tombent plus jamais malades", "img/test", TypeTrait.CARRIERE, CategorieSim.ADULTE, "Être au niveau 8 de la carrière Médecin");
+		resistanceALaMaladie.setDlc(auTravail);
+		
+		System.out.println(resistanceALaMaladie);
+		
+		// Trait à effets
+		TraitAEffets bebeDuPereHiver = new TraitAEffets(5, "Bébé du Père Hiver", "Le père de ce sim est le Père Hiver !", "img/test", TypeTrait.HERITAGE, CategorieSim.ADULTE, "Le Sim doit avoir le Père Hiver comme père");
+		bebeDuPereHiver.setDlc(saisons);
+		bebeDuPereHiver.setEffets(new ArrayList<String>());
+		Collections.addAll(bebeDuPereHiver.getEffets(), "Augmente l'obtention des points de satisfaction de 50%");
+		
+		System.out.println(bebeDuPereHiver);
 	}
 
 }
