@@ -11,6 +11,7 @@ import sims.model.Competence;
 import sims.model.DLC;
 import sims.model.EtapeAspiration;
 import sims.model.RangCarriere;
+import sims.model.TraitAspiration;
 import sims.model.TraitDeCaractere;
 import sims.model.TypeAspiration;
 import sims.model.TypeCarriere;
@@ -50,7 +51,7 @@ public class Test {
 		
 		System.out.println(carriereScientifique);
 		
-		// Aspiration
+		// Aspiration et Trait de récompense d'aspiration
 		EtapeAspiration etape1 = new EtapeAspiration(1, 1, "Jeune loup");
 		etape1.setSousEtapes(new ArrayList<String>());
 		Collections.addAll(etape1.getSousEtapes(), "Devenir un Loup-garou");
@@ -64,7 +65,15 @@ public class Test {
 		Collections.addAll(loupGarouUltime.getEtapes(), etape1, etape2);
 		loupGarouUltime.setDlc(loupsGarous);
 		
+		
+		TraitAspiration presenceMenacante = new TraitAspiration(2, "Présence menaçante", "Ces sims effraient tout le monde (même Greg)", "img/test", CategorieSim.ADULTE);
+		presenceMenacante.setDlc(loupsGarous);
+		presenceMenacante.setAspiration(loupGarouUltime);
+		
+		loupGarouUltime.setTrait(presenceMenacante);
+		
 		System.out.println(loupGarouUltime);
+		System.out.println(presenceMenacante);
 		
 		// Trait de caractère
 		TraitDeCaractere genie = new TraitDeCaractere(1, "Génie", "Ces Sims sont des génies", "img/test", TypeTrait.BASE, CategorieSim.ADULTE);

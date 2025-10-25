@@ -11,7 +11,7 @@ public class Aspiration {
 	private String img;
 	private TypeAspiration type;
 	private DLC dlc;
-	
+	private TraitAspiration trait;
 	private List<EtapeAspiration> etapes;
 
 	
@@ -85,6 +85,16 @@ public class Aspiration {
 	}
 
 
+	public TraitAspiration getTrait() {
+		return trait;
+	}
+
+
+	public void setTrait(TraitAspiration trait) {
+		this.trait = trait;
+	}
+
+
 	public List<EtapeAspiration> getEtapes() {
 		return etapes;
 	}
@@ -99,6 +109,6 @@ public class Aspiration {
 	@Override
 	public String toString() {
 		return "Aspiration [id=" + id + ", nom=" + nom + ", description=" + description + ", img=" + img + ", type="
-				+ type.getNom() + ", dlc=" + dlc.getNom() + ", etapes=" + etapes + "]";
+				+ type.getNom() + ", dlc=" + dlc.getNom() + ", trait=" + trait.getNom() + ", etapes=" + etapes + "]";
 	}
 }
