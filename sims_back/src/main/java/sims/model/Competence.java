@@ -13,14 +13,13 @@ public class Competence {
 	
 	
 	// Constructeurs
-	public Competence(Integer id, String nom, String description, String img, int niveauMax, CategorieSim categorieSim, DLC dlc) {
+	public Competence(Integer id, String nom, String description, String img, int niveauMax, CategorieSim categorieSim) {
 		this.id = id;
 		this.nom = nom;
 		this.description = description;
 		this.img = img;
 		this.niveauMax = niveauMax;
 		this.categorieSim = categorieSim;
-		this.dlc = dlc;
 	}
 
 

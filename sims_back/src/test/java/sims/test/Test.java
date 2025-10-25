@@ -15,7 +15,8 @@ public class Test {
 		
 		System.out.println(jeuDeBase);
 		
-		Competence competence = new Competence(1, "Cuisine", "Compétence indispensable pour se faire à manger", "img/test", 10, CategorieSim.ADULTE, jeuDeBase);
+		Competence competence = new Competence(1, "Cuisine", "Compétence indispensable pour se faire à manger", "img/test", 10, CategorieSim.ADULTE);
+		competence.setDlc(jeuDeBase);
 		
 		System.out.println(competence);
 
