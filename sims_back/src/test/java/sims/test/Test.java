@@ -15,7 +15,9 @@ import sims.model.TraitACondition;
 import sims.model.TraitAEffets;
 import sims.model.TraitAspiration;
 import sims.model.TraitBonus;
+import sims.model.TraitBoutique;
 import sims.model.TraitDeCaractere;
+import sims.model.TraitEducation;
 import sims.model.TypeAspiration;
 import sims.model.TypeCarriere;
 import sims.model.TypeDLC;
@@ -30,6 +32,7 @@ public class Test {
 		DLC auTravail = new DLC(2, "Au Travail", LocalDate.parse("2015-04-02"), "Commencez des carrières délirantes !", "img/test", TypeDLC.EXTENSION);
 		DLC loupsGarous = new DLC(3, "Loups-Garous", LocalDate.parse("2022-06-16"), "Devenez lycanthrope !", "img/test", TypeDLC.JEU);
 		DLC saisons = new DLC(4, "Saisons", LocalDate.parse("2018-06-22"), "Les saisons font leur grand retour !", "img/test", TypeDLC.EXTENSION);
+		DLC etreParents = new DLC(5, "Être parents", LocalDate.parse("2017-05-30"), "Devenez parents", "img/test", TypeDLC.JEU);
 		
 		System.out.println(jeuDeBase);
 		
@@ -104,6 +107,18 @@ public class Test {
 		Collections.addAll(bebeDuPereHiver.getEffets(), "Augmente l'obtention des points de satisfaction de 50%");
 		
 		System.out.println(bebeDuPereHiver);
+		
+		// Trait lié à l'éducation
+		TraitEducation irresponsable = new TraitEducation(6, "Irresponsable", "Ces sims ont eu une mauvaise éducation", "img/test", "Responsabilité");
+		irresponsable.setDlc(etreParents);
+		
+		System.out.println(irresponsable);
+		
+		// Trait de récompense de la boutique
+		TraitBoutique vessieDAcier = new TraitBoutique(7, "Vessie d'acier", "Ces sims n'ont plus besoin d'aller aux toilettes", "img/test", CategorieSim.ADULTE, 2000);
+		vessieDAcier.setDlc(jeuDeBase);
+		
+		System.out.println(vessieDAcier);
 	}
 
 }
