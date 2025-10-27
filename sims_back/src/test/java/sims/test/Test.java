@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import sims.model.Aspiration;
 import sims.model.Carriere;
 import sims.model.CategorieSim;
@@ -28,11 +32,11 @@ public class Test {
 	public static void main(String[] args) {
 		
 		// DLC
-		DLC jeuDeBase = new DLC(1, "Les Sims 4", LocalDate.parse("2014-09-05"), "C'est un jeu super cool !", "img/test", TypeDLC.BASE);
-		DLC auTravail = new DLC(2, "Au Travail", LocalDate.parse("2015-04-02"), "Commencez des carrières délirantes !", "img/test", TypeDLC.EXTENSION);
-		DLC loupsGarous = new DLC(3, "Loups-Garous", LocalDate.parse("2022-06-16"), "Devenez lycanthrope !", "img/test", TypeDLC.JEU);
-		DLC saisons = new DLC(4, "Saisons", LocalDate.parse("2018-06-22"), "Les saisons font leur grand retour !", "img/test", TypeDLC.EXTENSION);
-		DLC etreParents = new DLC(5, "Être parents", LocalDate.parse("2017-05-30"), "Devenez parents", "img/test", TypeDLC.JEU);
+		DLC jeuDeBase = new DLC("Les Sims 4", LocalDate.parse("2014-09-05"), "C'est un jeu super cool !", "img/test", TypeDLC.BASE);
+		DLC auTravail = new DLC("Au Travail", LocalDate.parse("2015-04-02"), "Commencez des carrières délirantes !", "img/test", TypeDLC.EXTENSION);
+		DLC loupsGarous = new DLC("Loups-Garous", LocalDate.parse("2022-06-16"), "Devenez lycanthrope !", "img/test", TypeDLC.JEU);
+		DLC saisons = new DLC("Saisons", LocalDate.parse("2018-06-22"), "Les saisons font leur grand retour !", "img/test", TypeDLC.EXTENSION);
+		DLC etreParents = new DLC("Être parents", LocalDate.parse("2017-05-30"), "Devenez parents", "img/test", TypeDLC.JEU);
 		
 		System.out.println(jeuDeBase);
 		
@@ -119,6 +123,21 @@ public class Test {
 		vessieDAcier.setDlc(jeuDeBase);
 		
 		System.out.println(vessieDAcier);
+		
+		
+		// Test JPA
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("configJPASims4");
+		EntityManager em = emf.createEntityManager();
+		
+		em.getTransaction().begin();
+		
+		em.persist(jeuDeBase);
+		em.persist(auTravail);
+		
+		em.getTransaction().commit();
+
+		em.close();
+		emf.close();
 	}
 
 }
