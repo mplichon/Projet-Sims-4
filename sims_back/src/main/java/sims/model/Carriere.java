@@ -2,22 +2,64 @@ package sims.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="carriere")
 public class Carriere {
 	
 	// Attributs
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(length = 25, nullable = false, unique = true)
 	private String nom;
+	
+	@Column(nullable = true)
 	private String description;
+	
+	@Column(nullable = true)
 	private String img;
+	
+	@Column(length = 25, nullable = true, unique = true)
 	private String nomCarriereGenerale;
+	
+	@Enumerated(EnumType.STRING)
 	private TypeCarriere type;
+	
+	@ManyToOne
+	@JoinColumn(name = "dlc_id")
 	private DLC dlc;
+	
+	@OneToMany
+	@JoinColumn(name = "carriere_id")
 	private List<RangCarriere> rangs;
 	
 	
 	// Constructeurs
+	public Carriere() {}
+	
 	public Carriere(Integer id, String nom, String description, String img, String nomCarriereGenerale, TypeCarriere type) {
 		this.id = id;
+		this.nom = nom;
+		this.description = description;
+		this.img = img;
+		this.nomCarriereGenerale = nomCarriereGenerale;
+		this.type = type;
+	}
+	
+	public Carriere(String nom, String description, String img, String nomCarriereGenerale, TypeCarriere type) {
 		this.nom = nom;
 		this.description = description;
 		this.img = img;

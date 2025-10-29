@@ -65,15 +65,18 @@ public class Test {
 		RangCarriere rang1 = new RangCarriere(1, 1, "Assistant", 200, "Jouer aux échecs");
 		rang1.setExigencesPourPromotion(new ArrayList<String>());
 		Collections.addAll(rang1.getExigencesPourPromotion(), "Être au niveau 2 de la compétence Logique");
+		rang1 = em.merge(rang1);
 		
 		RangCarriere rang2 = new RangCarriere(2, 2, "Scientifique fou", 1000, "Faire des expériences");
 		rang2.setExigencesPourPromotion(new ArrayList<String>());
 		Collections.addAll(rang2.getExigencesPourPromotion(), "Être au niveau 4 de la compétence Logique", "Être au niveau 2 de la compétence Jeux vidéo");
+		rang2 = em.merge(rang2);
 		
 		Carriere carriereScientifique = new Carriere(1, "Scientifique", "C'est la carrière idéale pour faire des inventions", "img/test", null, TypeCarriere.ACTIVE);
 		carriereScientifique.setDlc(auTravail);
 		carriereScientifique.setRangs(new ArrayList<RangCarriere>());
 		Collections.addAll(carriereScientifique.getRangs(), rang1, rang2);
+		carriereScientifique = em.merge(carriereScientifique);
 		
 		System.out.println(carriereScientifique);
 		
