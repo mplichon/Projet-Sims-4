@@ -1,20 +1,58 @@
 package sims.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="competence")
 public class Competence {
 	
 	// Attributs
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(length = 25, nullable = false, unique = true)
 	private String nom;
+	
+	@Column(nullable = true)
 	private String description;
+	
+	@Column(nullable = true)
 	private String img;
+	
+	@Column(nullable = false, columnDefinition = "INT(2)")
 	private int niveauMax;
+	
+	@Enumerated(EnumType.STRING)
 	private CategorieSim categorieSim;
+	
+	@ManyToOne
+	@JoinColumn(name = "dlc_id")
 	private DLC dlc;
 	
 	
 	// Constructeurs
+	public Competence() {}
+	
 	public Competence(Integer id, String nom, String description, String img, int niveauMax, CategorieSim categorieSim) {
 		this.id = id;
+		this.nom = nom;
+		this.description = description;
+		this.img = img;
+		this.niveauMax = niveauMax;
+		this.categorieSim = categorieSim;
+	}
+	
+	public Competence(String nom, String description, String img, int niveauMax, CategorieSim categorieSim) {
 		this.nom = nom;
 		this.description = description;
 		this.img = img;

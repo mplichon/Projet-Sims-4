@@ -30,21 +30,36 @@ import sims.model.TypeTrait;
 public class Test {
 
 	public static void main(String[] args) {
+		// Test JPA
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("configJPASims4");
+		EntityManager em = emf.createEntityManager();
 		
+		em.getTransaction().begin();
 		// DLC
 		DLC jeuDeBase = new DLC("Les Sims 4", LocalDate.parse("2014-09-05"), "C'est un jeu super cool !", "img/test", TypeDLC.BASE);
+		jeuDeBase = em.merge(jeuDeBase);
+		
 		DLC auTravail = new DLC("Au Travail", LocalDate.parse("2015-04-02"), "Commencez des carrières délirantes !", "img/test", TypeDLC.EXTENSION);
+		auTravail = em.merge(auTravail);
+		
 		DLC loupsGarous = new DLC("Loups-Garous", LocalDate.parse("2022-06-16"), "Devenez lycanthrope !", "img/test", TypeDLC.JEU);
+		loupsGarous = em.merge(loupsGarous);
+		
 		DLC saisons = new DLC("Saisons", LocalDate.parse("2018-06-22"), "Les saisons font leur grand retour !", "img/test", TypeDLC.EXTENSION);
+		saisons = em.merge(saisons);
+		
 		DLC etreParents = new DLC("Être parents", LocalDate.parse("2017-05-30"), "Devenez parents", "img/test", TypeDLC.JEU);
+		etreParents = em.merge(etreParents);
 		
 		System.out.println(jeuDeBase);
 		
 		// Compétence
-		Competence competence = new Competence(1, "Cuisine", "Compétence indispensable pour se faire à manger", "img/test", 10, CategorieSim.ADULTE);
-		competence.setDlc(jeuDeBase);
+		Competence cuisine = new Competence("Cuisine", "Compétence indispensable pour se faire à manger", "img/test", 10, CategorieSim.ADULTE);
+		cuisine.setDlc(jeuDeBase);
 		
-		System.out.println(competence);
+		cuisine = em.merge(cuisine);
+		
+		System.out.println(cuisine);
 		
 		// Carriere
 		RangCarriere rang1 = new RangCarriere(1, 1, "Assistant", 200, "Jouer aux échecs");
@@ -125,15 +140,8 @@ public class Test {
 		System.out.println(vessieDAcier);
 		
 		
-		// Test JPA
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("configJPASims4");
-		EntityManager em = emf.createEntityManager();
 		
-		em.getTransaction().begin();
-		
-		em.persist(jeuDeBase);
-		em.persist(auTravail);
-		
+		// Fin Test JPA
 		em.getTransaction().commit();
 
 		em.close();
