@@ -35,7 +35,7 @@ public class RangCarriere {
 	
 	@ElementCollection
     @CollectionTable(
-        name = "exigences_promotion",
+        name = "exigence_promotion",
         joinColumns = @JoinColumn (name = "rang_carriere_id")
     )
     @Column(name = "exigence")
