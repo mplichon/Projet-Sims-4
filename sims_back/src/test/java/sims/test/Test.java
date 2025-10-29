@@ -62,17 +62,17 @@ public class Test {
 		System.out.println(cuisine);
 		
 		// Carriere
-		RangCarriere rang1 = new RangCarriere(1, 1, "Assistant", 200, "Jouer aux échecs");
+		RangCarriere rang1 = new RangCarriere(1, "Assistant", 200, "Jouer aux échecs");
 		rang1.setExigencesPourPromotion(new ArrayList<String>());
 		Collections.addAll(rang1.getExigencesPourPromotion(), "Être au niveau 2 de la compétence Logique");
 		rang1 = em.merge(rang1);
 		
-		RangCarriere rang2 = new RangCarriere(2, 2, "Scientifique fou", 1000, "Faire des expériences");
+		RangCarriere rang2 = new RangCarriere(2, "Scientifique fou", 1000, "Faire des expériences");
 		rang2.setExigencesPourPromotion(new ArrayList<String>());
 		Collections.addAll(rang2.getExigencesPourPromotion(), "Être au niveau 4 de la compétence Logique", "Être au niveau 2 de la compétence Jeux vidéo");
 		rang2 = em.merge(rang2);
 		
-		Carriere carriereScientifique = new Carriere(1, "Scientifique", "C'est la carrière idéale pour faire des inventions", "img/test", null, TypeCarriere.ACTIVE);
+		Carriere carriereScientifique = new Carriere("Scientifique", "C'est la carrière idéale pour faire des inventions", "img/test", null, TypeCarriere.ACTIVE);
 		carriereScientifique.setDlc(auTravail);
 		carriereScientifique.setRangs(new ArrayList<RangCarriere>());
 		Collections.addAll(carriereScientifique.getRangs(), rang1, rang2);
@@ -84,15 +84,18 @@ public class Test {
 		EtapeAspiration etape1 = new EtapeAspiration(1, 1, "Jeune loup");
 		etape1.setSousEtapes(new ArrayList<String>());
 		Collections.addAll(etape1.getSousEtapes(), "Devenir un Loup-garou");
+		etape1 = em.merge(etape1);
 		
 		EtapeAspiration etape2 = new EtapeAspiration(2, 2, "Vieux loup");
 		etape2.setSousEtapes(new ArrayList<String>());
 		Collections.addAll(etape2.getSousEtapes(), "Atteindre le rang vieux loup", "Effrayer d'autres Sims");
+		etape2 = em.merge(etape2);
 		
-		Aspiration loupGarouUltime = new Aspiration(1, "Loup-garou ultime", "Être un simple loup-garou ne vous suffit pas", "img/test", TypeAspiration.LYCANTHROPIE);
+		Aspiration loupGarouUltime = new Aspiration("Loup-garou ultime", "Être un simple loup-garou ne vous suffit pas", "img/test", TypeAspiration.LYCANTHROPIE);
 		loupGarouUltime.setEtapes(new ArrayList<EtapeAspiration>());
 		Collections.addAll(loupGarouUltime.getEtapes(), etape1, etape2);
 		loupGarouUltime.setDlc(loupsGarous);
+		loupGarouUltime = em.merge(loupGarouUltime);
 		
 		
 		TraitAspiration presenceMenacante = new TraitAspiration(2, "Présence menaçante", "Ces sims effraient tout le monde (même Greg)", "img/test", CategorieSim.ADULTE);

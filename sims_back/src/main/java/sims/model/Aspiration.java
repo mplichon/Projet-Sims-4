@@ -2,20 +2,56 @@ package sims.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="aspiration")
 public class Aspiration {
 	
 	// Attributs
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(length = 25, nullable = false, unique = true)
 	private String nom;
+	
+	@Column(nullable = true)
 	private String description;
+	
+	@Column(nullable = true)
 	private String img;
+	
+	@Enumerated(EnumType.STRING)
 	private TypeAspiration type;
+	
+	@ManyToOne
+	@JoinColumn(name = "dlc_id")
 	private DLC dlc;
-	private TraitAspiration trait;
+	
+	//@OneToOne
+	//@JoinColumn(name = "trait_id")
+	private transient TraitAspiration trait;
+	
+	@OneToMany
+	@JoinColumn(name = "aspiration_id")
 	private List<EtapeAspiration> etapes;
 
 	
 	// Constructeurs
+	public Aspiration() {}
+	
 	public Aspiration(Integer id, String nom, String description, String img, TypeAspiration type) {
 		this.id = id;
 		this.nom = nom;
@@ -23,8 +59,16 @@ public class Aspiration {
 		this.img = img;
 		this.type = type;
 	}
+	
+	public Aspiration(String nom, String description, String img, TypeAspiration type) {
+		this.nom = nom;
+		this.description = description;
+		this.img = img;
+		this.type = type;
+	}
 
-
+	
+	// Getters et Setters
 	public Integer getId() {
 		return id;
 	}
