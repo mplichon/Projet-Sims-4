@@ -1,15 +1,28 @@
 package sims.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class TraitBoutique extends TraitDeCaractere {
 
 	// Attributs
+	@Column(nullable = false, columnDefinition = "INT(6)")
 	private int cout;
 
 	
 	// Constructeurs
+	public TraitBoutique() {}
+	
 	public TraitBoutique(Integer id, String nom, String description, String img,
 			CategorieSim categorieSim, int cout) {
 		super(id, nom, description, img, TypeTrait.BOUTIQUE, categorieSim);
+		this.cout = cout;
+	}
+	
+	public TraitBoutique(String nom, String description, String img,
+			CategorieSim categorieSim, int cout) {
+		super(nom, description, img, TypeTrait.BOUTIQUE, categorieSim);
 		this.cout = cout;
 	}
 
