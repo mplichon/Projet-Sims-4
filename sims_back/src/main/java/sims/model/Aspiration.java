@@ -42,7 +42,7 @@ public class Aspiration {
 	
 	@OneToOne
 	@JoinColumn(name = "trait_id")
-	private transient TraitAspiration trait;
+	private TraitAspiration trait;
 	
 	@OneToMany
 	@JoinColumn(name = "aspiration_id")

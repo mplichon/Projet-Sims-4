@@ -81,12 +81,12 @@ public class Test {
 		System.out.println(carriereScientifique);
 		
 		// Aspiration et Trait de récompense d'aspiration
-		EtapeAspiration etape1 = new EtapeAspiration(1, 1, "Jeune loup");
+		EtapeAspiration etape1 = new EtapeAspiration(1, "Jeune loup");
 		etape1.setSousEtapes(new ArrayList<String>());
 		Collections.addAll(etape1.getSousEtapes(), "Devenir un Loup-garou");
 		etape1 = em.merge(etape1);
 		
-		EtapeAspiration etape2 = new EtapeAspiration(2, 2, "Vieux loup");
+		EtapeAspiration etape2 = new EtapeAspiration(2, "Vieux loup");
 		etape2.setSousEtapes(new ArrayList<String>());
 		Collections.addAll(etape2.getSousEtapes(), "Atteindre le rang vieux loup", "Effrayer d'autres Sims");
 		etape2 = em.merge(etape2);
@@ -98,54 +98,64 @@ public class Test {
 		loupGarouUltime = em.merge(loupGarouUltime);
 		
 		
-		TraitAspiration presenceMenacante = new TraitAspiration(2, "Présence menaçante", "Ces sims effraient tout le monde (même Greg)", "img/test", CategorieSim.ADULTE);
+		TraitAspiration presenceMenacante = new TraitAspiration("Présence menaçante", "Ces sims effraient tout le monde (même Greg)", "img/test", CategorieSim.ADULTE);
 		presenceMenacante.setDlc(loupsGarous);
 		presenceMenacante.setAspiration(loupGarouUltime);
+		presenceMenacante = em.merge(presenceMenacante);
 		
 		loupGarouUltime.setTrait(presenceMenacante);
+		loupGarouUltime = em.merge(loupGarouUltime);
 		
 		System.out.println(loupGarouUltime);
 		System.out.println(presenceMenacante);
 		
 		// Trait de caractère
-		TraitDeCaractere genie = new TraitDeCaractere(1, "Génie", "Ces Sims sont des génies", "img/test", TypeTrait.BASE, CategorieSim.ADULTE);
+		TraitDeCaractere genie = new TraitDeCaractere("Génie", "Ces Sims sont des génies", "img/test", TypeTrait.BASE, CategorieSim.ADULTE);
 		genie.setDlc(jeuDeBase);
+		genie = em.merge(genie);
 		
 		System.out.println(genie);
 		
 		// Trait Bonus
-		TraitBonus collectionneur = new TraitBonus(3, "Collectionneur", "Ils trouvent des trésors plus facilement", "img/test", CategorieSim.ADULTE, TypeAspiration.NATURE);
+		TraitBonus collectionneur = new TraitBonus("Collectionneur", "Ils trouvent des trésors plus facilement", "img/test", CategorieSim.ADULTE, TypeAspiration.NATURE);
 		collectionneur.setDlc(jeuDeBase);
+		collectionneur = em.merge(collectionneur);
 		
 		System.out.println(collectionneur);
 		
 		// Trait à condition
-		TraitACondition resistanceALaMaladie = new TraitACondition(4, "Résistance à la maladie", "Ces Sims ne tombent plus jamais malades", "img/test", TypeTrait.CARRIERE, CategorieSim.ADULTE, "Être au niveau 8 de la carrière Médecin");
+		TraitACondition resistanceALaMaladie = new TraitACondition("Résistance à la maladie", "Ces Sims ne tombent plus jamais malades", "img/test", TypeTrait.CARRIERE, CategorieSim.ADULTE, "Être au niveau 8 de la carrière Médecin");
 		resistanceALaMaladie.setDlc(auTravail);
+		resistanceALaMaladie = em.merge(resistanceALaMaladie);
 		
 		System.out.println(resistanceALaMaladie);
 		
 		// Trait à effets
-		TraitAEffets bebeDuPereHiver = new TraitAEffets(5, "Bébé du Père Hiver", "Le père de ce sim est le Père Hiver !", "img/test", TypeTrait.HERITAGE, CategorieSim.ADULTE, "Le Sim doit avoir le Père Hiver comme père");
+		TraitAEffets bebeDuPereHiver = new TraitAEffets("Bébé du Père Hiver", "Le père de ce sim est le Père Hiver !", "img/test", TypeTrait.HERITAGE, CategorieSim.ADULTE, "Le Sim doit avoir le Père Hiver comme père");
 		bebeDuPereHiver.setDlc(saisons);
 		bebeDuPereHiver.setEffets(new ArrayList<String>());
 		Collections.addAll(bebeDuPereHiver.getEffets(), "Augmente l'obtention des points de satisfaction de 50%");
+		bebeDuPereHiver = em.merge(bebeDuPereHiver);
 		
 		System.out.println(bebeDuPereHiver);
 		
 		// Trait lié à l'éducation
-		TraitEducation irresponsable = new TraitEducation(6, "Irresponsable", "Ces sims ont eu une mauvaise éducation", "img/test", "Responsabilité");
+		TraitEducation irresponsable = new TraitEducation("Irresponsable", "Ces sims ont eu une mauvaise éducation", "img/test", "Responsabilité");
 		irresponsable.setDlc(etreParents);
+		irresponsable = em.merge(irresponsable);
 		
 		System.out.println(irresponsable);
 		
 		// Trait de récompense de la boutique
-		TraitBoutique vessieDAcier = new TraitBoutique(7, "Vessie d'acier", "Ces sims n'ont plus besoin d'aller aux toilettes", "img/test", CategorieSim.ADULTE, 2000);
+		TraitBoutique vessieDAcier = new TraitBoutique("Vessie d'acier", "Ces sims n'ont plus besoin d'aller aux toilettes", "img/test", CategorieSim.ADULTE, 2000);
 		vessieDAcier.setDlc(jeuDeBase);
+		vessieDAcier = em.merge(vessieDAcier);
 		
 		System.out.println(vessieDAcier);
 		
-		
+		/*Aspiration aspiration1 = em.find(Aspiration.class, 1);
+		System.out.println(aspiration1.getTrait());
+		System.out.println(aspiration1);*/
 		
 		// Fin Test JPA
 		em.getTransaction().commit();
