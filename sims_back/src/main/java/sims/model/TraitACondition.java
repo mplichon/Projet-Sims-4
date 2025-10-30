@@ -43,7 +43,7 @@ public class TraitACondition extends TraitDeCaractere {
 	// toString
 	@Override
 	public String toString() {
-		return "TraitACondition [condition=" + conditionTrait + ", id=" + id + ", nom=" + nom + ", description="
+		return "TraitACondition [conditionTrait=" + conditionTrait + ", id=" + id + ", nom=" + nom + ", description="
 				+ description + ", img=" + img + ", type=" + type.getNom() + ", categorieSim=" + categorieSim + ", dlc=" + dlc.getNom()
 				+ "]";
 	}

@@ -23,13 +23,13 @@ public class TraitAEffets extends TraitACondition {
 	public TraitAEffets() {}
 	
 	public TraitAEffets(Integer id, String nom, String description, String img, TypeTrait type,
-			CategorieSim categorieSim, String condition) {
-		super(id, nom, description, img, type, categorieSim, condition);
+			CategorieSim categorieSim, String conditionTrait) {
+		super(id, nom, description, img, type, categorieSim, conditionTrait);
 	}
 	
 	public TraitAEffets(String nom, String description, String img, TypeTrait type,
-			CategorieSim categorieSim, String condition) {
-		super(nom, description, img, type, categorieSim, condition);
+			CategorieSim categorieSim, String conditionTrait) {
+		super(nom, description, img, type, categorieSim, conditionTrait);
 	}
 
 
@@ -47,7 +47,7 @@ public class TraitAEffets extends TraitACondition {
 	// toString
 	@Override
 	public String toString() {
-		return "TraitAEffets [effets=" + effets + ", condition=" + condition + ", id=" + id + ", nom=" + nom
+		return "TraitAEffets [effets=" + effets + ", conditionTrait=" + conditionTrait + ", id=" + id + ", nom=" + nom
 				+ ", description=" + description + ", img=" + img + ", type=" + type.getNom() + ", categorieSim=" + categorieSim
 				+ ", dlc=" + dlc.getNom() + "]";
 	}
