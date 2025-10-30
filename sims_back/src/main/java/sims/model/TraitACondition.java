@@ -8,7 +8,7 @@ public class TraitACondition extends TraitDeCaractere {
 	
 	// Attributs
 	@Column(length = 50, nullable = false)
-	protected String condition;
+	protected String conditionTrait;
 
 	
 	// Constructeurs
@@ -16,34 +16,34 @@ public class TraitACondition extends TraitDeCaractere {
 
 	
 	public TraitACondition(Integer id, String nom, String description, String img, TypeTrait type,
-			CategorieSim categorieSim, String condition) {
+			CategorieSim categorieSim, String conditionTrait) {
 		super(id, nom, description, img, type, categorieSim);
-		this.condition = condition;
+		this.conditionTrait = conditionTrait;
 	}
 	
 	public TraitACondition(String nom, String description, String img, TypeTrait type,
-			CategorieSim categorieSim, String condition) {
+			CategorieSim categorieSim, String conditionTrait) {
 		super(nom, description, img, type, categorieSim);
-		this.condition = condition;
+		this.conditionTrait = conditionTrait;
 	}
 
 
 
 	// Getters et Setters
-	public String getCondition() {
-		return condition;
+	public String getConditionTrait() {
+		return conditionTrait;
 	}
 
 
-	public void setCondition(String condition) {
-		this.condition = condition;
+	public void setConditionTrait(String conditionTrait) {
+		this.conditionTrait = conditionTrait;
 	}
 
 
 	// toString
 	@Override
 	public String toString() {
-		return "TraitACondition [condition=" + condition + ", id=" + id + ", nom=" + nom + ", description="
+		return "TraitACondition [condition=" + conditionTrait + ", id=" + id + ", nom=" + nom + ", description="
 				+ description + ", img=" + img + ", type=" + type.getNom() + ", categorieSim=" + categorieSim + ", dlc=" + dlc.getNom()
 				+ "]";
 	}
