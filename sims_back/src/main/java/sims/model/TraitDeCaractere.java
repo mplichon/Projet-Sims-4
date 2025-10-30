@@ -21,7 +21,7 @@ public class TraitDeCaractere {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
-	@Column(length = 25, nullable = false, unique = true)
+	@Column(length = 25, nullable = false)
 	protected String nom;
 	
 	@Column(nullable = true)
