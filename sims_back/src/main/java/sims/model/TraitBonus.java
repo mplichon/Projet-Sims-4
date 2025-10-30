@@ -1,15 +1,29 @@
 package sims.model;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Entity
 public class TraitBonus extends TraitDeCaractere {
 	
 	// Attributs
+	@Enumerated(EnumType.STRING)
 	private TypeAspiration typeAspiration;
 
 	
 	// Constructeurs
+	public TraitBonus() {}
+	
 	public TraitBonus(Integer id, String nom, String description, String img,
 			CategorieSim categorieSim, TypeAspiration typeAspiration) {
 		super(id, nom, description, img, TypeTrait.BONUS, categorieSim);
+		this.typeAspiration = typeAspiration;
+	}
+	
+	public TraitBonus(String nom, String description, String img,
+			CategorieSim categorieSim, TypeAspiration typeAspiration) {
+		super(nom, description, img, TypeTrait.BONUS, categorieSim);
 		this.typeAspiration = typeAspiration;
 	}
 
