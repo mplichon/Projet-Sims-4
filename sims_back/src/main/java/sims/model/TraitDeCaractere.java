@@ -1,20 +1,59 @@
 package sims.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class TraitDeCaractere {
 	
 	// Attributs
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
+	
+	@Column(length = 25, nullable = false, unique = true)
 	protected String nom;
+	
+	@Column(nullable = true)
 	protected String description;
+	
+	@Column(nullable = true)
 	protected String img;
+	
+	@Enumerated(EnumType.STRING)
 	protected TypeTrait type;
+	
+	@Enumerated(EnumType.STRING)
 	protected CategorieSim categorieSim;
+	
+	@ManyToOne
+	@JoinColumn(name = "dlc_id")
 	protected DLC dlc;
 	
 	
 	// Constructeurs
+	public TraitDeCaractere() {}
+	
 	public TraitDeCaractere(Integer id, String nom, String description, String img, TypeTrait type, CategorieSim categorieSim) {
 		this.id = id;
+		this.nom = nom;
+		this.description = description;
+		this.img = img;
+		this.type = type;
+		this.categorieSim = categorieSim;
+	}
+	
+	public TraitDeCaractere(String nom, String description, String img, TypeTrait type, CategorieSim categorieSim) {
 		this.nom = nom;
 		this.description = description;
 		this.img = img;
