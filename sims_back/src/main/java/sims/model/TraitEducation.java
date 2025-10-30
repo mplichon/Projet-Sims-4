@@ -1,14 +1,26 @@
 package sims.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
 public class TraitEducation extends TraitDeCaractere {
 	
 	// Attributs
+	@Column(length = 20, nullable = false)
 	private String qualite;
 
 	
 	// Constructeurs
+	public TraitEducation() {}
+	
 	public TraitEducation(Integer id, String nom, String description, String img, String qualite) {
 		super(id, nom, description, img, TypeTrait.EDUCATION, CategorieSim.ADULTE);
+		this.qualite = qualite;
+	}
+	
+	public TraitEducation(String nom, String description, String img, String qualite) {
+		super(nom, description, img, TypeTrait.EDUCATION, CategorieSim.ADULTE);
 		this.qualite = qualite;
 	}
 
