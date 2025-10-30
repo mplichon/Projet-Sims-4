@@ -2,16 +2,34 @@ package sims.model;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+
+@Entity
 public class TraitAEffets extends TraitACondition {
 	
 	// Attributs
+	@ElementCollection
+    @CollectionTable(
+        name = "effet_trait",
+        joinColumns = @JoinColumn (name = "trait_id")
+    )
 	private List<String> effets;
 
 	
 	// Constructeurs
+	public TraitAEffets() {}
+	
 	public TraitAEffets(Integer id, String nom, String description, String img, TypeTrait type,
 			CategorieSim categorieSim, String condition) {
 		super(id, nom, description, img, type, categorieSim, condition);
+	}
+	
+	public TraitAEffets(String nom, String description, String img, TypeTrait type,
+			CategorieSim categorieSim, String condition) {
+		super(nom, description, img, type, categorieSim, condition);
 	}
 
 
