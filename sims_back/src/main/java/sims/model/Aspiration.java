@@ -40,8 +40,8 @@ public class Aspiration {
 	@JoinColumn(name = "dlc_id")
 	private DLC dlc;
 	
-	//@OneToOne
-	//@JoinColumn(name = "trait_id")
+	@OneToOne
+	@JoinColumn(name = "trait_id")
 	private transient TraitAspiration trait;
 	
 	@OneToMany
