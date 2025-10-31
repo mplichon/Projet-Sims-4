@@ -121,7 +121,7 @@ public class DLC {
 	// toString
 	@Override
 	public String toString() {
-		return "DLC [nom=" + nom + ", dateSortie=" + dateSortie + ", description=" + description + ", img=" + img
+		return "DLC [id=" + id + ", nom=" + nom + ", dateSortie=" + dateSortie + ", description=" + description + ", img=" + img
 				+ ", typeDLC=" + type.getNom() + "]";
 	}
 }
