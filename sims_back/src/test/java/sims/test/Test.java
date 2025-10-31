@@ -3,11 +3,15 @@ package sims.test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import sims.dao.IDAODlc;
 import sims.model.Aspiration;
 import sims.model.Carriere;
 import sims.model.CategorieSim;
@@ -28,8 +32,78 @@ import sims.model.TypeDLC;
 import sims.model.TypeTrait;
 
 public class Test {
+	
+	@Autowired
+	IDAODlc daoDlc;
 
 	public void run(String[] args) {
+		
+		System.out.println("------Tous les DLCs------");
+		
+		List<DLC> dlcs = daoDlc.findAll();
+		
+		if(dlcs.isEmpty()) 
+		{
+			System.out.println("Aucun DLC n'est enregistré");
+		}
+		for (DLC dlc : dlcs) {
+			System.out.println(dlc);
+		}
+		
+		System.out.println();
+		System.out.println("------Tous les Packs d'extension------");
+		
+		List<DLC> extensions = daoDlc.findAllByType(TypeDLC.EXTENSION);
+		
+		if(extensions.isEmpty()) 
+		{
+			System.out.println("Aucun Pack d'extension n'est enregistré");
+		}
+		for (DLC dlc : extensions) {
+			System.out.println(dlc);
+		}
+		
+		System.out.println();
+		System.out.println("------Tous les Packs de jeu------");
+		
+		List<DLC> packsDeJeu = daoDlc.findAllByType(TypeDLC.JEU);
+		
+		if(packsDeJeu.isEmpty()) 
+		{
+			System.out.println("Aucun Pack de jeu n'est enregistré");
+		}
+		for (DLC dlc : packsDeJeu) {
+			System.out.println(dlc);
+		}
+		
+		System.out.println();
+		System.out.println("------Tous les Kits d'objets------");
+		
+		List<DLC> kitsDObjets = daoDlc.findAllByType(TypeDLC.OBJETS);
+		
+		if(kitsDObjets.isEmpty()) 
+		{
+			System.out.println("Aucun Kit d'objets n'est enregistré");
+		}
+		for (DLC dlc : kitsDObjets) {
+			System.out.println(dlc);
+		}
+		
+		System.out.println();
+		System.out.println("------Tous les Kits------");
+		
+		List<DLC> kits = daoDlc.findAllByType(TypeDLC.MINIKIT);
+		
+		if(kits.isEmpty()) 
+		{
+			System.out.println("Aucun Kit n'est enregistré");
+		}
+		for (DLC dlc : kits) {
+			System.out.println(dlc);
+		}
+		
+		
+		/*
 		// Test JPA
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("configJPASims4");
 		EntityManager em = emf.createEntityManager();
@@ -153,15 +227,16 @@ public class Test {
 		
 		System.out.println(vessieDAcier);
 		
-		/*Aspiration aspiration1 = em.find(Aspiration.class, 1);
+		Aspiration aspiration1 = em.find(Aspiration.class, 1);
 		System.out.println(aspiration1.getTrait());
-		System.out.println(aspiration1);*/
+		System.out.println(aspiration1);
 		
 		// Fin Test JPA
 		em.getTransaction().commit();
 
 		em.close();
 		emf.close();
+		*/
 	}
 
 }
