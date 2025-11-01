@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import sims.dao.IDAOCompetence;
 import sims.dao.IDAODlc;
 import sims.model.Aspiration;
 import sims.model.Carriere;
@@ -35,9 +36,13 @@ public class Test {
 	
 	@Autowired
 	IDAODlc daoDlc;
+	
+	@Autowired
+	IDAOCompetence daoCompetence;
 
 	public void run(String[] args) {
 		
+		// DLC
 		System.out.println("------Tous les DLCs------");
 		
 		List<DLC> dlcs = daoDlc.findAll();
@@ -101,6 +106,62 @@ public class Test {
 		for (DLC dlc : kits) {
 			System.out.println(dlc);
 		}
+		
+		
+		// Compétence
+		
+		/*Competence photographie = new Competence("Photographie", "Clic clic, souriez !", "img/test", 10, CategorieSim.ADULTE);
+		photographie.setDlc(daoDlc.findById(7).orElse(null));
+		
+		Competence testCompetence = new Competence("Test", "Clic clic, souriez !", "img/test", 5, CategorieSim.ENFANT);
+		testCompetence.setDlc(daoDlc.findById(7).orElse(null));
+		
+		daoCompetence.save(photographie);
+		daoCompetence.save(testCompetence);*/
+		
+		Competence testCompetence = daoCompetence.findById(4).orElse(null);
+		testCompetence.setCategorieSim(CategorieSim.ADO);
+		daoCompetence.save(testCompetence);
+		
+		System.out.println("-----------------------------");
+		System.out.println("------Toutes les Compétences------");
+		
+		List<Competence> competences = daoCompetence.findAll();
+		
+		if(competences.isEmpty()) 
+		{
+			System.out.println("Aucune Compétence n'est enregistrée");
+		}
+		for (Competence comp : competences) {
+			System.out.println(comp);
+		}
+		
+		System.out.println();
+		System.out.println("------Toutes les Compétences d'adulte------");
+		
+		List<Competence> competencesAdulte = daoCompetence.findAllByCategorieSim(CategorieSim.ADULTE);
+		
+		if(competencesAdulte.isEmpty()) 
+		{
+			System.out.println("Aucune Compétence d'adulte n'est enregistrée");
+		}
+		for (Competence comp : competencesAdulte) {
+			System.out.println(comp);
+		}
+		
+		System.out.println();
+		System.out.println("------Toutes les Compétences d'enfant------");
+		
+		List<Competence> competencesEnfant = daoCompetence.findAllByCategorieSim(CategorieSim.ENFANT);
+		
+		if(competencesEnfant.isEmpty()) 
+		{
+			System.out.println("Aucune Compétence d'enfant n'est enregistrée");
+		}
+		for (Competence comp : competencesEnfant) {
+			System.out.println(comp);
+		}
+		daoCompetence.deleteById(4);
 		
 		
 		/*
