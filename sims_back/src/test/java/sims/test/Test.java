@@ -11,7 +11,10 @@ import javax.persistence.Persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+<<<<<<< HEAD
 import sims.dao.IDAOCompetence;
+=======
+>>>>>>> origin/main
 import sims.dao.IDAODlc;
 import sims.model.Aspiration;
 import sims.model.Carriere;
