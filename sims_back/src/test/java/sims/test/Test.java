@@ -1,39 +1,17 @@
 package sims.test;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-<<<<<<< HEAD
+import sims.dao.IDAOCarriere;
 import sims.dao.IDAOCompetence;
-=======
->>>>>>> origin/main
 import sims.dao.IDAODlc;
-import sims.model.Aspiration;
 import sims.model.Carriere;
 import sims.model.CategorieSim;
 import sims.model.Competence;
 import sims.model.DLC;
-import sims.model.EtapeAspiration;
-import sims.model.RangCarriere;
-import sims.model.TraitACondition;
-import sims.model.TraitAEffets;
-import sims.model.TraitAspiration;
-import sims.model.TraitBonus;
-import sims.model.TraitBoutique;
-import sims.model.TraitDeCaractere;
-import sims.model.TraitEducation;
-import sims.model.TypeAspiration;
-import sims.model.TypeCarriere;
 import sims.model.TypeDLC;
-import sims.model.TypeTrait;
 
 public class Test {
 	
@@ -42,6 +20,10 @@ public class Test {
 	
 	@Autowired
 	IDAOCompetence daoCompetence;
+	
+	@Autowired
+	IDAOCarriere daoCarriere;
+	
 
 	public void run(String[] args) {
 		
@@ -120,11 +102,11 @@ public class Test {
 		testCompetence.setDlc(daoDlc.findById(7).orElse(null));
 		
 		daoCompetence.save(photographie);
-		daoCompetence.save(testCompetence);*/
+		daoCompetence.save(testCompetence);
 		
 		Competence testCompetence = daoCompetence.findById(4).orElse(null);
 		testCompetence.setCategorieSim(CategorieSim.ADO);
-		daoCompetence.save(testCompetence);
+		daoCompetence.save(testCompetence);*/
 		
 		System.out.println("-----------------------------");
 		System.out.println("------Toutes les Compétences------");
@@ -164,8 +146,22 @@ public class Test {
 		for (Competence comp : competencesEnfant) {
 			System.out.println(comp);
 		}
-		daoCompetence.deleteById(4);
+		//daoCompetence.deleteById(4);
 		
+		
+		// Carrière
+		System.out.println("-----------------------------");
+		System.out.println("------Toutes les Carrières------");
+		
+		List<Carriere> carrieres = daoCarriere.findAll();
+		
+		if(carrieres.isEmpty()) 
+		{
+			System.out.println("Aucune Carrière n'est enregistrée");
+		}
+		for (Carriere carriere : carrieres) {
+			System.out.println(carriere);
+		}
 		
 		/*
 		// Test JPA

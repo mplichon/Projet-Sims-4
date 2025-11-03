@@ -1,11 +1,13 @@
 package sims.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,13 +35,13 @@ public class RangCarriere {
 	@Column(length = 50, nullable = true)
 	private String tacheDuJour;
 	
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
         name = "exigence_promotion",
         joinColumns = @JoinColumn (name = "rang_carriere_id")
     )
     @Column(name = "exigence")
-	private List<String> exigencesPourPromotion;
+	private List<String> exigencesPourPromotion = new ArrayList<String>();
 	
 	
 	// Constructeurs
