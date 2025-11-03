@@ -1,5 +1,6 @@
 package sims.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -16,7 +17,7 @@ public class TraitAEffets extends TraitACondition {
         name = "effet_trait",
         joinColumns = @JoinColumn (name = "trait_id")
     )
-	private List<String> effets;
+	private List<String> effets = new ArrayList<String>();
 
 	
 	// Constructeurs

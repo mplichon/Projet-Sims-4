@@ -1,5 +1,6 @@
 package sims.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -46,7 +47,7 @@ public class Aspiration {
 	
 	@OneToMany
 	@JoinColumn(name = "aspiration_id")
-	private List<EtapeAspiration> etapes;
+	private List<EtapeAspiration> etapes = new ArrayList<EtapeAspiration>();
 
 	
 	// Constructeurs

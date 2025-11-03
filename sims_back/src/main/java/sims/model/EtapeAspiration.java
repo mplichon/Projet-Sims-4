@@ -1,5 +1,6 @@
 package sims.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -33,7 +34,7 @@ public class EtapeAspiration {
         joinColumns = @JoinColumn (name = "etape_aspiration_id")
     )
     @Column(name = "sous_etape")
-	private List<String> sousEtapes;
+	private List<String> sousEtapes = new ArrayList<String>();
 	
 	
 	// Constructeurs
