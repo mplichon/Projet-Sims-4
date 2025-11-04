@@ -1,7 +1,7 @@
 package sims.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,9 +44,9 @@ public class Carriere {
 	@JoinColumn(name = "dlc_id")
 	private DLC dlc;
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "carriere_id")
-	private List<RangCarriere> rangs = new ArrayList<RangCarriere>();
+	private Set<RangCarriere> rangs = new HashSet<RangCarriere>();
 	
 	
 	// Constructeurs
@@ -141,12 +141,12 @@ public class Carriere {
 	}
 
 
-	public List<RangCarriere> getRangs() {
+	public Set<RangCarriere> getRangs() {
 		return rangs;
 	}
 
 
-	public void setRangs(List<RangCarriere> rangs) {
+	public void setRangs(Set<RangCarriere> rangs) {
 		this.rangs = rangs;
 	}
 

@@ -1,7 +1,7 @@
 package sims.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -35,13 +35,13 @@ public class RangCarriere {
 	@Column(length = 50, nullable = true)
 	private String tacheDuJour;
 	
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
         name = "exigence_promotion",
         joinColumns = @JoinColumn (name = "rang_carriere_id")
     )
     @Column(name = "exigence")
-	private List<String> exigencesPourPromotion = new ArrayList<String>();
+	private Set<String> exigencesPourPromotion = new HashSet<String>();
 	
 	
 	// Constructeurs
@@ -113,12 +113,12 @@ public class RangCarriere {
 	}
 
 
-	public List<String> getExigencesPourPromotion() {
+	public Set<String> getExigencesPourPromotion() {
 		return exigencesPourPromotion;
 	}
 
 
-	public void setExigencesPourPromotion(List<String> exigencesPourPromotion) {
+	public void setExigencesPourPromotion(Set<String> exigencesPourPromotion) {
 		this.exigencesPourPromotion = exigencesPourPromotion;
 	}
 

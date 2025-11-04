@@ -153,7 +153,7 @@ public class Test {
 		System.out.println("-----------------------------");
 		System.out.println("------Toutes les Carrières------");
 		
-		List<Carriere> carrieres = daoCarriere.findAll();
+		List<Carriere> carrieres = daoCarriere.findAllWithRangs();
 		
 		if(carrieres.isEmpty()) 
 		{
