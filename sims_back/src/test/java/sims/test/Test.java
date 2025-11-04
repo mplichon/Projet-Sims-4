@@ -154,6 +154,8 @@ public class Test {
 		System.out.println("------Toutes les Carrières------");
 		
 		List<Carriere> carrieres = daoCarriere.findAllWithRangs();
+		Carriere carriere2 = daoCarriere.findByIdWithRangs(2);
+		System.out.println(carriere2);
 		
 		if(carrieres.isEmpty()) 
 		{

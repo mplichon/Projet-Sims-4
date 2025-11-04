@@ -14,5 +14,5 @@ public interface IDAOCarriere extends JpaRepository<Carriere, Integer>{
 	public List<Carriere> findAllWithRangs();
 	
 	@Query("SELECT c from Carriere c LEFT JOIN FETCH c.rangs r LEFT JOIN FETCH r.exigencesPourPromotion WHERE c.id=:id")
-	public List<Carriere> findByIdWithRangs(@Param("id") Integer idClient);
+	public Carriere findByIdWithRangs(@Param("id") Integer id);
 }
