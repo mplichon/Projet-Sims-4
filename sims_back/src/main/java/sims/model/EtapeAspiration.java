@@ -1,7 +1,7 @@
 package sims.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -34,7 +34,7 @@ public class EtapeAspiration {
         joinColumns = @JoinColumn (name = "etape_aspiration_id")
     )
     @Column(name = "sous_etape")
-	private List<String> sousEtapes = new ArrayList<String>();
+	private Set<String> sousEtapes = new HashSet<String>();
 	
 	
 	// Constructeurs
@@ -83,12 +83,12 @@ public class EtapeAspiration {
 	}
 
 
-	public List<String> getSousEtapes() {
+	public Set<String> getSousEtapes() {
 		return sousEtapes;
 	}
 
 
-	public void setSousEtapes(List<String> sousEtapes) {
+	public void setSousEtapes(Set<String> sousEtapes) {
 		this.sousEtapes = sousEtapes;
 	}
 

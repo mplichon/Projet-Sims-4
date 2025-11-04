@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import sims.dao.IDAOAspiration;
 import sims.dao.IDAOCarriere;
 import sims.dao.IDAOCompetence;
 import sims.dao.IDAODlc;
+import sims.model.Aspiration;
 import sims.model.Carriere;
 import sims.model.CategorieSim;
 import sims.model.Competence;
@@ -23,6 +25,9 @@ public class Test {
 	
 	@Autowired
 	IDAOCarriere daoCarriere;
+	
+	@Autowired
+	IDAOAspiration daoAspiration;
 	
 
 	public void run(String[] args) {
@@ -154,8 +159,8 @@ public class Test {
 		System.out.println("------Toutes les Carrières------");
 		
 		List<Carriere> carrieres = daoCarriere.findAllWithRangs();
-		Carriere carriere2 = daoCarriere.findByIdWithRangs(2);
-		System.out.println(carriere2);
+		//Carriere carriere2 = daoCarriere.findByIdWithRangs(2);
+		//System.out.println(carriere2);
 		
 		if(carrieres.isEmpty()) 
 		{
@@ -163,6 +168,23 @@ public class Test {
 		}
 		for (Carriere carriere : carrieres) {
 			System.out.println(carriere);
+		}
+		
+		
+		// Aspiration
+		System.out.println("-----------------------------");
+		System.out.println("------Toutes les Aspirations------");
+		
+		List<Aspiration> aspirations = daoAspiration.findAllWithEtapes();
+		//Aspiration aspiration2 = daoAspiration.findByIdWithEtapes(2);
+		//System.out.println(aspiration2);
+		
+		if(aspirations.isEmpty()) 
+		{
+			System.out.println("Aucune Aspiration n'est enregistrée");
+		}
+		for (Aspiration aspiration : aspirations) {
+			System.out.println(aspiration);
 		}
 		
 		/*

@@ -1,7 +1,7 @@
 package sims.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -46,8 +47,9 @@ public class Aspiration {
 	private TraitAspiration trait;
 	
 	@OneToMany
+	@OrderBy("numero ASC")
 	@JoinColumn(name = "aspiration_id")
-	private List<EtapeAspiration> etapes = new ArrayList<EtapeAspiration>();
+	private Set<EtapeAspiration> etapes = new HashSet<EtapeAspiration>();
 
 	
 	// Constructeurs
@@ -140,12 +142,12 @@ public class Aspiration {
 	}
 
 
-	public List<EtapeAspiration> getEtapes() {
+	public Set<EtapeAspiration> getEtapes() {
 		return etapes;
 	}
 
 
-	public void setEtapes(List<EtapeAspiration> etapes) {
+	public void setEtapes(Set<EtapeAspiration> etapes) {
 		this.etapes = etapes;
 	}
 
