@@ -8,11 +8,14 @@ import sims.dao.IDAOAspiration;
 import sims.dao.IDAOCarriere;
 import sims.dao.IDAOCompetence;
 import sims.dao.IDAODlc;
+import sims.dao.IDAOTraitDeCaractere;
 import sims.model.Aspiration;
 import sims.model.Carriere;
 import sims.model.CategorieSim;
 import sims.model.Competence;
 import sims.model.DLC;
+import sims.model.TraitAspiration;
+import sims.model.TraitDeCaractere;
 import sims.model.TypeDLC;
 
 public class Test {
@@ -28,6 +31,9 @@ public class Test {
 	
 	@Autowired
 	IDAOAspiration daoAspiration;
+	
+	@Autowired
+	IDAOTraitDeCaractere daoTraitDeCaractere;
 	
 
 	public void run(String[] args) {
@@ -185,6 +191,60 @@ public class Test {
 		}
 		for (Aspiration aspiration : aspirations) {
 			System.out.println(aspiration);
+		}
+
+		
+		// Trait de caractère
+		System.out.println();
+		System.out.println("-----------------------------");
+		System.out.println("------Tous les Traits de caractère------");
+		
+		List<TraitDeCaractere> traitsDeCaractere = daoTraitDeCaractere.findAll();
+		//Aspiration aspiration2 = daoAspiration.findByIdWithEtapes(2);
+		//System.out.println(aspiration2);
+		
+		if(traitsDeCaractere.isEmpty()) 
+		{
+			System.out.println("Aucun Trait de caractère n'est enregistré");
+		}
+		for (TraitDeCaractere traitDeCaractere : traitsDeCaractere) {
+			System.out.println(traitDeCaractere);
+		}
+		
+		System.out.println();
+		System.out.println("------Tous les Traits de base------");
+		List<TraitDeCaractere> traitsDeBase = daoTraitDeCaractere.findAllTraitBase();
+		
+		if(traitsDeBase.isEmpty()) 
+		{
+			System.out.println("Aucun Trait de base n'est enregistré");
+		}
+		for (TraitDeCaractere traitDeCaractere : traitsDeBase) {
+			System.out.println(traitDeCaractere);
+		}
+		
+		System.out.println();
+		System.out.println("------Tous les Traits de fantôme------");
+		List<TraitDeCaractere> traitsDeFantome = daoTraitDeCaractere.findAllTraitFantome();
+		
+		if(traitsDeFantome.isEmpty()) 
+		{
+			System.out.println("Aucun Trait de fantôme n'est enregistré");
+		}
+		for (TraitDeCaractere traitDeCaractere : traitsDeFantome) {
+			System.out.println(traitDeCaractere);
+		}
+		
+		System.out.println();
+		System.out.println("------Tous les Traits de récompense d'aspiration------");
+		List<TraitAspiration> traitsAspiration = daoTraitDeCaractere.findAllTraitAspiration();
+		
+		if(traitsAspiration.isEmpty()) 
+		{
+			System.out.println("Aucun Trait de récompense d'aspiration n'est enregistré");
+		}
+		for (TraitAspiration traitDeCaractere : traitsAspiration) {
+			System.out.println(traitDeCaractere);
 		}
 		
 		/*
