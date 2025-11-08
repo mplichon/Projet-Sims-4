@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+}
+
+header {
+    font-family: "Montserrat", sans-serif;
+    background: linear-gradient(90deg, #3cb371, #2f855a);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+}
+
+nav a, header h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a {
+    margin: 0 1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #42c67e;
+}
+
+.login-btn {
+    background-color: white;
+    color: #2f855a;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.login-btn:hover {
+    background: linear-gradient(90deg, #30895c, #2f855a);;
+    color: white;
+}
