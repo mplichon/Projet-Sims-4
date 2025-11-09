@@ -12,7 +12,7 @@
 	<jsp:include page="includes/header.jsp" />
 
     <main>
-    <form method="POST" action="login" id="login">
+    <form method="POST" action="login" class="login-section">
         <h3>Connexion</h3>
         <p>Connectez-vous pour enregistrer les DLC que vous possédez :</p>
 
