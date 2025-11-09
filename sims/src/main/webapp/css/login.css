@@ -1,0 +1,38 @@
+form {
+    background-color: #ffffff;
+    border-top: 3px solid #48c774;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+form h3 {
+    color: #2f855a;
+    margin-bottom: 1rem;
+}
+
+form input {
+    width: 80%;
+    padding: 0.7rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+form button {
+    background-color: #48c774;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #2f855a;
+}
