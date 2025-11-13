@@ -10,6 +10,10 @@ body {
     min-height: 100vh;
 }
 
+body a {
+    text-decoration: none;
+}
+
 main {
     flex: 1;
 }
@@ -27,6 +31,27 @@ main {
     margin-bottom: 1.5rem;
     border-left: 6px solid #48c774;
     padding-left: 0.7rem;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.section-title .simple-btn {
+    background-color: #48c774;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s;
+}
+
+.simple-btn:hover {
+    background-color: #2f855a;
 }
 
 /* Tableau de gestion */
@@ -188,7 +213,7 @@ textarea {
     resize: vertical;
 }
 
-.formulaire-ajout .add-btn {
+.add-btn {
     background-color: #48c774;
     color: white;
     font-weight: bold;
@@ -207,6 +232,6 @@ textarea {
     height: auto;
 }
 
-.formulaire-ajout .add-btn:hover {
+.add-btn:hover {
     background-color: #2f855a;
 }

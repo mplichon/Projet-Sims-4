@@ -17,7 +17,7 @@
 
 	<main>
 		<section class="content-section">
-			<h2 class="section-title">Gestion des DLC</h2>
+			<h2 class="section-title"><div>Gestion des DLC</div><a href="#ajouter-content"><input class="simple-btn" type="submit" value="Ajouter"/></a></h2>
 
 			<table class="tableau-gestion">
 				<thead>
@@ -51,7 +51,7 @@
 			</table>
 		</section>
 
-		<section class="content-section">
+		<section class="content-section" id="ajouter-content">
 			<h2 class="section-title">Ajouter un DLC</h2>
 			<form:form modelAttribute="dlc" action="dlc" method="POST" class="formulaire-ajout">
 				<div class="grid-ajout">
