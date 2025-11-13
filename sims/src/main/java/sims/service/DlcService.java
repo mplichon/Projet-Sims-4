@@ -33,6 +33,11 @@ public class DlcService {
 		return daoDlc.findAllByType(type);
 	}
 	
+	public List<DLC> getAllOrderByDateSortieAsc()
+	{
+		return daoDlc.findAllOrderByDateSortieAsc();
+	}
+	
 	public DLC create(DLC dlc) 
 	{
 		return daoDlc.save(dlc);

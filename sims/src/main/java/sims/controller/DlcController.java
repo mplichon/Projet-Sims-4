@@ -22,7 +22,7 @@ public class DlcController {
 	
 	@GetMapping
 	public String allDlc(Model model) {
-		model.addAttribute("dlcs", dlcSrv.getAll());
+		model.addAttribute("dlcs", dlcSrv.getAllOrderByDateSortieAsc());
 		model.addAttribute("dlc", new DLC());
 		model.addAttribute("types", TypeDLC.values());
 		return "dlc/dlc";
