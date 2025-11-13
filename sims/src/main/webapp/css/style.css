@@ -118,6 +118,12 @@ main {
     font-weight: 500;
 }
 
+.formulaire-ajout .input-date {
+    -webkit-appearance: none;
+    appearance: none;
+    font-family: "Montserrat", sans-serif;
+}
+
 .formulaire-ajout .input-classique, .formulaire-ajout .input-date {
     width: 95%;
     padding: 0.7rem;
