@@ -55,6 +55,14 @@ main {
     color: white;
 }
 
+.tableau-gestion thead th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+.tableau-gestion thead th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
 .tableau-gestion tr:hover {
     background-color: #ededed;
 }
