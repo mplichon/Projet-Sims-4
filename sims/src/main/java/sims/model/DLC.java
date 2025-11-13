@@ -9,6 +9,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,7 +27,8 @@ public class DLC {
 	@Column(nullable = false)
 	private LocalDate dateSortie;
 	
-	@Column(nullable = true)
+	@Lob
+	@Column(nullable = true, columnDefinition = "TEXT")
 	private String description;
 	
 	@Column(nullable = true)

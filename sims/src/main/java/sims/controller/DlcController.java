@@ -28,10 +28,26 @@ public class DlcController {
 		return "dlc/dlc";
 	}
 	
+	@GetMapping("/{id}")
+	public String ficheDlc(@PathVariable Integer id, Model model)
+	{
+		DLC dlc = dlcSrv.getById(id);
+		model.addAttribute("dlc",dlc);
+		model.addAttribute("types", TypeDLC.values());
+		return "dlc/updateDlc";
+	}
+	
 	@PostMapping
 	public String createDlc(@ModelAttribute DLC dlc)
 	{
 		dlcSrv.create(dlc);
+		return "redirect:/dlc";
+	}
+	
+	@PostMapping("/{id}")
+	public String modifierFormateur(@ModelAttribute DLC dlc)
+	{
+		dlcSrv.update(dlc);
 		return "redirect:/dlc";
 	}
 	

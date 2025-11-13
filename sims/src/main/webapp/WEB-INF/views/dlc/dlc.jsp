@@ -22,7 +22,7 @@
 			<table class="tableau-gestion">
 				<thead>
 					<tr>
-						<th>ID</th>
+						<th>Logo</th>
 						<th>Nom</th>
 						<th>Date de sortie</th>
 						<th>Description</th>
@@ -33,13 +33,13 @@
 				<tbody>
 					<c:forEach items="${dlcs}" var="dlc">
 						<tr>
-							<td>${dlc.id}</td>
+							<td><img src="${dlc.img}" alt="Logo ${dlc.nom}" class="img-logo"></td>
 							<td>${dlc.nom}</td>
 							<td>
 								<fmt:parseDate value="${dlc.dateSortie}" pattern="yyyy-MM-dd" var="dateSortieFormatee" type="date"/>
 								<fmt:formatDate value="${dateSortieFormatee}" pattern="dd/MM/yyyy"/>
 							</td>
-							<td>${dlc.description}</td>
+							<td><div class="description">${dlc.description}</div></td>
 							<td>${dlc.type.nom}</td>
 							<td>
 								<a href="dlc/${dlc.id}"><input type="button" value="Modifier" class="action-btn edit-btn"></a>
@@ -61,8 +61,11 @@
 					<form:label path="dateSortie">Date de sortie :</form:label>
 					<form:input class="input-date" path="dateSortie" type="date" required="required" />
 
+					<!-- <form:label path="description">Description :</form:label>
+					<form:input class="input-classique" path="description" type="text" placeholder="Saisir la description"/> -->
+
 					<form:label path="description">Description :</form:label>
-					<form:input class="input-classique" path="description" type="text" placeholder="Saisir la description"/>
+					<form:textarea class="input-classique" path="description" rows="4" placeholder="Saisir la description"></form:textarea>
 
 					<form:label path="img">Image :</form:label>
 					<form:input class="input-classique" path="img" type="text" placeholder="Saisir le chemin de l'image"/>
