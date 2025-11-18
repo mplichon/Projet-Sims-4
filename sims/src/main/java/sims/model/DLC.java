@@ -23,7 +23,7 @@ public class DLC {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(length = 25, nullable = false, unique = true)
+	@Column(length = 30, nullable = false, unique = true)
 	private String nom;
 	
 	@Column(nullable = false)

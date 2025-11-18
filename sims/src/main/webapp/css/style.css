@@ -70,11 +70,6 @@ main {
     border-bottom: 1px solid #ddd;
 }
 
-.tableau-gestion tr td:nth-child(6) { /*boutons*/
-    min-width: 185px;
-    text-align: center;
-}
-
 .tableau-gestion th {
     background-color: #48c774;
     color: white;

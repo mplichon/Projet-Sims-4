@@ -11,6 +11,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>DLC | Sims 4 Encyclopédie</title>
 	<jsp:include page="../includes/includes.jsp" />
+	<style>
+		.tableau-gestion tr td:nth-child(6) { /*boutons*/
+			min-width: 185px;
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
     <jsp:include page="../includes/header.jsp" />
@@ -24,7 +30,7 @@
 					<tr>
 						<th>Logo</th>
 						<th>Nom</th>
-						<th>Date de sortie</th>
+						<th>Sortie</th>
 						<th>Description</th>
 						<th>Type</th>
 						<th>Actions</th>
@@ -60,9 +66,6 @@
 
 					<form:label path="dateSortie">Date de sortie :</form:label>
 					<form:input class="input-date" path="dateSortie" type="date" required="required" />
-
-					<!-- <form:label path="description">Description :</form:label>
-					<form:input class="input-classique" path="description" type="text" placeholder="Saisir la description"/> -->
 
 					<form:label path="description">Description :</form:label>
 					<form:textarea class="input-classique" path="description" rows="4" placeholder="Saisir la description"></form:textarea>
