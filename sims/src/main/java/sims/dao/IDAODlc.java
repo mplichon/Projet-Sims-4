@@ -14,4 +14,7 @@ public interface IDAODlc extends JpaRepository<DLC, Integer>{
 	
 	@Query("SELECT d FROM DLC d ORDER BY d.dateSortie ASC")
 	public List<DLC> findAllOrderByDateSortieAsc();
+	
+	@Query("SELECT d FROM DLC d ORDER BY d.nom ASC")
+	public List<DLC> findAllOrderByNomAsc();
 }

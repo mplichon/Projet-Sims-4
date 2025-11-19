@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -23,7 +24,8 @@ public class Competence {
 	@Column(length = 25, nullable = false, unique = true)
 	private String nom;
 	
-	@Column(nullable = true)
+	@Lob
+	@Column(nullable = true, columnDefinition = "TEXT")
 	private String description;
 	
 	@Column(nullable = true)

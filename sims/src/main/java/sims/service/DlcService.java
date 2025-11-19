@@ -28,6 +28,11 @@ public class DlcService {
 		return daoDlc.findAll();
 	}
 	
+	public List<DLC> getAllOrderByNomAsc()
+	{
+		return daoDlc.findAllOrderByNomAsc();
+	}
+	
 	public List<DLC> getAllByType(TypeDLC type)
 	{
 		return daoDlc.findAllByType(type);

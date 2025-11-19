@@ -1,3 +1,8 @@
+*::selection {
+    background-color: #48c774;
+    color: white;
+}
+
 body {
     height: 100%;
     margin: 0;
@@ -163,6 +168,7 @@ main {
     font-size: 0.95rem;
     color: #333;
     transition: border 0.3s, box-shadow 0.3s;
+    font-weight: 400;
 }
 
 .formulaire-ajout .input-classique:focus, .formulaire-ajout .input-date:focus {
@@ -201,11 +207,43 @@ main {
 }
 
 .formulaire-ajout .input-radio input:checked {
-  border: 4px solid #2f855a;
+    border: 4px solid #2f855a;
 }
 
-textarea {
+.formulaire-ajout textarea {
     resize: vertical;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+}
+
+.formulaire-ajout select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+    cursor: pointer;
+    transition: border 0.3s, box-shadow 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%232f855a' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+
+.formulaire-ajout select:focus {
+    border-color: #48c774;
+    box-shadow: 0 0 5px rgba(72,199,116,0.5);
+    outline: none;
+}
+
+.formulaire-ajout select option:checked {
+    font-weight: bold;
 }
 
 .add-btn {

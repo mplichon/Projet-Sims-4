@@ -26,18 +26,19 @@ public class CompetenceController {
 	
 	@GetMapping
 	public String allCompetence(Model model) {
-		model.addAttribute("competences", competenceSrv.getAll());
+		model.addAttribute("competences", competenceSrv.getAllOrderByNomAsc());
 		model.addAttribute("competence", new Competence());
 		model.addAttribute("categoriesSim", CategorieSim.values());
-		model.addAttribute("dlcs", dlcSrv.getAll());
+		model.addAttribute("dlcs", dlcSrv.getAllOrderByNomAsc());
 		return "competence/competence";
 	}
 	
 	@GetMapping("/{id}")
 	public String ficheCompetence(@PathVariable Integer id, Model model)
 	{
-		Competence competence = competenceSrv.getById(id);
-		model.addAttribute("competence",competence);
+		model.addAttribute("competence", competenceSrv.getById(id));
+		model.addAttribute("categoriesSim", CategorieSim.values());
+		model.addAttribute("dlcs", dlcSrv.getAllOrderByNomAsc());
 		return "competence/updateCompetence";
 	}
 	

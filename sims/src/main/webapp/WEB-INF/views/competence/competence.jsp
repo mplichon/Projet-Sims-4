@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -30,7 +31,7 @@
 						<th>Logo</th>
 						<th>Nom</th>
 						<th>Description</th>
-						<th>Niveau max</th>
+						<th>Niveaux</th>
 						<th>Catégorie</th>
 						<th>DLC</th>
 						<th>Actions</th>
@@ -43,7 +44,10 @@
 							<td>${competence.nom}</td>
 							<td><div class="description">${competence.description}</div></td>
 							<td>${competence.niveauMax}</td>
-							<td>${competence.categorieSim}</td>
+							<td>
+								<c:set var="categorieFormattee" value="${competence.categorieSim.name()}" />
+								${fn:toUpperCase(fn:substring(categorieFormattee, 0, 1))}${fn:toLowerCase(fn:substring(categorieFormattee, 1, fn:length(categorieFormattee)))}
+							</td>
 							<td><img src="${competence.dlc.img}" alt="Logo ${competence.dlc.nom}" title="${competence.dlc.nom}" class="img-logo"></td>
 							<td>
 								<a href="competence/${competence.id}"><input type="button" value="Modifier" class="action-btn edit-btn"></a>

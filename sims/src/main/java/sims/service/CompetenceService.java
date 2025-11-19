@@ -28,6 +28,11 @@ public class CompetenceService {
 		return daoCompetence.findAll();
 	}
 	
+	public List<Competence> getAllOrderByNomAsc()
+	{
+		return daoCompetence.findAllOrderByNomAsc();
+	}
+	
 	public List<Competence> getAllByCategorieSim(CategorieSim categorieSim)
 	{
 		return daoCompetence.findAllByCategorieSim(categorieSim);
