@@ -274,6 +274,33 @@ main {
     font-weight: bold;
 }
 
+.line-small-btn {
+    display: flex;
+    justify-content: end;
+}
+
+.line-btn {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.line-btn button {
+    min-width: 160px;
+}
+
+.small-btn {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    height: 2rem;
+    width: 2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
 .add-btn {
     background-color: #48c774;
     color: white;

@@ -63,7 +63,7 @@
 					<form:textarea class="input-classique" path="description" rows="4" placeholder="Saisir la description"></form:textarea>
 
 					<form:label path="nomCarriereGenerale">Carrière générale :</form:label>
-					<form:input class="input-classique" path="nomCarriereGenerale" type="number" placeholder="Saisir le nom de la carrière générale" required="required" />
+					<form:input class="input-classique" path="nomCarriereGenerale" type="text" placeholder="Saisir le nom de la carrière générale" required="required" />
 
 					<form:label path="img">Image :</form:label>
 					<form:input class="input-classique" path="img" type="text" placeholder="Saisir le chemin de l'image"/>
@@ -87,7 +87,7 @@
 						<form:input path="rangs[${i.index}].titre" type="text" placeholder="Saisir le titre du rang" required="required" class="input-classique"/>
 
 						<form:label path="rangs[${i.index}].salaire">Salaire :</form:label>
-						<form:input path="rangs[${i.index}].salaire" type="number" placeholder="Saisir le salaire du rang" required="required" class="input-classique"/>
+						<form:input class="input-classique" path="rangs[${i.index}].salaire" type="number" placeholder="Saisir le salaire du rang" required="required"/>
 					
 						<form:label path="rangs[${i.index}].tacheDuJour">Tâche du jour :</form:label>
 						<form:input path="rangs[${i.index}].tacheDuJour" type="text" placeholder="Saisir la tâche du jour du rang" required="required" class="input-classique"/>
@@ -96,13 +96,64 @@
 							<label><c:if test="${j.first}">Exigences :</c:if></label>
 							<form:input path="rangs[${i.index}].exigencesPourPromotion[${j.index}]" type="text" placeholder="Saisir une exigence pour la promotion" required="required" class="input-classique"/>
 						</c:forEach>
+						<!-- boutons ajouter/supprimer exigence -->
+						<div></div>
+						<div class="line-small-btn">
+							<button class="edit-btn small-btn" type="button" onclick="ajouterExigence(${i.index})">+</button>
+							<button class="delete-btn small-btn" type="button" onclick="supprimerExigence(${i.index})">-</button>
+						</div>
 					</c:forEach>
 				</div>
+
+				<!-- boutons ajouter/supprimer rang -->
+				 <div class="line-btn">
+					<button class="action-btn edit-btn" type="button" onclick="ajouterRang()">Ajouter un rang</button>
+					<button class="action-btn delete-btn" type="button" onclick="supprimerRang()">Supprimer un rang</button>
+				 </div>
+
 				<input class="add-btn" type="submit" value="Ajouter">
 			</form:form>
 		</section>
 	</main>
 	
     <jsp:include page="../includes/footer.jsp" />
+
+	
+<script>
+	function post(url, data) {
+		const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+
+		const body = new URLSearchParams(data).toString();
+		return fetch(url, {
+			method: 'POST',
+			headers,
+			body
+		});
+	}
+
+	function ajouterRang() {
+		post('carriere/ajouter-rang', {})     // pas de données nécessaires
+			.then(r => { window.location.href = '/carriere'; })
+			.catch(e => { console.error(e); alert('Erreur en ajoutant un rang'); });
+	}
+
+	function ajouterExigence(index) {
+		post('carriere/ajouter-exigence', { index: index })
+			.then(r => { window.location.href = '/carriere'; })
+			.catch(e => { console.error(e); alert('Erreur en ajoutant une exigence'); });
+	}
+
+	function supprimerRang() {
+		post('carriere/supprimer-rang', {})     // pas de données nécessaires
+			.then(r => { window.location.href = '/carriere'; })
+			.catch(e => { console.error(e); alert('Erreur en ajoutant un rang'); });
+	}
+
+	function supprimerExigence(index) {
+		post('carriere/supprimer-exigence', { index: index })
+			.then(r => { window.location.href = '/carriere'; })
+			.catch(e => { console.error(e); alert('Erreur en ajoutant une exigence'); });
+	}
+</script>
 </body>
 </html>
