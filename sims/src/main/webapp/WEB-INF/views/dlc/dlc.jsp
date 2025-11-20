@@ -11,12 +11,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>DLC | Sims 4 Encyclopédie</title>
 	<jsp:include page="../includes/includes.jsp" />
-	<style>
-		.tableau-gestion tr td:nth-child(6) { /*boutons*/
-			min-width: 185px;
-			text-align: center;
-		}
-	</style>
 </head>
 <body>
     <jsp:include page="../includes/header.jsp" />
@@ -47,7 +41,7 @@
 							</td>
 							<td><div class="description">${dlc.description}</div></td>
 							<td>${dlc.type.nom}</td>
-							<td>
+							<td class="colonne-btn">
 								<a href="dlc/${dlc.id}"><input type="button" value="Modifier" class="action-btn edit-btn"></a>
 								<a href="dlc/delete/${dlc.id}"><input type="button" value="Supprimer" class="action-btn delete-btn"></a>
 							</td>

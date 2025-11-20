@@ -11,12 +11,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Compétences | Sims 4 Encyclopédie</title>
 	<jsp:include page="../includes/includes.jsp" />
-	<style>
-		.tableau-gestion tr td:nth-child(7) { /*boutons*/
-			min-width: 185px;
-			text-align: center;
-		}
-	</style>
 </head>
 <body>
     <jsp:include page="../includes/header.jsp" />
@@ -49,7 +43,7 @@
 								${fn:toUpperCase(fn:substring(categorieFormattee, 0, 1))}${fn:toLowerCase(fn:substring(categorieFormattee, 1, fn:length(categorieFormattee)))}
 							</td>
 							<td><img src="${competence.dlc.img}" alt="Logo ${competence.dlc.nom}" title="${competence.dlc.nom}" class="img-logo"></td>
-							<td>
+							<td class="colonne-btn">
 								<a href="competence/${competence.id}"><input type="button" value="Modifier" class="action-btn edit-btn"></a>
 								<a href="competence/delete/${competence.id}"><input type="button" value="Supprimer" class="action-btn delete-btn"></a>
 							</td>

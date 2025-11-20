@@ -3,6 +3,7 @@ package sims.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -28,7 +30,8 @@ public class Carriere {
 	@Column(length = 25, nullable = false, unique = true)
 	private String nom;
 	
-	@Column(nullable = true)
+	@Lob
+	@Column(nullable = true, columnDefinition = "TEXT")
 	private String description;
 	
 	@Column(nullable = true)
@@ -44,7 +47,7 @@ public class Carriere {
 	@JoinColumn(name = "dlc_id")
 	private DLC dlc;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "carriere_id")
 	private Set<RangCarriere> rangs = new HashSet<RangCarriere>();
 	
