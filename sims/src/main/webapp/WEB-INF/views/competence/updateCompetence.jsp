@@ -39,7 +39,7 @@
 						<form:option value="">Choisir un DLC</form:option>
 						<form:options items="${dlcs}" itemValue="id" itemLabel="nom"/>
 					</form:select>
-
+				</div>
 				<input class="add-btn" type="submit" value="Modifier">
 			</form:form>
 		</section>

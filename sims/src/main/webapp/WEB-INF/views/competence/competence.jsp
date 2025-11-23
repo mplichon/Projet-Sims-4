@@ -73,7 +73,7 @@
 					<div class="input-radio"><form:radiobuttons path="categorieSim" items="${categoriesSim}" required="required" /></div>
 					
 					<form:label path="dlc">DLC :</form:label>
-					<form:select required="required" path="dlc.id">
+					<form:select required="required" path="dlc.id" class="select-form">
 						<form:option value="">Choisir un DLC</form:option>
 						<form:options items="${dlcs}" itemValue="id" itemLabel="nom"/>
 					</form:select>

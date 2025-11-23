@@ -1,7 +1,7 @@
 package sims.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -27,7 +27,7 @@ public class Carriere {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(length = 25, nullable = false, unique = true)
+	@Column(length = 30, nullable = false, unique = true)
 	private String nom;
 	
 	@Lob
@@ -37,7 +37,7 @@ public class Carriere {
 	@Column(nullable = true)
 	private String img;
 	
-	@Column(length = 25, nullable = true, unique = true)
+	@Column(length = 25, nullable = true)
 	private String nomCarriereGenerale;
 	
 	@Enumerated(EnumType.STRING)
@@ -49,7 +49,7 @@ public class Carriere {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "carriere_id")
-	private Set<RangCarriere> rangs = new HashSet<RangCarriere>();
+	private List<RangCarriere> rangs = new ArrayList<RangCarriere>();
 	
 	
 	// Constructeurs
@@ -144,12 +144,12 @@ public class Carriere {
 	}
 
 
-	public Set<RangCarriere> getRangs() {
+	public List<RangCarriere> getRangs() {
 		return rangs;
 	}
 
 
-	public void setRangs(Set<RangCarriere> rangs) {
+	public void setRangs(List<RangCarriere> rangs) {
 		this.rangs = rangs;
 	}
 
@@ -161,6 +161,5 @@ public class Carriere {
 				+ ", nomCarriereGenerale=" + nomCarriereGenerale + ", type=" + type.getNom() + ", dlc=" + dlc.getNom() + ", rangs="
 				+ rangs + "]";
 	}
-	
-	
+
 }

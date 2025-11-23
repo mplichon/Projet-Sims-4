@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Carrières | Sims 4 Encyclopédie</title>
+	<title>${carriere.nom} | Sims 4 Encyclopédie</title>
 	<jsp:include page="../includes/includes.jsp" />
 </head>
 <body>
@@ -16,46 +16,8 @@
 
 	<main>
 		<section class="content-section">
-			<h2 class="section-title"><div>Gestion des carrières</div><a href="#ajouter-content"><input class="simple-btn" type="submit" value="Ajouter"/></a></h2>
-
-			<table class="tableau-gestion">
-				<thead>
-					<tr>
-						<th>Logo</th>
-						<th>Nom</th>
-						<th>Description</th>
-						<th>Carrière générale</th>
-						<th>Type</th>
-						<th>DLC</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${carrieres}" var="c">
-						<tr>
-							<td><img src="${c.img}" alt="Logo ${c.nom}" class="img-logo"></td>
-							<td>${c.nom}</td>
-							<td><div class="description">${c.description}</div></td>
-							<c:choose>
-								<c:when test="${empty c.nomCarriereGenerale}"><td>N/A</td></c:when>
-								<c:otherwise><td>${c.nomCarriereGenerale}</td></c:otherwise>
-							</c:choose>
-							<td>${c.type.nom}</td>
-							<td><img src="${c.dlc.img}" alt="Logo ${c.dlc.nom}" title="${c.dlc.nom}" class="img-logo"></td>
-							<td class="colonne-btn">
-								<button type="button" onclick="modifierCarriere(${c.id})" class="action-btn edit-btn">Modifier</button>
-								<!-- <a href="carriere/${c.id}"><input type="button" value="Modifier" class="action-btn edit-btn"></a> -->
-								<a href="carriere/delete/${c.id}"><input type="button" value="Supprimer" class="action-btn delete-btn"></a>
-							</td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</section>
-
-		<section class="content-section" id="ajouter-content">
-			<h2 class="section-title">Ajouter une compétence</h2>
-			<form:form modelAttribute="carriere" action="carriere" method="POST" class="formulaire-ajout">
+			<h2 class="section-title">Modifier une carrière</h2>
+			<form:form modelAttribute="carriere" action="/carriere/${carriere.id}" method="POST" class="formulaire-ajout">
 				<div class="grid-ajout">
 					<form:label path="nom">Nom :</form:label>
 					<form:input class="input-classique" path="nom" type="text" placeholder="Saisir le nom" required="required" />
@@ -77,9 +39,9 @@
 						<form:option value="">Choisir un DLC</form:option>
 						<form:options items="${dlcs}" itemValue="id" itemLabel="nom"/>
 					</form:select>
-				</div>
+                </div>
 
-				<h3>Rangs</h3>
+                <h3>Rangs</h3>
 				<div class="grid-ajout">
 					<c:forEach items="${carriere.rangs}" var="rang" varStatus="i">
 						<h4>Rang ${i.index + 1} :</h4><br>
@@ -100,26 +62,25 @@
 						<!-- boutons ajouter/supprimer exigence -->
 						<div></div>
 						<div class="line-small-btn">
-							<button class="edit-btn small-btn" type="button" onclick="ajouterExigence(${i.index})">+</button>
-							<button class="delete-btn small-btn" type="button" onclick="supprimerExigence(${i.index})">-</button>
+							<button class="edit-btn small-btn" type="button" onclick="ajouterExigence(${carriere.id}, ${i.index})">+</button>
+							<button class="delete-btn small-btn" type="button" onclick="supprimerExigence(${carriere.id}, ${i.index})">-</button>
 						</div>
 					</c:forEach>
 				</div>
 
 				<!-- boutons ajouter/supprimer rang -->
 				 <div class="line-btn">
-					<button class="action-btn edit-btn" type="button" onclick="ajouterRang()">Ajouter un rang</button>
-					<button class="action-btn delete-btn" type="button" onclick="supprimerRang()">Supprimer un rang</button>
+					<button class="action-btn edit-btn" type="button" onclick="ajouterRang(${carriere.id})">Ajouter un rang</button>
+					<button class="action-btn delete-btn" type="button" onclick="supprimerRang(${carriere.id})">Supprimer un rang</button>
 				 </div>
 
-				<input class="add-btn" type="submit" value="Ajouter">
+				<input class="add-btn" type="submit" value="Modifier">
 			</form:form>
 		</section>
-	</main>
-	
+    </main>
+
     <jsp:include page="../includes/footer.jsp" />
 
-	
 <script>
 	function post(url, data) {
 		const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
@@ -132,34 +93,28 @@
 		});
 	}
 
-	function ajouterRang() {
-		post('carriere/ajouter-rang', {})     // pas de données nécessaires
-			.then(r => { window.location.href = '/carriere'; })
+	function ajouterRang(id) {
+		post('ajouter-rang/' + id, {}) // pas de données nécessaires
+			.then(r => { window.location.href = '/carriere/' + id; })
 			.catch(e => { console.error(e); alert('Erreur en ajoutant un rang'); });
 	}
 
-	function ajouterExigence(index) {
-		post('carriere/ajouter-exigence', { index: index })
-			.then(r => { window.location.href = '/carriere'; })
+	function ajouterExigence(id, index) {
+		post('ajouter-exigence/' + id, { index: index })
+			.then(r => { window.location.href = '/carriere/' + id; })
 			.catch(e => { console.error(e); alert('Erreur en ajoutant une exigence'); });
 	}
 
-	function supprimerRang() {
-		post('carriere/supprimer-rang', {})     // pas de données nécessaires
-			.then(r => { window.location.href = '/carriere'; })
+	function supprimerRang(id) {
+		post('supprimer-rang/' + id, {})     // pas de données nécessaires
+			.then(r => { window.location.href = '/carriere/' + id; })
 			.catch(e => { console.error(e); alert('Erreur en supprimant un rang'); });
 	}
 
-	function supprimerExigence(index) {
-		post('carriere/supprimer-exigence', { index: index })
-			.then(r => { window.location.href = '/carriere'; })
-			.catch(e => { console.error(e); alert('Erreur en supprimant une exigence'); });
-	}
-
-	function modifierCarriere(id) {
-		post('carriere/update-variables/' + id, {})
+	function supprimerExigence(id, index) {
+		post('supprimer-exigence/' + id, { index: index })
 			.then(r => { window.location.href = '/carriere/' + id; })
-			.catch(e => { console.error(e); alert('Erreur en ajoutant une exigence'); });
+			.catch(e => { console.error(e); alert('Erreur en supprimant une exigence'); });
 	}
 </script>
 </body>

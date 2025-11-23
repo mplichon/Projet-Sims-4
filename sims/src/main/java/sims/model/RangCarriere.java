@@ -1,7 +1,7 @@
 package sims.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -26,7 +26,7 @@ public class RangCarriere {
 	@Column(nullable = false, columnDefinition = "INT(2)")
 	private int numero;
 	
-	@Column(length = 25, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String titre;
 	
 	@Column(nullable = false, columnDefinition = "INT(5)")
@@ -41,7 +41,7 @@ public class RangCarriere {
         joinColumns = @JoinColumn (name = "rang_carriere_id")
     )
     @Column(name = "exigence")
-	private Set<String> exigencesPourPromotion = new HashSet<String>();
+	private List<String> exigencesPourPromotion = new ArrayList<String>();
 	
 	
 	// Constructeurs
@@ -113,12 +113,12 @@ public class RangCarriere {
 	}
 
 
-	public Set<String> getExigencesPourPromotion() {
+	public List<String> getExigencesPourPromotion() {
 		return exigencesPourPromotion;
 	}
 
 
-	public void setExigencesPourPromotion(Set<String> exigencesPourPromotion) {
+	public void setExigencesPourPromotion(List<String> exigencesPourPromotion) {
 		this.exigencesPourPromotion = exigencesPourPromotion;
 	}
 

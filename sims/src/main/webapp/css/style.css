@@ -176,7 +176,7 @@ main {
     padding: 0.4rem 0.6rem;
     border-radius: 6px;
     border-left: 4px solid #48c774;
-    margin-right: 3rem;
+    margin-right: 2.7rem;
 }
 
 .formulaire-ajout .input-date {
@@ -263,7 +263,6 @@ main {
     background-position: right 10px center;
 }
 
-
 .formulaire-ajout select:focus {
     border-color: #48c774;
     box-shadow: 0 0 5px rgba(72,199,116,0.5);
@@ -272,6 +271,10 @@ main {
 
 .formulaire-ajout select option:checked {
     font-weight: bold;
+}
+
+option:hover {
+    background-color: #48c774;
 }
 
 .line-small-btn {
