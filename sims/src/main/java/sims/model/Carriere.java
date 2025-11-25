@@ -27,7 +27,7 @@ public class Carriere {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(length = 30, nullable = false, unique = true)
+	@Column(length = 40, nullable = false, unique = true)
 	private String nom;
 	
 	@Lob
