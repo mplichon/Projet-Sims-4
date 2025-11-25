@@ -37,7 +37,7 @@ public class Carriere {
 	@Column(nullable = true)
 	private String img;
 	
-	@Column(length = 25, nullable = true)
+	@Column(length = 30, nullable = true)
 	private String nomCarriereGenerale;
 	
 	@Enumerated(EnumType.STRING)

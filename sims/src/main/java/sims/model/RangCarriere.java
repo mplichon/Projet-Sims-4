@@ -32,7 +32,7 @@ public class RangCarriere {
 	@Column(nullable = false, columnDefinition = "INT(5)")
 	private int salaire;
 	
-	@Column(length = 50, nullable = true)
+	@Column(length = 70, nullable = true)
 	private String tacheDuJour;
 	
 	@ElementCollection(fetch = FetchType.LAZY)
