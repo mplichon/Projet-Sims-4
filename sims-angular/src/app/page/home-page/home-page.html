@@ -2,8 +2,8 @@
   <p-card [pt]="cardPt"> Bienvenue dans le monde des Sims 4 ! </p-card>
   <p>Explorez toutes les facettes du jeu et connectez-vous pour indiquer vos DLC.</p>
 </section>
-<section class="content-section">
-  <h2 class="section-title">Découvre les sections du site</h2>
+<sims-section>
+  <sims-titre-section [titre]="titreSection" />
 
   <div class="cards">
     <sims-section-du-site-card [title]="dlc.title" [content]="dlc.content" [link]="dlc.link" />
@@ -28,4 +28,4 @@
       [link]="trait.link"
     />
   </div>
-</section>
+</sims-section>

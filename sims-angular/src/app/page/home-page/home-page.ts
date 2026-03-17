@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
-import { Card, CardModule, CardPassThrough } from 'primeng/card';
+import { CardModule, CardPassThrough } from 'primeng/card';
 import { SectionDuSiteCard } from '../../component/section-du-site-card/section-du-site-card';
-import { Title } from '@angular/platform-browser';
+import { TitreSection } from '../../component/titre-section/titre-section';
+import { Section } from '../../component/section/section';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CardModule, SectionDuSiteCard],
+  imports: [CardModule, SectionDuSiteCard, TitreSection, Section],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
 export class HomePage {
+  // PassThrough pour le style de la carte de bienvenue
   cardPt: CardPassThrough = {
     root: {
       style: {
@@ -34,6 +36,10 @@ export class HomePage {
     },
   };
 
+  // titre de la section de la page
+  titreSection: string = 'Découvre les sections du site';
+
+  // infos pour les cartes des sections du site
   dlc = {
     title: 'DLC',
     content:

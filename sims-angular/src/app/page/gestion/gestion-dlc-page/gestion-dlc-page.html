@@ -1,1 +1,24 @@
-<p>gestion-dlc-page works!</p>
+<sims-section>
+  <sims-titre-section [titre]="gestionDlc" />
+
+  <p-table [value]="dlcs">
+    <ng-template #header>
+      <tr>
+        <th>Logo</th>
+        <th>Nom</th>
+        <th>Sortie</th>
+        <th>Description</th>
+        <th>Type</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-dlc>
+      <tr>
+        <th>{{ dlc.image }}</th>
+        <th>{{ dlc.nom }}</th>
+        <th>{{ dlc.dateSortie }}</th>
+        <th>{{ dlc.description }}</th>
+        <th>{{ dlc.type }}</th>
+      </tr>
+    </ng-template>
+  </p-table>
+</sims-section>
