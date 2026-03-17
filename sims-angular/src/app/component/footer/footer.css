@@ -1,0 +1,13 @@
+footer {
+  background: var(--gradient-footer);
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  padding: 1.8rem 0;
+  margin-top: 4rem;
+  box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.2);
+}
+
+footer p {
+  margin: 16px 0;
+}

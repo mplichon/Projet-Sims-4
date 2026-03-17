@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'primeicons/primeicons.css';
+@import 'tailwindcss';
+@import 'tailwindcss-primeui';
+
+*::selection {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--background-color);
+  color: var(--base-color);
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+:root {
+  --primary-color: #48c774;
+  --secondary-color: #2f855a;
+  --third-color: #3cb371;
+  --base-color: #333;
+  --background-color: #f3faf5;
+  --gradient-header: linear-gradient(90deg, #3cb371, #2f855a);
+  --gradient-footer: linear-gradient(90deg, #2f855a, #276749);
+}

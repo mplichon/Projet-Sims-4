@@ -1,0 +1,69 @@
+.logo-title {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.right-actions i {
+  cursor: pointer;
+  font-size: 0.5rem;
+}
+
+header {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--gradient-header);
+  color: white;
+  padding: 0.7rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+header img {
+  height: 50px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+nav a,
+header h1 a {
+  color: white;
+  text-decoration: none;
+}
+
+header h1 a {
+  font-weight: 700;
+}
+
+nav a {
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--primary-color);
+}
+
+nav a:last-child {
+  /* correspond à l'icône de connexion */
+  margin-right: 0px;
+}
+
+.login-btn {
+  background-color: white;
+  color: var(--secondary-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.login-btn:hover {
+  background: linear-gradient(90deg, #30895c, #2f855a);
+  color: white;
+}

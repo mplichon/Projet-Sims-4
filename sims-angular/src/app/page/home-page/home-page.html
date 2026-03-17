@@ -1,0 +1,31 @@
+<section class="hero">
+  <p-card [pt]="cardPt"> Bienvenue dans le monde des Sims 4 ! </p-card>
+  <p>Explorez toutes les facettes du jeu et connectez-vous pour indiquer vos DLC.</p>
+</section>
+<section class="content-section">
+  <h2 class="section-title">Découvre les sections du site</h2>
+
+  <div class="cards">
+    <sims-section-du-site-card [title]="dlc.title" [content]="dlc.content" [link]="dlc.link" />
+    <sims-section-du-site-card
+      [title]="competence.title"
+      [content]="competence.content"
+      [link]="competence.link"
+    />
+    <sims-section-du-site-card
+      [title]="carriere.title"
+      [content]="carriere.content"
+      [link]="carriere.link"
+    />
+    <sims-section-du-site-card
+      [title]="aspiration.title"
+      [content]="aspiration.content"
+      [link]="aspiration.link"
+    />
+    <sims-section-du-site-card
+      [title]="trait.title"
+      [content]="trait.content"
+      [link]="trait.link"
+    />
+  </div>
+</section>
