@@ -1,7 +1,7 @@
 .logo-title {
   display: flex;
   align-items: center;
-  gap: 1.4rem;
+  gap: 0.8rem;
 }
 
 .right-actions i {
@@ -13,15 +13,25 @@ header {
   font-family: 'Montserrat', sans-serif;
   background: var(--gradient-header);
   color: white;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 0.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-header img {
+.logo-container {
   height: 50px;
+  width: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+header img {
+  height: 42px;
 }
 
 header h1 {
