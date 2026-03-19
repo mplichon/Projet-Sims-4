@@ -1,10 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import Lara from '@primeuix/themes/lara'
+import Lara from '@primeuix/themes/lara';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { apiUrlInterceptor } from './interceptors/api-url-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,8 +20,9 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
-        preset: Lara
-      }
-    })
-  ]
+        preset: Lara,
+      },
+    }),
+    provideHttpClient(withInterceptors([apiUrlInterceptor])),
+  ],
 };
