@@ -1,10 +1,17 @@
 <sims-section>
   <sims-titre-section [titre]="gestionDlc" />
+  <p-toast />
 
   <p-toolbar>
     <ng-template #start>
-      <p-button label="Nouveau" icon="pi pi-plus" />
-      <p-button severity="danger" label="Supprimer" icon="pi pi-trash" />
+      <p-button label="Nouveau" icon="pi pi-plus" (onClick)="ouvrirNouveau()" />
+      <p-button
+        severity="danger"
+        label="Supprimer"
+        icon="pi pi-trash"
+        (onClick)="supprimerDlcsSelectionnes()"
+        [disabled]="!selectedDlcs || !selectedDlcs.length"
+      />
     </ng-template>
     <ng-template #end>
       <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
@@ -17,6 +24,7 @@
     [rows]="10"
     [columns]="cols"
     [paginator]="true"
+    [globalFilterFields]="['nom']"
     [(selection)]="selectedDlcs"
     [rowHover]="true"
     dataKey="id"
@@ -70,7 +78,7 @@
           <p-tableCheckbox [value]="dlc" />
         </td>
         <td style="min-width: 12rem">
-          <img [src]="dlc.img" [alt]="dlc.nom" style="width: 64px" />
+          <img [src]="dlc.img" [alt]="'Logo ' + dlc.nom" style="width: 64px" />
         </td>
         <td style="min-width: 16rem">{{ dlc.nom }}</td>
         <td>{{ dlc.dateSortie | date: 'dd/MM/yyyy' }}</td>
@@ -80,7 +88,12 @@
         </td>
         <td>
           <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" (click)="modifierDlc(dlc)" />
-          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            (click)="supprimerDlc(dlc)"
+          />
         </td>
       </tr>
     </ng-template>
@@ -95,11 +108,23 @@
 >
   <ng-template #content>
     <div class="flex flex-col gap-6">
-      <img [src]="dlc.img" [alt]="dlc.nom" *ngIf="dlc.img" />
+      <img [src]="dlc.img" [alt]="'Logo ' + dlc.nom" *ngIf="dlc.img" />
       <div>
         <label for="nom">Nom</label>
         <input type="text" pInputText id="nom" [(ngModel)]="dlc.nom" required autofocus fluid />
         <small *ngIf="submitted && !dlc.nom">Le nom est requis.</small>
+      </div>
+      <div>
+        <label for="date-sortie">Date de sortie</label>
+        <p-datepicker
+          [(ngModel)]="dlc.dateSortie"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          inputId="date-sortie"
+          dateFormat="dd/mm/yy"
+          fluid
+        />
+        <small *ngIf="submitted && !dlc.dateSortie">La date est requise.</small>
       </div>
       <div>
         <label for="description">Description</label>
@@ -134,7 +159,9 @@
   </ng-template>
 
   <ng-template #footer>
-    <p-button label="Cancel" icon="pi pi-times" text />
-    <p-button label="Save" icon="pi pi-check" />
+    <p-button label="Cancel" icon="pi pi-times" text (click)="cacherDialog()" />
+    <p-button label="Save" icon="pi pi-check" (click)="sauvegarderDlc()" />
   </ng-template>
 </p-dialog>
+
+<p-confirmDialog />

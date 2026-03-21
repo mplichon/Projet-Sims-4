@@ -1,4 +1,4 @@
 export interface TypeDlcDTO {
-  id: number;
+  code: string;
   nom: string;
 }
