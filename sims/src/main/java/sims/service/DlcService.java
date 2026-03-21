@@ -1,5 +1,6 @@
 package sims.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,10 @@ public class DlcService {
 	
 	@Autowired
 	IDAODlc daoDlc;
+
+	public List<TypeDLC> getAllTypeDLC() {
+		return Arrays.asList(TypeDLC.values());
+	}
 	
 	public DLC getById(Integer id)
 	{

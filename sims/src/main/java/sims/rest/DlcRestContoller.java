@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import sims.dto.dlc.ReponseListeGestionDlcDTO;
+import sims.dto.dlc.TypeDlcDTO;
 import sims.mapper.DlcMapper;
 import sims.service.DlcService;
 
@@ -26,10 +27,19 @@ public class DlcRestContoller {
     @Autowired
     DlcMapper mapper;
 
+    @GetMapping("/gestion/types")
+    public List<TypeDlcDTO> getAllTypeDlcGestion() {
+        log.info("GET /api/dlc/gestion/types - getAllTypeDlcGestion() called");
+        return service.getAllTypeDLC()
+            .stream()
+            .map(mapper::toTypeDlcDTO)
+            .toList();
+    }
+
     @GetMapping("/gestion")
     public List<ReponseListeGestionDlcDTO> getAllDlcGestion() {
         log.info("GET /api/dlc/gestion - getAllDlcGestion() called");
-        return service.getAll()
+        return service.getAllOrderByDateSortieAsc()
             .stream()
             .map(mapper::toReponseListeGestionDlcDTO)
             .toList();

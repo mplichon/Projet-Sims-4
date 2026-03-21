@@ -1,24 +1,140 @@
 <sims-section>
   <sims-titre-section [titre]="gestionDlc" />
 
-  <p-table [value]="dlcs">
+  <p-toolbar>
+    <ng-template #start>
+      <p-button label="Nouveau" icon="pi pi-plus" />
+      <p-button severity="danger" label="Supprimer" icon="pi pi-trash" />
+    </ng-template>
+    <ng-template #end>
+      <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="dlcs"
+    [rows]="10"
+    [columns]="cols"
+    [paginator]="true"
+    [(selection)]="selectedDlcs"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="{first} à {last} sur {totalRecords} DLC"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template #caption>
+      <div class="flex items-center justify-between">
+        <p-iconfield>
+          <p-inputicon class="pi pi-search" />
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Recherche..."
+          />
+        </p-iconfield>
+      </div>
+    </ng-template>
     <ng-template #header>
       <tr>
-        <th>Logo</th>
-        <th>Nom</th>
-        <th>Sortie</th>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox />
+        </th>
+        <th style="min-width: 16rem">Logo</th>
+        <th pSortableColumn="nom" style="min-width: 16rem">
+          <div class="flex items-center gap-2">
+            Nom
+            <p-sortIcon field="nom" />
+          </div>
+        </th>
+        <th pSortableColumn="dateSortie" style="min-width: 8rem">
+          <div class="flex items-center gap-2">
+            Sortie
+            <p-sortIcon field="dateSortie" />
+          </div>
+        </th>
         <th>Description</th>
-        <th>Type</th>
+        <th pSortableColumn="type.nom" style="min-width: 10rem">
+          <div class="flex items-center gap-2">
+            Type
+            <p-sortIcon field="type.nom" />
+          </div>
+        </th>
+        <th style="min-width: 12rem"></th>
       </tr>
     </ng-template>
     <ng-template #body let-dlc>
       <tr>
-        <th>{{ dlc.image }}</th>
-        <th>{{ dlc.nom }}</th>
-        <th>{{ dlc.dateSortie }}</th>
-        <th>{{ dlc.description }}</th>
-        <th>{{ dlc.type }}</th>
+        <td style="width: 3rem">
+          <p-tableCheckbox [value]="dlc" />
+        </td>
+        <td style="min-width: 12rem">
+          <img [src]="dlc.img" [alt]="dlc.nom" style="width: 64px" />
+        </td>
+        <td style="min-width: 16rem">{{ dlc.nom }}</td>
+        <td>{{ dlc.dateSortie | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ dlc.description }}</td>
+        <td>
+          <p-tag [value]="dlc.type.nom" />
+        </td>
+        <td>
+          <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" (click)="modifierDlc(dlc)" />
+          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" />
+        </td>
       </tr>
     </ng-template>
   </p-table>
 </sims-section>
+
+<p-dialog
+  [(visible)]="dlcDialog"
+  [style]="{ width: '450px' }"
+  header="Modification du DLC"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      <img [src]="dlc.img" [alt]="dlc.nom" *ngIf="dlc.img" />
+      <div>
+        <label for="nom">Nom</label>
+        <input type="text" pInputText id="nom" [(ngModel)]="dlc.nom" required autofocus fluid />
+        <small *ngIf="submitted && !dlc.nom">Le nom est requis.</small>
+      </div>
+      <div>
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          pTextarea
+          [(ngModel)]="dlc.description"
+          required
+          rows="3"
+          cols="20"
+          fluid
+        ></textarea>
+        <small *ngIf="submitted && !dlc.description">La description est requis.</small>
+      </div>
+      <div>
+        <label for="img">Logo</label>
+        <input type="text" pInputText id="img" [(ngModel)]="dlc.img" autofocus fluid />
+      </div>
+
+      <div>
+        <label for="type" class="block font-bold mb-3">Type de DLC</label>
+        <p-select
+          [(ngModel)]="dlc.type"
+          inputId="type"
+          [options]="types"
+          optionLabel="nom"
+          placeholder="Sélectionne un type"
+          fluid
+        />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Cancel" icon="pi pi-times" text />
+    <p-button label="Save" icon="pi pi-check" />
+  </ng-template>
+</p-dialog>
