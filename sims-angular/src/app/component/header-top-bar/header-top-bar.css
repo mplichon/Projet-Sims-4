@@ -74,6 +74,6 @@ nav a:last-child {
 }
 
 .login-btn:hover {
-  background: linear-gradient(90deg, #30895c, #2f855a);
   color: white;
+  background: transparent;
 }

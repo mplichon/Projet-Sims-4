@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { Table, TableModule } from 'primeng/table';
+import { Table, TableModule, TablePassThrough } from 'primeng/table';
 import { TitreSection } from '../../../component/titre-section/titre-section';
 import { CommonModule } from '@angular/common';
 import { Section } from '../../../component/section/section';
@@ -12,16 +12,16 @@ import { Column, ExportColumn } from '../../../models/dlc/table-models';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { TagModule } from 'primeng/tag';
-import { DialogModule } from 'primeng/dialog';
+import { DialogModule, DialogPassThrough } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
-import { SelectModule } from 'primeng/select';
+import { SelectModule, SelectPassThrough } from 'primeng/select';
 import { TypeDlcDTO } from '../../../models/dlc/type-dlc-dto';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, PassThrough } from 'primeng/api';
 import { RequeteCreationModificationDlcDTO } from '../../../models/dlc/requete-creation-modification-dlc-dto';
-import { DatePickerModule } from 'primeng/datepicker';
+import { DatePickerModule, DatePickerPassThrough } from 'primeng/datepicker';
 import { DlcMapper } from '../../../mapper/dlc-mapper';
 import { RequeteCreationModificationDlcWithDateDTO } from '../../../models/dlc/requete-creation-modification-dlc-with-date-dto';
 
@@ -51,7 +51,7 @@ import { RequeteCreationModificationDlcWithDateDTO } from '../../../models/dlc/r
   styleUrl: './gestion-dlc-page.css',
 })
 export class GestionDlcPage implements OnInit {
-  gestionDlc: string = 'Gestion des DLC';
+  gestionDlc: string = 'Gestion des DLCs';
 
   dlcs!: ReponseListeGestionDlcDTO[];
   dlc!: RequeteCreationModificationDlcWithDateDTO;
@@ -60,6 +60,7 @@ export class GestionDlcPage implements OnInit {
   types!: TypeDlcDTO[];
 
   dlcDialog: boolean = false;
+  dlcDialogTitle: string = "Ajout d'un DLC";
 
   submitted: boolean = false;
 
@@ -106,13 +107,15 @@ export class GestionDlcPage implements OnInit {
   }
 
   ouvrirNouveau() {
-    this.dlc = { nom: '', description: '', img: '', type: { code: '', nom: '' } };
+    this.dlc = { nom: '', description: '', img: '', type: { code: '', nom: '', couleur: '' } };
     this.submitted = false;
+    this.dlcDialogTitle = "Ajout d'un DLC";
     this.dlcDialog = true;
   }
 
   modifierDlc(dlc: ReponseListeGestionDlcDTO) {
     this.dlc = this.dlcMapper.toRequeteCreationModificationDlcWithDateDTO(dlc);
+    this.dlcDialogTitle = "Modification d'un DLC";
     this.dlcDialog = true;
   }
 
@@ -121,7 +124,7 @@ export class GestionDlcPage implements OnInit {
     this.submitted = false;
   }
 
-  sauvegarderDlc() {
+  enregistrerDlc() {
     this.submitted = true;
 
     if (this.dlc.nom?.trim()) {
@@ -176,7 +179,7 @@ export class GestionDlcPage implements OnInit {
 
   supprimerDlc(dlc: RequeteCreationModificationDlcDTO) {
     this.confirmationService.confirm({
-      message: 'Êtes-vous sûr de vouloir supprimer ' + dlc.nom + ' ?',
+      message: 'Êtes-vous sûr de vouloir supprimer le DLC ' + dlc.nom + ' ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       rejectButtonProps: {
@@ -194,7 +197,7 @@ export class GestionDlcPage implements OnInit {
           nom: '',
           description: '',
           img: '',
-          type: { code: '', nom: '' },
+          type: { code: '', nom: '', couleur: '' },
         };
         this.messageService.add({
           severity: 'success',
@@ -206,15 +209,43 @@ export class GestionDlcPage implements OnInit {
     });
   }
 
-  findIndexById(id: number): number {
-    let index = -1;
-    for (let i = 0; i < this.dlcs.length; i++) {
-      if (this.dlcs[i].id === id) {
-        index = i;
-        break;
-      }
-    }
+  datepickerPt: DatePickerPassThrough = {
+    header: {
+      style: {
+        fontSize: '0.9rem',
+        height: '1.6rem',
+      },
+    },
+    tableHeader: {
+      style: {
+        fontSize: '0.9rem',
+        height: '1rem',
+      },
+    },
+    table: {
+      style: {
+        fontSize: '0.85rem',
+        height: '1rem',
+      },
+    },
+    weekDayCell: {
+      style: {
+        padding: '0',
+      },
+    },
+    dayCell: {
+      style: {
+        padding: '0',
+      },
+    },
+  };
 
-    return index;
-  }
+  tablePt: TablePassThrough = {
+    header: {
+      style: {
+        backgroundColor: 'transparent',
+        border: '0',
+      },
+    },
+  };
 }

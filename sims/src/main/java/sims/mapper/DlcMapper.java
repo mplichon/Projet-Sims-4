@@ -20,6 +20,7 @@ public class DlcMapper {
         TypeDlcDTO dto = new TypeDlcDTO();
         dto.setCode(typeDlc.name());
         dto.setNom(typeDlc.getNom());
+        dto.setCouleur(typeDlc.getCouleur());
 
         return dto;
     }

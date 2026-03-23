@@ -2,9 +2,9 @@
   <sims-titre-section [titre]="gestionDlc" />
   <p-toast />
 
-  <p-toolbar>
+  <p-toolbar class="mb-6">
     <ng-template #start>
-      <p-button label="Nouveau" icon="pi pi-plus" (onClick)="ouvrirNouveau()" />
+      <p-button label="Nouveau" class="mr-2" icon="pi pi-plus" (onClick)="ouvrirNouveau()" />
       <p-button
         severity="danger"
         label="Supprimer"
@@ -30,9 +30,10 @@
     dataKey="id"
     currentPageReportTemplate="{first} à {last} sur {totalRecords} DLC"
     [showCurrentPageReport]="true"
+    [pt]="tablePt"
   >
     <ng-template #caption>
-      <div class="flex items-center justify-between">
+      <div class="flex flex-row-reverse">
         <p-iconfield>
           <p-inputicon class="pi pi-search" />
           <input
@@ -46,47 +47,79 @@
     </ng-template>
     <ng-template #header>
       <tr>
-        <th style="width: 3rem">
+        <th
+          style="
+            width: 3rem;
+            background-color: var(--p-primary-color);
+            border-top-left-radius: 10px;
+          "
+        >
           <p-tableHeaderCheckbox />
         </th>
-        <th style="min-width: 16rem">Logo</th>
-        <th pSortableColumn="nom" style="min-width: 16rem">
+        <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
+        <th
+          class="dlc-colonne-nom"
+          pSortableColumn="nom"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
           <div class="flex items-center gap-2">
             Nom
             <p-sortIcon field="nom" />
           </div>
         </th>
-        <th pSortableColumn="dateSortie" style="min-width: 8rem">
+        <th
+          class="dlc-colonne-sortie"
+          pSortableColumn="dateSortie"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
           <div class="flex items-center gap-2">
             Sortie
             <p-sortIcon field="dateSortie" />
           </div>
         </th>
-        <th>Description</th>
-        <th pSortableColumn="type.nom" style="min-width: 10rem">
+        <th style="width: 27rem; background-color: var(--p-primary-color); color: white">
+          Description
+        </th>
+        <th
+          class="dlc-colonne-type"
+          pSortableColumn="type.nom"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
           <div class="flex items-center gap-2">
             Type
             <p-sortIcon field="type.nom" />
           </div>
         </th>
-        <th style="min-width: 12rem"></th>
+        <th
+          style="
+            width: 8rem;
+            background-color: var(--p-primary-color);
+            border-top-right-radius: 10px;
+          "
+        ></th>
       </tr>
     </ng-template>
     <ng-template #body let-dlc>
       <tr>
-        <td style="width: 3rem">
+        <td>
           <p-tableCheckbox [value]="dlc" />
         </td>
-        <td style="min-width: 12rem">
+        <td>
           <img [src]="dlc.img" [alt]="'Logo ' + dlc.nom" style="width: 64px" />
         </td>
-        <td style="min-width: 16rem">{{ dlc.nom }}</td>
+        <td>{{ dlc.nom }}</td>
         <td>{{ dlc.dateSortie | date: 'dd/MM/yyyy' }}</td>
-        <td>{{ dlc.description }}</td>
         <td>
-          <p-tag [value]="dlc.type.nom" />
+          <div class="overflow-hidden h-16">{{ dlc.description }}</div>
         </td>
         <td>
+          <p-tag
+            class="text-center"
+            [value]="dlc.type.nom"
+            [style]="{ backgroundColor: dlc.type.couleur }"
+          />
+        </td>
+        <td style="width: 8rem">
           <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" (click)="modifierDlc(dlc)" />
           <p-button
             icon="pi pi-trash"
@@ -103,12 +136,18 @@
 <p-dialog
   [(visible)]="dlcDialog"
   [style]="{ width: '450px' }"
-  header="Modification du DLC"
+  [header]="dlcDialogTitle"
   [modal]="true"
 >
   <ng-template #content>
     <div class="flex flex-col gap-6">
-      <img [src]="dlc.img" [alt]="'Logo ' + dlc.nom" *ngIf="dlc.img" />
+      <img
+        [src]="dlc.img"
+        [alt]="'Logo ' + dlc.nom"
+        *ngIf="dlc.img"
+        class="block m-auto pb-4"
+        style="width: 100px"
+      />
       <div>
         <label for="nom">Nom</label>
         <input type="text" pInputText id="nom" [(ngModel)]="dlc.nom" required autofocus fluid />
@@ -122,6 +161,9 @@
           [showIcon]="true"
           inputId="date-sortie"
           dateFormat="dd/mm/yy"
+          [pt]="datepickerPt"
+          appendTo="body"
+          required
           fluid
         />
         <small *ngIf="submitted && !dlc.dateSortie">La date est requise.</small>
@@ -137,11 +179,11 @@
           cols="20"
           fluid
         ></textarea>
-        <small *ngIf="submitted && !dlc.description">La description est requis.</small>
+        <small *ngIf="submitted && !dlc.description">La description est requise.</small>
       </div>
       <div>
         <label for="img">Logo</label>
-        <input type="text" pInputText id="img" [(ngModel)]="dlc.img" autofocus fluid />
+        <input type="text" pInputText id="img" [(ngModel)]="dlc.img" fluid />
       </div>
 
       <div>
@@ -152,6 +194,8 @@
           [options]="types"
           optionLabel="nom"
           placeholder="Sélectionne un type"
+          appendTo="body"
+          required
           fluid
         />
       </div>
@@ -159,8 +203,8 @@
   </ng-template>
 
   <ng-template #footer>
-    <p-button label="Cancel" icon="pi pi-times" text (click)="cacherDialog()" />
-    <p-button label="Save" icon="pi pi-check" (click)="sauvegarderDlc()" />
+    <p-button label="Annuler" icon="pi pi-times" text (click)="cacherDialog()" />
+    <p-button label="Enregistrer" icon="pi pi-check" (click)="enregistrerDlc()" />
   </ng-template>
 </p-dialog>
 
