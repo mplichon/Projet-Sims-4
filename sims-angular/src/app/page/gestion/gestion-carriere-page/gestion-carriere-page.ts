@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './gestion-carriere-page.html',
   styleUrl: './gestion-carriere-page.css',
 })
-export class GestionCarrierePage {
-
-}
+export class GestionCarrierePage {}

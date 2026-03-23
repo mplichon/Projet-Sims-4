@@ -29,7 +29,7 @@ public class CompetenceRestController {
     @GetMapping("/gestion")
     public List<ReponseListeGestionCompetenceDTO> getAllCompetenceGestion() {
         log.info("GET /api/competence/gestion - getAllCompetenceGestion() called");
-        return service.getAll()
+        return service.getAllOrderByNomAsc()
             .stream()
             .map(mapper::toReponseListeGestionCompetenceDTO)
             .toList();

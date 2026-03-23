@@ -18,7 +18,7 @@ export const routes: Routes = [
   {
     path: 'gestion/dlc',
     component: GestionDlcPage,
-    title: 'DLC | Sims 4 Encyclopédie',
+    title: 'DLCs | Sims 4 Encyclopédie',
   },
   {
     path: 'gestion/competence',

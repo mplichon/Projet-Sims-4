@@ -1,1 +1,126 @@
-<p>gestion-competence-page works!</p>
+<sims-section>
+  <sims-titre-section [titre]="gestionCompetence" />
+  <p-toast />
+
+  <p-toolbar class="mb-6">
+    <ng-template #start>
+      <p-button label="Nouveau" class="mr-2" icon="pi pi-plus" (onClick)="ouvrirNouveau()" />
+      <p-button
+        severity="danger"
+        label="Supprimer"
+        icon="pi pi-trash"
+        (onClick)="supprimerDlcsSelectionnes()"
+        [disabled]="!selectedCompetences || !selectedCompetences.length"
+      />
+    </ng-template>
+    <ng-template #end>
+      <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="competences"
+    [rows]="10"
+    [columns]="cols"
+    [paginator]="true"
+    [globalFilterFields]="['nom']"
+    [(selection)]="selectedCompetences"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="{first} à {last} sur {totalRecords} compétences"
+    [showCurrentPageReport]="true"
+    [pt]="tablePt"
+  >
+    <ng-template #caption>
+      <div class="flex flex-row-reverse">
+        <p-iconfield>
+          <p-inputicon class="pi pi-search" />
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Recherche..."
+          />
+        </p-iconfield>
+      </div>
+    </ng-template>
+    <ng-template #header>
+      <tr>
+        <th
+          style="
+            width: 3rem;
+            background-color: var(--p-primary-color);
+            border-top-left-radius: 10px;
+          "
+        >
+          <p-tableHeaderCheckbox />
+        </th>
+        <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
+        <th
+          class="competence-colonne-nom"
+          pSortableColumn="nom"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
+          <div class="flex items-center gap-2">
+            Nom
+            <p-sortIcon field="nom" />
+          </div>
+        </th>
+        <th style="width: 27rem; background-color: var(--p-primary-color); color: white">
+          Description
+        </th>
+        <th
+          class="competence-colonne-categorie"
+          pSortableColumn="categorie.nom"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
+          <div class="flex items-center gap-2">
+            Catégorie
+            <p-sortIcon field="type.nom" />
+          </div>
+        </th>
+        <th style="width: 3rem; background-color: var(--p-primary-color); color: white">DLC</th>
+        <th
+          style="
+            width: 8rem;
+            background-color: var(--p-primary-color);
+            border-top-right-radius: 10px;
+          "
+        ></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-competence>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="competence" />
+        </td>
+        <td>
+          <img [src]="competence.img" [alt]="'Logo ' + competence.nom" style="width: 64px" />
+        </td>
+        <td>{{ competence.nom }}</td>
+        <td>
+          <div class="overflow-hidden h-16">{{ competence.description }}</div>
+        </td>
+        <td>{{ competence.categorieSim.nom }}</td>
+        <td>
+          <img [src]="competence.dlc.img" [alt]="competence.dlc.nom" style="width: 64px" />
+        </td>
+        <td style="width: 8rem">
+          <p-button
+            icon="pi pi-pencil"
+            class="mr-2"
+            [rounded]="true"
+            (click)="modifierDlc(competence)"
+          />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            (click)="supprimerDlc(competence)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</sims-section>

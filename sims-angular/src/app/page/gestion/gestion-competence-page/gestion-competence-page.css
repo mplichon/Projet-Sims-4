@@ -1,0 +1,14 @@
+:host ::ng-deep .p-datatable-sort-icon {
+  color: white;
+  border-color: white;
+}
+
+:host ::ng-deep .competence-colonne-nom:hover .p-datatable-sort-icon {
+  color: #35985c !important;
+  border-color: #35985c !important;
+}
+
+:host ::ng-deep .competence-colonne-categorie:hover .p-datatable-sort-icon {
+  color: #35985c !important;
+  border-color: #35985c !important;
+}

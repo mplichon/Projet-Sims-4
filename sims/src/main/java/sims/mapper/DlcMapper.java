@@ -34,6 +34,7 @@ public class DlcMapper {
         DlcLegerDTO dto = new DlcLegerDTO();
         dto.setId(dlc.getId());
         dto.setNom(dlc.getNom());
+        dto.setImg(dlc.getImg());
 
         return dto;
     }

@@ -8,7 +8,7 @@ import { ReponseListeGestionDlcDTO } from '../../../models/dlc/reponse-liste-ges
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
-import { Column, ExportColumn } from '../../../models/dlc/table-models';
+import { Column, ExportColumn } from '../../../models/table-models';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { TagModule } from 'primeng/tag';

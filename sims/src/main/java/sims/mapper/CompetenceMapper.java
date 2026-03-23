@@ -12,7 +12,7 @@ import sims.model.Competence;
 public class CompetenceMapper {
 
     @Autowired
-    CategorieSimMapper categorieSimMapper;
+    SimMapper categorieSimMapper;
     
     @Autowired
     DlcMapper dlcMapper;

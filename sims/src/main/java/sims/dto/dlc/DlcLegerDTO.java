@@ -5,6 +5,7 @@ public class DlcLegerDTO {
     // Attributs
     private Integer id;
     private String nom;
+    private String img;
 
     // Contructeurs 
     public DlcLegerDTO() {
@@ -22,5 +23,13 @@ public class DlcLegerDTO {
     }
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
