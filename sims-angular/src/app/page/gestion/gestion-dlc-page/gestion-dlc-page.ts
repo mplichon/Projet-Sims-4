@@ -152,7 +152,7 @@ export class GestionDlcPage implements OnInit {
 
   supprimerDlcsSelectionnes() {
     this.confirmationService.confirm({
-      message: 'Êtes-vous sûr de vouloir supprimer  les DLCs sélectionnés ?',
+      message: 'Êtes-vous sûr de vouloir supprimer les DLCs sélectionnés ?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       rejectButtonProps: {
@@ -165,7 +165,7 @@ export class GestionDlcPage implements OnInit {
         label: 'Oui',
       },
       accept: () => {
-        this.selectedDlcs.map((d) => this.dlcService.deleteById(d.id));
+        this.selectedDlcs.map((d) => this.dlcService.deleteDlcById(d.id));
         this.selectedDlcs = [];
         this.messageService.add({
           severity: 'success',
@@ -192,7 +192,7 @@ export class GestionDlcPage implements OnInit {
         label: 'Oui',
       },
       accept: () => {
-        this.dlcService.deleteById(dlc.id ? dlc.id : 0);
+        this.dlcService.deleteDlcById(dlc.id ? dlc.id : 0);
         this.dlc = {
           nom: '',
           description: '',

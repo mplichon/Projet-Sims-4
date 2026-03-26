@@ -7,8 +7,8 @@ import { CategorieSimDTO } from '../models/categorie-sim-dto';
   providedIn: 'root',
 })
 export class SimService {
-  private apiUrl = '/api/sim';
-  private apiGestionUrl = '/gestion';
+  private apiUrl = '/sim';
+  private apiGestionUrl = this.apiUrl + '/gestion';
   private refresh$: Subject<void> = new Subject<void>();
 
   constructor(private http: HttpClient) {}

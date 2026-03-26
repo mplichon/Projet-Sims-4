@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sims.dto.dlc.DlcLegerDTO;
 import sims.dto.dlc.ReponseCreationDlcDTO;
 import sims.dto.dlc.ReponseListeGestionDlcDTO;
 import sims.dto.dlc.ReponseModificationDlcDTO;
@@ -52,6 +53,15 @@ public class DlcRestContoller {
         return service.getAllOrderByDateSortieAsc()
             .stream()
             .map(mapper::toReponseListeGestionDlcDTO)
+            .toList();
+    }
+
+    @GetMapping("/selection")
+    public List<DlcLegerDTO> getAllDlcSelection() {
+        log.info("GET /api/dlc/selection - getAllDlcSelection() called");
+        return service.getAllOrderByNomAsc()
+            .stream()
+            .map(mapper::toDlcLegerDTO)
             .toList();
     }
 

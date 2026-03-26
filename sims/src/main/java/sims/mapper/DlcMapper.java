@@ -1,5 +1,6 @@
 package sims.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sims.dto.dlc.DlcLegerDTO;
@@ -11,9 +12,13 @@ import sims.dto.dlc.RequeteModificationDlcDTO;
 import sims.dto.dlc.TypeDlcDTO;
 import sims.model.DLC;
 import sims.model.TypeDLC;
+import sims.service.DlcService;
 
 @Component
 public class DlcMapper {
+
+    @Autowired
+    private DlcService service;
 
     // TypeDlc
     public TypeDlcDTO toTypeDlcDTO(TypeDLC typeDlc) {
@@ -82,6 +87,10 @@ public class DlcMapper {
     }
 
     // DlcDTO vers DLC
+    public DLC toDlc(DlcLegerDTO dto) {
+        return service.getById(dto.getId());
+    }
+
     public DLC toDlc(RequeteCreationDlcDTO dto) {
         DLC dlc = new DLC();
         dlc.setNom(dto.getNom());

@@ -1,12 +1,12 @@
 import { CategorieSimDTO } from '../categorie-sim-dto';
 import { DlcLegerDTO } from '../dlc/dlc-leger-dto';
 
-export interface RequeteCreationModificationCompetenceDTO {
-  id?: number;
+export interface ReponseGestionCompetenceDTO {
+  id: number;
   nom: string;
   description: string;
   img: string;
-  niveauMax?: number;
+  niveauMax: number;
   categorieSim: CategorieSimDTO;
-  dlc?: DlcLegerDTO;
+  dlc: DlcLegerDTO;
 }

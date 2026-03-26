@@ -104,7 +104,12 @@
         </td>
         <td>{{ competence.categorieSim.nom }}</td>
         <td>
-          <img [src]="competence.dlc.img" [alt]="competence.dlc.nom" style="width: 64px" />
+          <img
+            [src]="competence.dlc.img"
+            [alt]="'Logo ' + competence.dlc.nom"
+            [title]="competence.dlc.nom"
+            style="width: 64px"
+          />
         </td>
         <td style="width: 8rem">
           <p-button
@@ -124,3 +129,97 @@
     </ng-template>
   </p-table>
 </sims-section>
+
+<p-dialog
+  [(visible)]="competenceDialog"
+  [style]="{ width: '450px' }"
+  [header]="competenceDialogTitle"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      <img
+        [src]="competence.img"
+        [alt]="'Logo ' + competence.nom"
+        *ngIf="competence.img"
+        class="block m-auto pb-4"
+        style="width: 100px"
+      />
+      <div>
+        <label for="nom-competence">Nom</label>
+        <input
+          type="text"
+          pInputText
+          id="nom-competence"
+          [(ngModel)]="competence.nom"
+          required
+          autofocus
+          fluid
+        />
+        <small *ngIf="submitted && !competence.nom">Le nom est requis.</small>
+      </div>
+      <div>
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          pTextarea
+          [(ngModel)]="competence.description"
+          required
+          rows="3"
+          cols="20"
+          fluid
+        ></textarea>
+        <small *ngIf="submitted && !competence.description">La description est requise.</small>
+      </div>
+      <div>
+        <label for="img">Logo</label>
+        <input type="text" pInputText id="img" [(ngModel)]="competence.img" fluid />
+      </div>
+      <div>
+        <label for="niveau-max">Niveau max</label>
+        <p-inputnumber
+          [(ngModel)]="competence.niveauMax"
+          [showButtons]="true"
+          inputId="niveau-max"
+          [min]="0"
+          required
+          fluid
+        />
+      </div>
+
+      <div>
+        <label for="categorie" class="block font-bold mb-3">Catégorie de Sim</label>
+        <p-select
+          [(ngModel)]="competence.categorieSim"
+          inputId="categorie"
+          [options]="categories"
+          optionLabel="nom"
+          placeholder="Sélectionne une catégorie"
+          appendTo="body"
+          required
+          fluid
+        />
+      </div>
+      <div>
+        <label for="dlcs" class="block font-bold mb-3">DLC</label>
+        <p-select
+          [(ngModel)]="competence.dlc"
+          inputId="dlcs"
+          [options]="dlcs"
+          optionLabel="nom"
+          placeholder="Sélectionne un DLC"
+          appendTo="body"
+          required
+          fluid
+        />
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Annuler" icon="pi pi-times" text (click)="cacherDialog()" />
+    <p-button label="Enregistrer" icon="pi pi-check" (click)="enregistrerDlc()" />
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog />

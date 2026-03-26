@@ -15,4 +15,8 @@ public class SimMapper {
 
         return dto;
     }
+
+    public CategorieSim toCategorieSim(CategorieSimDTO dto) {
+        return CategorieSim.valueOf(dto.getCode());
+    }
 }
