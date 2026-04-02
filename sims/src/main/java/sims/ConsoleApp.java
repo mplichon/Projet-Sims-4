@@ -16,6 +16,7 @@ import sims.model.Carriere;
 import sims.model.CategorieSim;
 import sims.model.Competence;
 import sims.model.DLC;
+import sims.model.TraitAEffets;
 import sims.model.TraitAspiration;
 import sims.model.TraitDeCaractere;
 import sims.model.TypeDLC;
@@ -235,6 +236,18 @@ public class ConsoleApp implements CommandLineRunner {
 		// 	System.out.println("Aucun Trait de récompense d'aspiration n'est enregistré");
 		// }
 		// for (TraitAspiration traitDeCaractere : traitsAspiration) {
+		// 	System.out.println(traitDeCaractere);
+		// }
+
+		// System.out.println();
+		// System.out.println("------Tous les Traits d'héritage'------");
+		// List<TraitAEffets> traitsHeritage = daoTraitDeCaractere.findAllTraitHeritage();
+		
+		// if(traitsHeritage.isEmpty()) 
+		// {
+		// 	System.out.println("Aucun Trait de récompense d'héritage n'est enregistré");
+		// }
+		// for (TraitAEffets traitDeCaractere : traitsHeritage) {
 		// 	System.out.println(traitDeCaractere);
 		// }
 	}

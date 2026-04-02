@@ -47,6 +47,7 @@
     </ng-template>
     <ng-template #header>
       <tr>
+        <!-- Checkbox -->
         <th
           style="
             width: 3rem;
@@ -56,7 +57,9 @@
         >
           <p-tableHeaderCheckbox />
         </th>
+        <!-- Logo -->
         <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
+        <!-- Nom -->
         <th
           class="competence-colonne-nom"
           pSortableColumn="nom"
@@ -67,9 +70,11 @@
             <p-sortIcon field="nom" />
           </div>
         </th>
+        <!-- Description -->
         <th style="width: 27rem; background-color: var(--p-primary-color); color: white">
           Description
         </th>
+        <!-- Catégorie -->
         <th
           class="competence-colonne-categorie"
           pSortableColumn="categorie.nom"
@@ -80,7 +85,9 @@
             <p-sortIcon field="type.nom" />
           </div>
         </th>
+        <!-- DLC -->
         <th style="width: 3rem; background-color: var(--p-primary-color); color: white">DLC</th>
+        <!-- Boutons -->
         <th
           style="
             width: 8rem;
@@ -92,17 +99,23 @@
     </ng-template>
     <ng-template #body let-competence>
       <tr>
+        <!-- Checkbox -->
         <td>
           <p-tableCheckbox [value]="competence" />
         </td>
+        <!-- Logo -->
         <td>
           <img [src]="competence.img" [alt]="'Logo ' + competence.nom" style="width: 64px" />
         </td>
+        <!-- Nom -->
         <td>{{ competence.nom }}</td>
+        <!-- Description -->
         <td>
           <div class="overflow-hidden h-16">{{ competence.description }}</div>
         </td>
+        <!-- Catégorie -->
         <td>{{ competence.categorieSim.nom }}</td>
+        <!-- DLC -->
         <td>
           <img
             [src]="competence.dlc.img"
@@ -111,6 +124,7 @@
             style="width: 64px"
           />
         </td>
+        <!-- Boutons -->
         <td style="width: 8rem">
           <p-button
             icon="pi pi-pencil"
@@ -145,6 +159,7 @@
         class="block m-auto pb-4"
         style="width: 100px"
       />
+      <!-- Nom -->
       <div>
         <label for="nom-competence">Nom</label>
         <input
@@ -158,6 +173,7 @@
         />
         <small *ngIf="submitted && !competence.nom">Le nom est requis.</small>
       </div>
+      <!-- Description -->
       <div>
         <label for="description">Description</label>
         <textarea
@@ -171,10 +187,12 @@
         ></textarea>
         <small *ngIf="submitted && !competence.description">La description est requise.</small>
       </div>
+      <!-- Logo -->
       <div>
         <label for="img">Logo</label>
         <input type="text" pInputText id="img" [(ngModel)]="competence.img" fluid />
       </div>
+      <!-- Niveau max -->
       <div>
         <label for="niveau-max">Niveau max</label>
         <p-inputnumber
@@ -186,7 +204,7 @@
           fluid
         />
       </div>
-
+      <!-- Catégorie -->
       <div>
         <label for="categorie" class="block font-bold mb-3">Catégorie de Sim</label>
         <p-select
@@ -200,6 +218,7 @@
           fluid
         />
       </div>
+      <!-- DLC -->
       <div>
         <label for="dlcs" class="block font-bold mb-3">DLC</label>
         <p-select

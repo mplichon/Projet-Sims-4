@@ -1,5 +1,6 @@
 package sims.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,12 +9,17 @@ import org.springframework.stereotype.Service;
 
 import sims.dao.IDAOAspiration;
 import sims.model.Aspiration;
+import sims.model.TypeAspiration;
 
 @Service
 public class AspirationService {
 
 	@Autowired
 	IDAOAspiration daoAspiration;
+	
+	public List<TypeAspiration> getAllTypeAspiration() {
+		return Arrays.asList(TypeAspiration.values());
+	}
 	
 	public Aspiration getById(Integer id)
 	{
@@ -35,6 +41,10 @@ public class AspirationService {
 	public List<Aspiration> getAllWithEtapes()
 	{
 		return daoAspiration.findAllWithEtapes();
+	}
+
+	public List<Aspiration> getAllOrderByNomAsc() {
+		return daoAspiration.findAllOrderByNomAsc();
 	}
 	
 	public Aspiration create(Aspiration aspiration) 

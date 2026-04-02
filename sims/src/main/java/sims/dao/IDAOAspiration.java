@@ -15,4 +15,7 @@ public interface IDAOAspiration extends JpaRepository<Aspiration, Integer>{
 	
 	@Query("SELECT a from Aspiration a LEFT JOIN FETCH a.etapes e LEFT JOIN FETCH e.sousEtapes WHERE a.id=:id")
 	public Aspiration findByIdWithEtapes(@Param("id") Integer id);
+
+	@Query("SELECT a FROM Aspiration a ORDER BY a.nom ASC")
+	public List<Aspiration> findAllOrderByNomAsc();
 }

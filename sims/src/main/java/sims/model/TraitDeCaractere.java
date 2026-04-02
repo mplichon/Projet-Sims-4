@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -21,10 +22,11 @@ public class TraitDeCaractere {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
-	@Column(length = 25, nullable = false)
+	@Column(length = 40, nullable = false)
 	protected String nom;
 	
-	@Column(nullable = true)
+	@Lob
+	@Column(nullable = true, columnDefinition = "TEXT")
 	protected String description;
 	
 	@Column(nullable = true)

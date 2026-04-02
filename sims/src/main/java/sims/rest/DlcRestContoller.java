@@ -76,8 +76,8 @@ public class DlcRestContoller {
 	}
     
     @PutMapping("/gestion/{id}")
-	public ReponseModificationDlcDTO updateDlc(@PathVariable Integer id,@RequestBody RequeteModificationDlcDTO requeteDlc) {
-        log.info("PUT /api/dlc/gestion/{} - updateDlc() called, id");
+	public ReponseModificationDlcDTO updateDlc(@PathVariable Integer id, @RequestBody RequeteModificationDlcDTO requeteDlc) {
+        log.info("PUT /api/dlc/gestion/{} - updateDlc() called", id);
         DLC dlc = mapper.toDlc(requeteDlc);
         dlc.setId(id);
 
@@ -88,7 +88,7 @@ public class DlcRestContoller {
 
     @DeleteMapping("/gestion/{id}")
 	public void deleteDlc(@PathVariable Integer id) {
-		log.info("DELETE /api/joueur/{} - deleteDlc() called", id);
+		log.info("DELETE /api/dlc/gestion/{} - deleteDlc() called", id);
 		service.deleteById(id);
 	}
 }

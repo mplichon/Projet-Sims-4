@@ -1,1 +1,347 @@
-<p>gestion-trait-page works!</p>
+<sims-section>
+  <sims-titre-section [titre]="gestionTrait" />
+  <p-toast />
+
+  <p-toolbar class="mb-6">
+    <ng-template #start>
+      <p-button label="Nouveau" class="mr-2" icon="pi pi-plus" (onClick)="ouvrirNouveau()" />
+      <p-button
+        severity="danger"
+        label="Supprimer"
+        icon="pi pi-trash"
+        (onClick)="supprimerTraitsSelectionnes()"
+        [disabled]="!selectedTraits || !selectedTraits.length"
+      />
+    </ng-template>
+    <ng-template #end>
+      <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="traits"
+    [rows]="10"
+    [columns]="cols"
+    [paginator]="true"
+    [globalFilterFields]="['nom']"
+    [(selection)]="selectedTraits"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="{first} à {last} sur {totalRecords} traits de caractère"
+    [showCurrentPageReport]="true"
+    [pt]="tablePt"
+  >
+    <ng-template #caption>
+      <div class="flex flex-row-reverse">
+        <p-iconfield>
+          <p-inputicon class="pi pi-search" />
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Recherche..."
+          />
+        </p-iconfield>
+      </div>
+    </ng-template>
+    <ng-template #header>
+      <tr>
+        <!-- Checkbox -->
+        <th
+          style="
+            width: 3rem;
+            background-color: var(--p-primary-color);
+            border-top-left-radius: 10px;
+          "
+        >
+          <p-tableHeaderCheckbox />
+        </th>
+        <!-- Logo -->
+        <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
+        <!-- Nom -->
+        <th
+          class="trait-colonne-nom"
+          pSortableColumn="nom"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
+          <div class="flex items-center gap-2">
+            Nom
+            <p-sortIcon field="nom" />
+          </div>
+        </th>
+        <!-- Description -->
+        <th style="width: 17rem; background-color: var(--p-primary-color); color: white">
+          Description
+        </th>
+        <!-- Type -->
+        <th
+          class="trait-colonne-type"
+          pSortableColumn="type.nom"
+          style="width: 10rem; background-color: var(--p-primary-color); color: white"
+        >
+          <div class="flex items-center gap-2">
+            Type
+            <p-sortIcon field="type.nom" />
+          </div>
+        </th>
+        <!-- Catégorie -->
+        <th
+          class="trait-colonne-categorie"
+          pSortableColumn="categorie.nom"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
+          <div class="flex items-center gap-2">
+            Catégorie
+            <p-sortIcon field="type.nom" />
+          </div>
+        </th>
+        <!-- DLC -->
+        <th style="width: 3rem; background-color: var(--p-primary-color); color: white">DLC</th>
+        <!-- Boutons -->
+        <th
+          style="
+            width: 8rem;
+            background-color: var(--p-primary-color);
+            border-top-right-radius: 10px;
+          "
+        ></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-trait>
+      <tr>
+        <!-- Checkbox -->
+        <td>
+          <p-tableCheckbox [value]="trait" />
+        </td>
+        <!-- Logo -->
+        <td>
+          <img [src]="trait.img" [alt]="'Logo ' + trait.nom" style="width: 64px" />
+        </td>
+        <!-- Nom -->
+        <td>{{ trait.nom }}</td>
+        <!-- Description -->
+        <td>
+          <div class="overflow-hidden h-16">{{ trait.description }}</div>
+        </td>
+        <!-- Type -->
+        <td>{{ trait.type.nom }}</td>
+        <!-- Catégorie -->
+        <td>{{ trait.categorieSim.nom }}</td>
+        <!-- DLC -->
+        <td>
+          <img
+            [src]="trait.dlc.img"
+            [alt]="'Logo ' + trait.dlc.nom"
+            [title]="trait.dlc.nom"
+            style="width: 64px"
+          />
+        </td>
+        <!-- Boutons -->
+        <td style="width: 8rem">
+          <p-button
+            icon="pi pi-pencil"
+            class="mr-2"
+            [rounded]="true"
+            (click)="modifierTrait(trait)"
+          />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            (click)="supprimerTrait(trait)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</sims-section>
+
+<p-dialog
+  [(visible)]="traitDialog"
+  [style]="{ width: '450px' }"
+  [header]="traitDialogTitle"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      <img
+        [src]="trait.img"
+        [alt]="'Logo ' + trait.nom"
+        *ngIf="trait.img"
+        class="block m-auto pb-4"
+        style="width: 100px"
+      />
+      <!-- Nom -->
+      <div>
+        <label for="nom" class="block font-semibold mb-3">Nom</label>
+        <input type="text" pInputText id="nom" [(ngModel)]="trait.nom" required autofocus fluid />
+        <small *ngIf="submitted && !trait.nom">Le nom est requis.</small>
+      </div>
+      <!-- Description -->
+      <div>
+        <label for="description" class="block font-semibold mb-3">Description</label>
+        <textarea
+          id="description"
+          pTextarea
+          [(ngModel)]="trait.description"
+          required
+          rows="3"
+          cols="20"
+          fluid
+        ></textarea>
+        <small *ngIf="submitted && !trait.description">La description est requise.</small>
+      </div>
+      <!-- Logo -->
+      <div>
+        <label for="img" class="block font-semibold mb-3">Logo</label>
+        <input type="text" pInputText id="img" [(ngModel)]="trait.img" fluid />
+      </div>
+      <!-- Type -->
+      <div>
+        <label for="type" class="block font-semibold mb-3">Type de trait</label>
+        <p-select
+          [(ngModel)]="trait.type"
+          inputId="type"
+          [options]="types"
+          optionLabel="nom"
+          placeholder="Sélectionne un type"
+          appendTo="body"
+          required
+          fluid
+        />
+      </div>
+      <!-- Catégorie -->
+      <div>
+        <label for="categorie" class="block font-semibold mb-3">Catégorie de Sim</label>
+        <p-select
+          [(ngModel)]="trait.categorieSim"
+          inputId="categorie"
+          [options]="categories"
+          optionLabel="nom"
+          placeholder="Sélectionne une catégorie"
+          appendTo="body"
+          required
+          fluid
+        />
+      </div>
+      <!-- DLC -->
+      <div>
+        <label for="dlcs" class="block font-semibold mb-3">DLC</label>
+        <p-select
+          [(ngModel)]="trait.dlc"
+          inputId="dlcs"
+          [options]="dlcs"
+          optionLabel="nom"
+          placeholder="Sélectionne un DLC"
+          appendTo="body"
+          required
+          fluid
+        />
+      </div>
+      <!-- Coût -->
+      @if (typesBoutique.includes(trait.type.code)) {
+        <div>
+          <label for="cout" class="block font-semibold mb-3">Coût</label>
+          <p-inputnumber
+            [(ngModel)]="trait.cout"
+            [showButtons]="true"
+            inputId="cout"
+            [min]="0"
+            required
+            fluid
+          />
+        </div>
+      }
+      <!-- Qualité -->
+      @if (typesEducation.includes(trait.type.code)) {
+        <div>
+          <label for="qualite" class="block font-semibold mb-3">Qualité</label>
+          <input type="text" pInputText id="qualite" [(ngModel)]="trait.qualite" autofocus fluid />
+        </div>
+      }
+      <!-- Condition -->
+      @if (typesACondition.includes(trait.type.code) || typesAEffets.includes(trait.type.code)) {
+        <div>
+          <label for="condition" class="block font-semibold mb-3">Condition</label>
+          <input
+            type="text"
+            pInputText
+            id="condition"
+            [(ngModel)]="trait.condition"
+            autofocus
+            fluid
+          />
+        </div>
+      }
+      <!-- Effets -->
+      <!-- mettre des boutons + et -, et une boucle for -->
+      @if (typesAEffets.includes(trait.type.code)) {
+        <div>
+          <div class="flex justify-between mb-2">
+            <label for="effets" class="block font-semibold pt-2">Effets</label>
+            <p-buttongroup>
+              <p-button icon="pi pi-plus" severity="info" size="small" (onClick)="ajouterEffet()" />
+              <p-button
+                icon="pi pi-minus"
+                severity="danger"
+                size="small"
+                (onClick)="supprimerEffet()"
+                [disabled]="supprimerEffetButtonDisable"
+              />
+            </p-buttongroup>
+          </div>
+          @for (effet of trait.effets; track $index; let i = $index) {
+            <input
+              type="text"
+              pInputText
+              id="effet"
+              [(ngModel)]="trait.effets![i]"
+              [name]="'effet' + i"
+              fluid
+            />
+          }
+        </div>
+      }
+      <!-- Type d'aspiration -->
+      @if (typesBonus.includes(trait.type.code)) {
+        <div>
+          <label for="types-aspiration" class="block font-semibold mb-3">Type d'aspiration</label>
+          <p-select
+            [(ngModel)]="trait.typeAspiration"
+            inputId="types-aspiration"
+            [options]="typesAspiration"
+            optionLabel="nom"
+            placeholder="Sélectionne un type d'aspiration"
+            appendTo="body"
+            required
+            fluid
+          />
+        </div>
+      }
+      <!-- Aspiration -->
+      @if (typesTraitAspiration.includes(trait.type.code)) {
+        <div>
+          <label for="aspirations" class="block font-semibold mb-3">Aspiration</label>
+          <p-select
+            [(ngModel)]="trait.aspiration"
+            inputId="aspirations"
+            [options]="aspirations"
+            optionLabel="nom"
+            placeholder="Sélectionne une aspiration"
+            appendTo="body"
+            required
+            fluid
+          />
+        </div>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Annuler" icon="pi pi-times" text (click)="cacherDialog()" />
+    <p-button label="Enregistrer" icon="pi pi-check" (click)="enregistrerTrait()" />
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog />

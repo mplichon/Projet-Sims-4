@@ -19,6 +19,9 @@ public interface IDAOTraitDeCaractere extends JpaRepository<TraitDeCaractere, In
 	// Traits de caractère
 	@Query("SELECT DISTINCT t FROM TraitDeCaractere t LEFT JOIN FETCH t.effets")
 	public List<TraitDeCaractere> findAll();
+
+	@Query("SELECT t FROM TraitDeCaractere t ORDER BY t.nom ASC")
+	public List<TraitDeCaractere> findAllOrderByNomAsc();
 	
 	// Traits de base
 	@Query("SELECT t FROM TraitDeCaractere t WHERE t.type = 'BASE'")
