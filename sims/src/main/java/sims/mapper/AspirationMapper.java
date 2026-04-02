@@ -24,6 +24,7 @@ public class AspirationMapper {
         TypeAspirationDTO dto = new TypeAspirationDTO();
         dto.setCode(typeAspiration.name());
         dto.setNom(typeAspiration.getNom());
+        dto.setImg(typeAspiration.getImg());
 
         return dto;
     }

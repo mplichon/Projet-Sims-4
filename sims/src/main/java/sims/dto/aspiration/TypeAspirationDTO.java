@@ -5,6 +5,7 @@ public class TypeAspirationDTO {
     // Attributs
     private String code;
     private String nom;
+    private String img;
 
     // Constructeurs
     public TypeAspirationDTO() {
@@ -22,5 +23,13 @@ public class TypeAspirationDTO {
     }
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

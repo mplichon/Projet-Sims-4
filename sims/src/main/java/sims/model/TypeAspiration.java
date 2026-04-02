@@ -15,10 +15,10 @@ public enum TypeAspiration {
 	ANIMAL("Animal", "https://luniversims.fr/uploads/monthly_2022_03/76895547_AspirationAnimaux.png.b074d98a4c46c797fe477c6264985bba.png"),
 	BIEN_ETRE("Bien-être", "https://luniversims.fr/uploads/monthly_2022_03/1657950884_AspirationsBien-tre.png.2bc884e12c1ecf26e052ddb399d95115.png"),
 	STAR_WARS("Star Wars", "https://luniversims.fr/uploads/monthly_2022_03/2073632694_AspirationsStarWars.png.4cde26250f3ee1bbc9e78a31c5c1b8a1.png"),
-	LYCANTHROPIE("Lycanthropie", null),
+	LYCANTHROPIE("Lycanthropie", "https://static.wikia.nocookie.net/sims/images/0/09/Werewolf_Initiate.png/revision/latest?cb=20220619230708"),
 	FEE("Fée", "https://luniversims.fr/uploads/monthly_2025_07/image.png.28430b10ef63179430fca0c99bcf3202.png"),
 	
-	ADO("Ado", null),
+	ADO("Ado", "https://tiermaker.com/images/media/template_images/2024/18879229/sims-4-aspirations-18879229/0x000000000x9df936a6c43089c40x00b2d882.png"),
 	
 	CREATIVITE_ENFANT("Créativité (enfant)", "https://luniversims.fr/uploads/monthly_2022_03/1508255428_AspirationsCrativit.png.d3985e052a3d3304052a39d0a6bea277.png"),
 	FACULTES_MENTALES("Facultés mentales", "https://luniversims.fr/uploads/monthly_2022_03/894759774_AspirationsFacultsMentale.png.3f2a5437ca70904a122178c84658aaa5.png"),
