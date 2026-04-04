@@ -358,7 +358,20 @@
             appendTo="body"
             required
             fluid
-          />
+          >
+            <ng-template #selectedItem let-selectedOption>
+              <div class="flex items-center gap-3" *ngIf="selectedOption">
+                <img [src]="selectedOption.img" style="width: 28px" />
+                <div>{{ selectedOption.nom }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-aspiration #item>
+              <div class="flex items-center gap-3">
+                <img [src]="aspiration.img" style="width: 28px" />
+                <div>{{ aspiration.nom }}</div>
+              </div>
+            </ng-template>
+          </p-select>
         </div>
       }
     </div>
