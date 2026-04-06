@@ -1,1 +1,353 @@
-<p>gestion-aspiration-page works!</p>
+<sims-section>
+  <sims-titre-section [titre]="gestionAspiration" />
+  <p-toast />
+
+  <p-toolbar class="mb-6">
+    <ng-template #start>
+      <p-button label="Nouveau" class="mr-2" icon="pi pi-plus" (onClick)="ouvrirNouveau()" />
+      <p-button
+        severity="danger"
+        label="Supprimer"
+        icon="pi pi-trash"
+        (onClick)="supprimerAspirationsSelectionnes()"
+        [disabled]="!selectedAspirations || !selectedAspirations.length"
+      />
+    </ng-template>
+    <ng-template #end>
+      <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="aspirations"
+    [rows]="10"
+    [columns]="cols"
+    [paginator]="true"
+    [globalFilterFields]="['nom']"
+    [(selection)]="selectedAspirations"
+    [rowHover]="true"
+    dataKey="id"
+    currentPageReportTemplate="{first} à {last} sur {totalRecords} aspirations"
+    [showCurrentPageReport]="true"
+    [pt]="tablePt"
+  >
+    <ng-template #caption>
+      <div class="flex flex-row-reverse">
+        <p-iconfield>
+          <p-inputicon class="pi pi-search" />
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($event.target.value, 'contains')"
+            placeholder="Recherche..."
+          />
+        </p-iconfield>
+      </div>
+    </ng-template>
+    <ng-template #header>
+      <tr>
+        <!-- Checkbox -->
+        <th
+          style="
+            width: 3rem;
+            background-color: var(--p-primary-color);
+            border-top-left-radius: 10px;
+          "
+        >
+          <p-tableHeaderCheckbox />
+        </th>
+        <!-- Logo -->
+        <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
+        <!-- Nom -->
+        <th
+          class="aspiration-colonne-nom"
+          pSortableColumn="nom"
+          style="width: 5rem; background-color: var(--p-primary-color); color: white"
+        >
+          <div class="flex items-center gap-2">
+            Nom
+            <p-sortIcon field="nom" />
+          </div>
+        </th>
+        <!-- Description -->
+        <th style="width: 17rem; background-color: var(--p-primary-color); color: white">
+          Description
+        </th>
+        <!-- Type -->
+        <th
+          class="aspiration-colonne-type"
+          pSortableColumn="type.nom"
+          style="width: 10rem; background-color: var(--p-primary-color); color: white"
+        >
+          <div class="flex items-center gap-2">
+            Type
+            <p-sortIcon field="type.nom" />
+          </div>
+        </th>
+        <!-- DLC -->
+        <th style="width: 3rem; background-color: var(--p-primary-color); color: white">DLC</th>
+        <!-- Boutons -->
+        <th
+          style="
+            width: 8rem;
+            background-color: var(--p-primary-color);
+            border-top-right-radius: 10px;
+          "
+        ></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-aspiration>
+      <tr>
+        <!-- Checkbox -->
+        <td>
+          <p-tableCheckbox [value]="aspiration" />
+        </td>
+        <!-- Logo -->
+        <td>
+          <img [src]="aspiration.img" [alt]="'Logo ' + aspiration.nom" style="width: 64px" />
+        </td>
+        <!-- Nom -->
+        <td>{{ aspiration.nom }}</td>
+        <!-- Description -->
+        <td>
+          <div class="overflow-hidden h-16">{{ aspiration.description }}</div>
+        </td>
+        <!-- Type -->
+        <td>{{ aspiration.type.nom }}</td>
+        <!-- DLC -->
+        <td>
+          <img
+            [src]="aspiration.dlc.img"
+            [alt]="'Logo ' + aspiration.dlc.nom"
+            [title]="aspiration.dlc.nom"
+            style="width: 64px"
+          />
+        </td>
+        <!-- Boutons -->
+        <td style="width: 8rem">
+          <p-button
+            icon="pi pi-pencil"
+            class="mr-2"
+            [rounded]="true"
+            (click)="modifierAspiration(aspiration)"
+          />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            (click)="supprimerAspiration(aspiration)"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</sims-section>
+
+<p-dialog
+  [(visible)]="aspirationDialog"
+  [style]="{ width: '450px' }"
+  [header]="aspirationDialogTitle"
+  [modal]="true"
+>
+  <ng-template #content>
+    <div class="flex flex-col gap-6">
+      <img
+        [src]="aspiration.img"
+        [alt]="'Logo ' + aspiration.nom"
+        *ngIf="aspiration.img"
+        class="block m-auto pb-4"
+        style="width: 100px"
+      />
+      <!-- Nom -->
+      <div>
+        <label for="nom" class="block font-semibold mb-3">Nom</label>
+        <input
+          type="text"
+          pInputText
+          id="nom"
+          [(ngModel)]="aspiration.nom"
+          required
+          autofocus
+          fluid
+        />
+        <small *ngIf="submitted && !aspiration.nom">Le nom est requis.</small>
+      </div>
+      <!-- Description -->
+      <div>
+        <label for="description" class="block font-semibold mb-3">Description</label>
+        <textarea
+          id="description"
+          pTextarea
+          [(ngModel)]="aspiration.description"
+          required
+          rows="3"
+          cols="20"
+          fluid
+        ></textarea>
+        <small *ngIf="submitted && !aspiration.description">La description est requise.</small>
+      </div>
+      <!-- Logo -->
+      <div>
+        <label for="img" class="block font-semibold mb-3">Logo</label>
+        <input type="text" pInputText id="img" [(ngModel)]="aspiration.img" fluid />
+      </div>
+      <!-- Type -->
+      <div>
+        <label for="type" class="block font-semibold mb-3">Type d'aspiration</label>
+        <p-select
+          [(ngModel)]="aspiration.type"
+          inputId="type"
+          [options]="types"
+          optionLabel="nom"
+          placeholder="Sélectionne un type"
+          appendTo="body"
+          required
+          fluid
+        >
+          <ng-template #selectedItem let-selectedOption>
+            <div class="flex items-center gap-3" *ngIf="selectedOption">
+              <img [src]="selectedOption.img" style="width: 28px" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-type #item>
+            <div class="flex items-center gap-3">
+              <img [src]="type.img" style="width: 28px" />
+              <div>{{ type.nom }}</div>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+      <!-- DLC -->
+      <div>
+        <label for="dlcs" class="block font-semibold mb-3">DLC</label>
+        <p-select
+          [(ngModel)]="aspiration.dlc"
+          inputId="dlcs"
+          [options]="dlcs"
+          optionLabel="nom"
+          placeholder="Sélectionne un DLC"
+          appendTo="body"
+          required
+          fluid
+        >
+          <ng-template #selectedItem let-selectedOption>
+            <div class="flex items-center gap-3" *ngIf="selectedOption">
+              <img [src]="selectedOption.img" style="width: 28px" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-dlc #item>
+            <div class="flex items-center gap-3">
+              <img [src]="dlc.img" style="width: 28px" />
+              <div>{{ dlc.nom }}</div>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+      <!-- Trait -->
+      <div>
+        <label for="aspirations" class="block font-semibold mb-3">Trait de récompense</label>
+        <p-select
+          [(ngModel)]="aspiration.trait"
+          inputId="aspirations"
+          [options]="traitsAspiration"
+          optionLabel="nom"
+          placeholder="Sélectionne un trait"
+          appendTo="body"
+          required
+          fluid
+        >
+          <ng-template #selectedItem let-selectedOption>
+            <div class="flex items-center gap-3" *ngIf="selectedOption">
+              <img [src]="selectedOption.img" style="width: 28px" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-aspiration #item>
+            <div class="flex items-center gap-3">
+              <img [src]="aspiration.img" style="width: 28px" />
+              <div>{{ aspiration.nom }}</div>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+      <!-- Etapes -->
+      <div>
+        <div class="flex justify-between mb-2">
+          <label for="etapes" class="block font-semibold pt-2">Étapes</label>
+          <p-buttongroup>
+            <p-button icon="pi pi-plus" severity="info" size="small" (onClick)="ajouterEtape()" />
+            <p-button
+              icon="pi pi-minus"
+              severity="danger"
+              size="small"
+              (onClick)="supprimerEtape()"
+              [disabled]="supprimerEtapeButtonDisable"
+            />
+          </p-buttongroup>
+        </div>
+        <div class="pl-2">
+          @for (etape of aspiration.etapes; track etape.numero; let i = $index) {
+            <label [for]="'etape' + i" class="block font-medium">{{
+              'Étape ' + etape.numero
+            }}</label>
+            <div class="pl-3 mb-3">
+              <label [for]="'etape' + i + 'nom'" class="block font-normal mb-1">Nom</label>
+              <input
+                class="mb-2"
+                type="text"
+                pInputText
+                [id]="'etape' + i + 'nom'"
+                [(ngModel)]="aspiration.etapes[i].nom"
+                [name]="'etape' + i + 'nom'"
+                fluid
+              />
+              <!-- Sous-étapes -->
+              <div class="flex justify-between mb-1">
+                <label [for]="'etape' + i + 'sous-etapes'" class="block font-normal"
+                  >Sous-étapes</label
+                >
+                <p-buttongroup>
+                  <p-button
+                    icon="pi pi-plus"
+                    severity="info"
+                    size="small"
+                    (onClick)="ajouterSousEtape(i)"
+                    [pt]="sousEtapeButtonPt"
+                  />
+                  <p-button
+                    icon="pi pi-minus"
+                    severity="danger"
+                    size="small"
+                    (onClick)="supprimerSousEtape(i)"
+                    [disabled]="supprimerSousEtapeButtonDisable[i]"
+                    [pt]="sousEtapeButtonPt"
+                  />
+                </p-buttongroup>
+              </div>
+              @for (sousEtape of etape.sousEtapes; track $index; let j = $index) {
+                <input
+                  type="text"
+                  pInputText
+                  [id]="'etape' + i + 'sousEtape' + j"
+                  [(ngModel)]="aspiration.etapes[i].sousEtapes[j]"
+                  [name]="'etape' + i + 'sousEtape' + j"
+                  fluid
+                />
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #footer>
+    <p-button label="Annuler" icon="pi pi-times" text (click)="cacherDialog()" />
+    <p-button label="Enregistrer" icon="pi pi-check" (click)="enregistrerAspiration()" />
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog />

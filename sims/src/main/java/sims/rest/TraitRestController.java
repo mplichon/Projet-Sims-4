@@ -20,6 +20,7 @@ import sims.dto.trait.ReponseListeGestionTraitDTO;
 import sims.dto.trait.ReponseModificationTraitDTO;
 import sims.dto.trait.RequeteCreationTraitDTO;
 import sims.dto.trait.RequeteModificationTraitDTO;
+import sims.dto.trait.TraitLegerDTO;
 import sims.dto.trait.TypeTraitDTO;
 import sims.manager.TraitManager;
 import sims.mapper.TraitMapper;
@@ -58,6 +59,24 @@ public class TraitRestController {
         return service.getAllOrderByNomAsc()
             .stream()
             .map(mapper::toReponseListeGestionTraitDTO)
+            .toList();
+    }
+
+    @GetMapping("/selection")
+    public List<TraitLegerDTO> getAllTraitSelection() {
+        log.info("GET /api/trait/selection - getAllTraitSelection() called");
+        return service.getAllOrderByNomAsc()
+            .stream()
+            .map(mapper::toTraitLegerDTO)
+            .toList();
+    }
+
+    @GetMapping("/selection/aspiration")
+    public List<TraitLegerDTO> getAllTraitAspirationSelection() {
+        log.info("GET /api/trait/selection - getAllTraitSelection() called");
+        return service.getAllTraitAspiration()
+            .stream()
+            .map(mapper::toTraitLegerDTO)
             .toList();
     }
 

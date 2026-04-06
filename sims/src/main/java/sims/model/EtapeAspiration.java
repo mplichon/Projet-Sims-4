@@ -1,7 +1,7 @@
 package sims.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -25,7 +25,7 @@ public class EtapeAspiration {
 	@Column(nullable = false, columnDefinition = "INT(2)")
 	private int numero;
 	
-	@Column(length = 25, nullable = false, unique = true)
+	@Column(length = 35, nullable = false, unique = true)
 	private String nom;
 	
 	@ElementCollection
@@ -34,7 +34,7 @@ public class EtapeAspiration {
         joinColumns = @JoinColumn (name = "etape_aspiration_id")
     )
     @Column(name = "sous_etape")
-	private Set<String> sousEtapes = new HashSet<String>();
+	private List<String> sousEtapes = new ArrayList<String>();
 	
 	
 	// Constructeurs
@@ -83,12 +83,12 @@ public class EtapeAspiration {
 	}
 
 
-	public Set<String> getSousEtapes() {
+	public List<String> getSousEtapes() {
 		return sousEtapes;
 	}
 
 
-	public void setSousEtapes(Set<String> sousEtapes) {
+	public void setSousEtapes(List<String> sousEtapes) {
 		this.sousEtapes = sousEtapes;
 	}
 

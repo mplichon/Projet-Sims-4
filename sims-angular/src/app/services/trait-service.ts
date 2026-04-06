@@ -5,6 +5,7 @@ import { TypeTraitDTO } from '../models/trait/type-trait-dto';
 import { ReponseListeGestionTraitDTO } from '../models/trait/reponse-liste-gestion-trait-dto';
 import { RequeteCreationModificationTraitDTO } from '../models/trait/requete-creation-modification-trait-dto';
 import { ReponseModificationTraitDTO } from '../models/trait/reponse-modification-trait-dto';
+import { TraitLegerDTO } from '../models/trait/trait-leger-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,13 @@ export class TraitService {
     return this.refresh$.pipe(
       startWith(null),
       switchMap(() => this.http.get<ReponseListeGestionTraitDTO[]>(this.apiGestionUrl)),
+    );
+  }
+
+  public getAllTraitAspirationSelection(): Observable<TraitLegerDTO[]> {
+    return this.refresh$.pipe(
+      startWith(null),
+      switchMap(() => this.http.get<TraitLegerDTO[]>(this.apiSelectionUrl + '/aspiration')),
     );
   }
 

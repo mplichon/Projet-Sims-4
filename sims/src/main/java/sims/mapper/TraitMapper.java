@@ -12,6 +12,7 @@ import sims.dto.trait.ReponseListeGestionTraitDTO;
 import sims.dto.trait.ReponseModificationTraitDTO;
 import sims.dto.trait.RequeteCreationTraitDTO;
 import sims.dto.trait.RequeteModificationTraitDTO;
+import sims.dto.trait.TraitLegerDTO;
 import sims.dto.trait.TypeTraitDTO;
 import sims.model.Aspiration;
 import sims.model.CategorieSim;
@@ -25,6 +26,7 @@ import sims.model.TraitDeCaractere;
 import sims.model.TraitEducation;
 import sims.model.TypeAspiration;
 import sims.model.TypeTrait;
+import sims.service.TraitDeCaractereService;
 
 @Component
 public class TraitMapper {
@@ -37,6 +39,9 @@ public class TraitMapper {
 
     @Autowired
     private AspirationMapper aspirationMapper;
+
+    @Autowired
+    private TraitDeCaractereService service;
 
     // TypeTrait
     public TypeTraitDTO toTypeTraitDTO(TypeTrait typeTrait) {
@@ -52,6 +57,15 @@ public class TraitMapper {
     }
 
     // Trait vers TraitDTO
+    public TraitLegerDTO toTraitLegerDTO(TraitDeCaractere trait) {
+        TraitLegerDTO dto = new TraitLegerDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setImg(trait.getImg());
+
+        return dto;
+    }
+
     public ReponseListeGestionTraitDTO toReponseListeGestionTraitDTO(TraitDeCaractere trait) {
         ReponseListeGestionTraitDTO dto = new ReponseListeGestionTraitDTO();
         dto.setId(trait.getId());
@@ -366,6 +380,10 @@ public class TraitMapper {
     }
 
     // TraitDTO vers TraitDeCaractere
+    public TraitDeCaractere toTraitDeCaractere(TraitLegerDTO dto) {
+        return service.getById(dto.getId());
+    }
+
     public TraitDeCaractere toTraitDeCaractere(RequeteCreationTraitDTO dto) {
         TraitDeCaractere trait = new TraitDeCaractere();
         trait.setNom(dto.getNom());

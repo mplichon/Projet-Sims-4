@@ -52,7 +52,7 @@ public interface IDAOTraitDeCaractere extends JpaRepository<TraitDeCaractere, In
 	public TraitDeCaractere findTraitEnfanceById(@Param("id") Integer id);
 	
 	// Traits de récompense d'aspiration
-	@Query("FROM TraitAspiration")
+	@Query("SELECT t FROM TraitAspiration t ORDER BY t.nom ASC")
 	public List<TraitAspiration> findAllTraitAspiration();
 	
 	@Query("SELECT t FROM TraitAspiration t WHERE t.id=:id")

@@ -1,12 +1,14 @@
 package sims.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +28,7 @@ public class Aspiration {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(length = 25, nullable = false, unique = true)
+	@Column(length = 35, nullable = false, unique = true)
 	private String nom;
 	
 	@Column(nullable = true)
@@ -46,10 +48,10 @@ public class Aspiration {
 	@JoinColumn(name = "trait_id")
 	private TraitAspiration trait;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@OrderBy("numero ASC")
 	@JoinColumn(name = "aspiration_id")
-	private Set<EtapeAspiration> etapes = new HashSet<EtapeAspiration>();
+	private List<EtapeAspiration> etapes = new ArrayList<EtapeAspiration>();
 
 	
 	// Constructeurs
@@ -139,15 +141,18 @@ public class Aspiration {
 
 	public void setTrait(TraitAspiration trait) {
 		this.trait = trait;
+		if (trait != null) {
+			trait.setAspiration(this);
+		}
 	}
 
 
-	public Set<EtapeAspiration> getEtapes() {
+	public List<EtapeAspiration> getEtapes() {
 		return etapes;
 	}
 
 
-	public void setEtapes(Set<EtapeAspiration> etapes) {
+	public void setEtapes(List<EtapeAspiration> etapes) {
 		this.etapes = etapes;
 	}
 

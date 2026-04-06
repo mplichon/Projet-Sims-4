@@ -137,7 +137,7 @@ export class GestionTraitPage implements OnInit {
       this.dlcs = dlcs;
     });
 
-    this.aspirationService.getAllTypeAspirationGestion().subscribe((types) => {
+    this.aspirationService.getAllTypeAspirationSelection().subscribe((types) => {
       this.typesAspiration = types;
     });
 
@@ -269,7 +269,7 @@ export class GestionTraitPage implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Succès',
-          detail: 'Compétence supprimée',
+          detail: 'Trait supprimé',
           life: 3000,
         });
       },
