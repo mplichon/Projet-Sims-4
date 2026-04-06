@@ -31,8 +31,15 @@ public class TraitAspiration extends TraitDeCaractere {
 	}
 
 
+	public void setAspirationNotSync(Aspiration aspiration) {
+		this.aspiration = aspiration;
+	}
+
 	public void setAspiration(Aspiration aspiration) {
 		this.aspiration = aspiration;
+		if (aspiration != null) {
+			aspiration.setTraitNotSync(this);
+		}
 	}
 
 

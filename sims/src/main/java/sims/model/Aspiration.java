@@ -139,10 +139,14 @@ public class Aspiration {
 	}
 
 
+	public void setTraitNotSync(TraitAspiration trait) {
+		this.trait = trait;
+	}
+
 	public void setTrait(TraitAspiration trait) {
 		this.trait = trait;
 		if (trait != null) {
-			trait.setAspiration(this);
+			trait.setAspirationNotSync(this);
 		}
 	}
 
