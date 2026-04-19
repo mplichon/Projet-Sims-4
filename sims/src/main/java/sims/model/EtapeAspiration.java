@@ -25,7 +25,7 @@ public class EtapeAspiration {
 	@Column(nullable = false, columnDefinition = "INT(2)")
 	private int numero;
 	
-	@Column(length = 35, nullable = false, unique = true)
+	@Column(length = 45, nullable = false, unique = true)
 	private String nom;
 	
 	@ElementCollection

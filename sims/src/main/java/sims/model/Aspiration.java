@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -28,10 +29,11 @@ public class Aspiration {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(length = 35, nullable = false, unique = true)
+	@Column(length = 45, nullable = false, unique = true)
 	private String nom;
 	
-	@Column(nullable = true)
+	@Lob
+	@Column(nullable = true, columnDefinition = "TEXT")
 	private String description;
 	
 	@Column(nullable = true)

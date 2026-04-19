@@ -22,7 +22,7 @@ public class TraitDeCaractere {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
-	@Column(length = 40, nullable = false)
+	@Column(length = 45, nullable = false)
 	protected String nom;
 	
 	@Lob
