@@ -1,5 +1,6 @@
 package sims.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,12 +9,17 @@ import org.springframework.stereotype.Service;
 
 import sims.dao.IDAOCarriere;
 import sims.model.Carriere;
+import sims.model.TypeCarriere;
 
 @Service
 public class CarriereService {
 
 	@Autowired
 	IDAOCarriere daoCarriere;
+	
+	public List<TypeCarriere> getAllTypeCarriere() {
+		return Arrays.asList(TypeCarriere.values());
+	}
 	
 	public Carriere getById(Integer id)
 	{
@@ -35,6 +41,10 @@ public class CarriereService {
 	public List<Carriere> getAllWithRangs()
 	{
 		return daoCarriere.findAllWithRangs();
+	}
+
+	public List<Carriere> getAllOrderByNomAsc() {
+		return daoCarriere.findAllOrderByNomAsc();
 	}
 	
 	public Carriere create(Carriere carriere) 

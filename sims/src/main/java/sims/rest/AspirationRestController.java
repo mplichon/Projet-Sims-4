@@ -45,8 +45,8 @@ public class AspirationRestController {
     AspirationMapper mapper;
 
     @GetMapping("/selection/types")
-    public List<TypeAspirationDTO> getAllTypeAspirationGestion() {
-        log.info("GET /api/aspiration/selection/types - getAllTypeAspirationGestion() called");
+    public List<TypeAspirationDTO> getAllTypeAspirationSelection() {
+        log.info("GET /api/aspiration/selection/types - getAllTypeAspirationSelection() called");
         return service.getAllTypeAspiration()
             .stream()
             .map(mapper::toTypeAspirationDTO)

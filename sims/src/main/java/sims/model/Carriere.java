@@ -50,6 +50,10 @@ public class Carriere {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "carriere_id")
 	private List<RangCarriere> rangs = new ArrayList<RangCarriere>();
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "carriere_id")
+	private List<BrancheCarriere> branches = new ArrayList<BrancheCarriere>();
 	
 	
 	// Constructeurs
@@ -78,81 +82,73 @@ public class Carriere {
 		return id;
 	}
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public String getNom() {
 		return nom;
 	}
 
-
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
 
 	public String getDescription() {
 		return description;
 	}
 
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 	public String getImg() {
 		return img;
 	}
 
-
 	public void setImg(String img) {
 		this.img = img;
 	}
-
 
 	public String getNomCarriereGenerale() {
 		return nomCarriereGenerale;
 	}
 
-
 	public void setNomCarriereGenerale(String nomCarriereGenerale) {
 		this.nomCarriereGenerale = nomCarriereGenerale;
 	}
-
 
 	public TypeCarriere getType() {
 		return type;
 	}
 
-
 	public void setType(TypeCarriere type) {
 		this.type = type;
 	}
-
 
 	public DLC getDlc() {
 		return dlc;
 	}
 
-
 	public void setDlc(DLC dlc) {
 		this.dlc = dlc;
 	}
-
 
 	public List<RangCarriere> getRangs() {
 		return rangs;
 	}
 
-
 	public void setRangs(List<RangCarriere> rangs) {
 		this.rangs = rangs;
 	}
 
+	public List<BrancheCarriere> getBranches() {
+		return branches;
+	}
+
+	public void setBranches(List<BrancheCarriere> branches) {
+		this.branches = branches;
+	}
 
 	// toString
 	@Override

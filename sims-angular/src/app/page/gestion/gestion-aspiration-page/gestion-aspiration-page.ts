@@ -212,7 +212,7 @@ export class GestionAspirationPage implements OnInit {
         label: 'Oui',
       },
       accept: () => {
-        this.selectedAspirations.map((a) => this.traitService.deleteTraitById(a.id));
+        this.selectedAspirations.map((a) => this.aspirationService.deleteAspirationById(a.id));
         this.selectedAspirations = [];
         this.messageService.add({
           severity: 'success',
