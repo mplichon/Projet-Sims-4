@@ -61,7 +61,7 @@
         <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
         <!-- Nom -->
         <th
-          class="aspiration-colonne-nom"
+          class="carriere-colonne-nom"
           pSortableColumn="nom"
           style="width: 5rem; background-color: var(--p-primary-color); color: white"
         >
@@ -76,7 +76,7 @@
         </th>
         <!-- Type -->
         <th
-          class="aspiration-colonne-type"
+          class="carriere-colonne-type"
           pSortableColumn="type.nom"
           style="width: 10rem; background-color: var(--p-primary-color); color: white"
         >
@@ -344,165 +344,171 @@
           <p-tabpanels>
             @for (branche of carriere.branches; track $index; let b = $index) {
               <p-tabpanel [value]="b">
-                <!-- Nom branche -->
-                <div>
-                  <label [for]="'branche' + b + 'nom'" class="block font-semibold mb-3">Nom</label>
-                  <input
-                    type="text"
-                    pInputText
-                    [id]="'branche' + b + 'nom'"
-                    [(ngModel)]="carriere.branches[b].nom"
-                    required
-                    autofocus
-                    fluid
-                  />
-                  <small *ngIf="submitted && !carriere.branches[b].nom">Le nom est requis.</small>
-                </div>
-                <!-- Description branche -->
-                <div>
-                  <label [for]="'branche' + b + 'description'" class="block font-semibold mb-3"
-                    >Description</label
-                  >
-                  <textarea
-                    [id]="'branche' + b + 'description'"
-                    pTextarea
-                    [(ngModel)]="carriere.branches[b].description"
-                    required
-                    rows="3"
-                    cols="20"
-                    fluid
-                  ></textarea>
-                  <small *ngIf="submitted && !carriere.branches[b].description"
-                    >La description est requise.</small
-                  >
-                </div>
-                <!-- Logo branche -->
-                <div>
-                  <label [for]="'branche' + b + 'img'" class="block font-semibold mb-3">Logo</label>
-                  <input
-                    type="text"
-                    pInputText
-                    [id]="'branche' + b + 'img'"
-                    [(ngModel)]="carriere.branches[b].img"
-                    fluid
-                  />
-                </div>
-                <!-- Rangs branche -->
-                <div>
-                  <div class="flex justify-between mb-2">
-                    <label [for]="'branche' + b + 'rang'" class="block font-semibold pt-2"
-                      >Rangs</label
+                <div class="flex flex-col gap-5">
+                  <!-- Nom branche -->
+                  <div>
+                    <label [for]="'branche' + b + 'nom'" class="block font-semibold mb-3"
+                      >Nom</label
                     >
-                    <p-buttongroup>
-                      <p-button
-                        icon="pi pi-plus"
-                        severity="info"
-                        size="small"
-                        (onClick)="ajouterRangBranche(b)"
-                      />
-                      <p-button
-                        icon="pi pi-minus"
-                        severity="danger"
-                        size="small"
-                        (onClick)="supprimerRangBranche(b)"
-                        [disabled]="supprimerRangBranchesButtonDisable[b]"
-                      />
-                    </p-buttongroup>
+                    <input
+                      type="text"
+                      pInputText
+                      [id]="'branche' + b + 'nom'"
+                      [(ngModel)]="carriere.branches[b].nom"
+                      required
+                      autofocus
+                      fluid
+                    />
+                    <small *ngIf="submitted && !carriere.branches[b].nom">Le nom est requis.</small>
                   </div>
-                  <div class="pl-2">
-                    @for (rang of carriere.branches[b].rangs; track rang.numero; let i = $index) {
-                      <label [for]="'branche' + b + 'rang' + i" class="block font-medium">
-                        Rang {{ rang.numero + carriere.rangs.length }}
-                      </label>
-                      <div class="pl-3 mb-3">
-                        <!-- Titre branche -->
-                        <label
-                          [for]="'branche' + b + 'rang' + i + 'titre'"
-                          class="block font-normal mb-1"
-                        >
-                          Titre
+                  <!-- Description branche -->
+                  <div>
+                    <label [for]="'branche' + b + 'description'" class="block font-semibold mb-3"
+                      >Description</label
+                    >
+                    <textarea
+                      [id]="'branche' + b + 'description'"
+                      pTextarea
+                      [(ngModel)]="carriere.branches[b].description"
+                      required
+                      rows="3"
+                      cols="20"
+                      fluid
+                    ></textarea>
+                    <small *ngIf="submitted && !carriere.branches[b].description"
+                      >La description est requise.</small
+                    >
+                  </div>
+                  <!-- Logo branche -->
+                  <div>
+                    <label [for]="'branche' + b + 'img'" class="block font-semibold mb-3"
+                      >Logo</label
+                    >
+                    <input
+                      type="text"
+                      pInputText
+                      [id]="'branche' + b + 'img'"
+                      [(ngModel)]="carriere.branches[b].img"
+                      fluid
+                    />
+                  </div>
+                  <!-- Rangs branche -->
+                  <div>
+                    <div class="flex justify-between mb-2">
+                      <label [for]="'branche' + b + 'rang'" class="block font-semibold pt-2"
+                        >Rangs</label
+                      >
+                      <p-buttongroup>
+                        <p-button
+                          icon="pi pi-plus"
+                          severity="info"
+                          size="small"
+                          (onClick)="ajouterRangBranche(b)"
+                        />
+                        <p-button
+                          icon="pi pi-minus"
+                          severity="danger"
+                          size="small"
+                          (onClick)="supprimerRangBranche(b)"
+                          [disabled]="supprimerRangBranchesButtonDisable[b]"
+                        />
+                      </p-buttongroup>
+                    </div>
+                    <div class="pl-2">
+                      @for (rang of carriere.branches[b].rangs; track rang.numero; let i = $index) {
+                        <label [for]="'branche' + b + 'rang' + i" class="block font-medium">
+                          Rang {{ rang.numero + carriere.rangs.length }}
                         </label>
-                        <input
-                          class="mb-2"
-                          type="text"
-                          pInputText
-                          [id]="'branche' + b + 'rang' + i + 'titre'"
-                          [(ngModel)]="carriere.branches[b].rangs[i].titre"
-                          [name]="'branche' + b + 'rang' + i + 'titre'"
-                          fluid
-                        />
-                        <!-- Salaire branche -->
-                        <label
-                          [for]="'branche' + b + 'rang' + i + 'salaire'"
-                          class="block font-normal mb-1"
-                          >Salaire</label
-                        >
-                        <p-inputnumber
-                          class="mb-2"
-                          [(ngModel)]="carriere.branches[b].rangs[i].salaire"
-                          [showButtons]="true"
-                          [inputId]="'branche' + b + 'rang' + i + 'salaire'"
-                          [name]="'branche' + b + 'rang' + i + 'salaire'"
-                          [min]="0"
-                          required
-                          fluid
-                        />
-                        <!-- Tâche du jour branche -->
-                        <label
-                          [for]="'branche' + b + 'rang' + i + 'tache'"
-                          class="block font-normal mb-1"
-                          >Tâche du jour</label
-                        >
-                        <input
-                          class="mb-2"
-                          type="text"
-                          pInputText
-                          [id]="'branche' + b + 'rang' + i + 'tache'"
-                          [(ngModel)]="carriere.branches[b].rangs[i].tacheDuJour"
-                          [name]="'branche' + b + 'rang' + i + 'tache'"
-                          fluid
-                        />
-                        <!-- Exigences branche -->
-                        <div class="flex justify-between mb-1">
+                        <div class="pl-3 mb-3">
+                          <!-- Titre branche -->
                           <label
-                            [for]="'branche' + b + 'rang' + i + 'exigence'"
-                            class="block font-normal"
-                            >Exigences pour promotion</label
+                            [for]="'branche' + b + 'rang' + i + 'titre'"
+                            class="block font-normal mb-1"
                           >
-                          <p-buttongroup>
-                            <p-button
-                              icon="pi pi-plus"
-                              severity="info"
-                              size="small"
-                              (onClick)="ajouterExigenceBranche(b, i)"
-                              [pt]="exigenceButtonPt"
-                            />
-                            <p-button
-                              icon="pi pi-minus"
-                              severity="danger"
-                              size="small"
-                              (onClick)="supprimerExigenceBranche(b, i)"
-                              [disabled]="supprimerExigenceBranchesButtonDisable[b][i]"
-                              [pt]="exigenceButtonPt"
-                            />
-                          </p-buttongroup>
-                        </div>
-                        @for (
-                          exigence of rang.exigencesPourPromotion;
-                          track $index;
-                          let j = $index
-                        ) {
+                            Titre
+                          </label>
                           <input
+                            class="mb-2"
                             type="text"
                             pInputText
-                            [id]="'branche' + b + 'rang' + i + 'exigence' + j"
-                            [(ngModel)]="carriere.branches[b].rangs[i].exigencesPourPromotion[j]"
-                            [name]="'branche' + b + 'rang' + i + 'exigence' + j"
+                            [id]="'branche' + b + 'rang' + i + 'titre'"
+                            [(ngModel)]="carriere.branches[b].rangs[i].titre"
+                            [name]="'branche' + b + 'rang' + i + 'titre'"
                             fluid
                           />
-                        }
-                      </div>
-                    }
+                          <!-- Salaire branche -->
+                          <label
+                            [for]="'branche' + b + 'rang' + i + 'salaire'"
+                            class="block font-normal mb-1"
+                            >Salaire</label
+                          >
+                          <p-inputnumber
+                            class="mb-2"
+                            [(ngModel)]="carriere.branches[b].rangs[i].salaire"
+                            [showButtons]="true"
+                            [inputId]="'branche' + b + 'rang' + i + 'salaire'"
+                            [name]="'branche' + b + 'rang' + i + 'salaire'"
+                            [min]="0"
+                            required
+                            fluid
+                          />
+                          <!-- Tâche du jour branche -->
+                          <label
+                            [for]="'branche' + b + 'rang' + i + 'tache'"
+                            class="block font-normal mb-1"
+                            >Tâche du jour</label
+                          >
+                          <input
+                            class="mb-2"
+                            type="text"
+                            pInputText
+                            [id]="'branche' + b + 'rang' + i + 'tache'"
+                            [(ngModel)]="carriere.branches[b].rangs[i].tacheDuJour"
+                            [name]="'branche' + b + 'rang' + i + 'tache'"
+                            fluid
+                          />
+                          <!-- Exigences branche -->
+                          <div class="flex justify-between mb-1">
+                            <label
+                              [for]="'branche' + b + 'rang' + i + 'exigence'"
+                              class="block font-normal"
+                              >Exigences pour promotion</label
+                            >
+                            <p-buttongroup>
+                              <p-button
+                                icon="pi pi-plus"
+                                severity="info"
+                                size="small"
+                                (onClick)="ajouterExigenceBranche(b, i)"
+                                [pt]="exigenceButtonPt"
+                              />
+                              <p-button
+                                icon="pi pi-minus"
+                                severity="danger"
+                                size="small"
+                                (onClick)="supprimerExigenceBranche(b, i)"
+                                [disabled]="supprimerExigenceBranchesButtonDisable[b][i]"
+                                [pt]="exigenceButtonPt"
+                              />
+                            </p-buttongroup>
+                          </div>
+                          @for (
+                            exigence of rang.exigencesPourPromotion;
+                            track $index;
+                            let j = $index
+                          ) {
+                            <input
+                              type="text"
+                              pInputText
+                              [id]="'branche' + b + 'rang' + i + 'exigence' + j"
+                              [(ngModel)]="carriere.branches[b].rangs[i].exigencesPourPromotion[j]"
+                              [name]="'branche' + b + 'rang' + i + 'exigence' + j"
+                              fluid
+                            />
+                          }
+                        </div>
+                      }
+                    </div>
                   </div>
                 </div>
               </p-tabpanel>
@@ -514,8 +520,10 @@
   </ng-template>
 
   <ng-template #footer>
-    <p-button label="Annuler" icon="pi pi-times" text (click)="cacherDialog()" />
-    <p-button label="Enregistrer" icon="pi pi-check" (click)="enregistrerCarriere()" />
+    <div class="mt-3">
+      <p-button label="Annuler" icon="pi pi-times" text (click)="cacherDialog()" />
+      <p-button label="Enregistrer" icon="pi pi-check" (click)="enregistrerCarriere()" />
+    </div>
   </ng-template>
 </p-dialog>
 
