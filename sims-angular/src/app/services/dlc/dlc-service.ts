@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, startWith, Subject, switchMap } from 'rxjs';
-import { ReponseListeGestionDlcDTO } from '../models/dlc/reponse-liste-gestion-dlc-dto';
-import { TypeDlcDTO } from '../models/dlc/type-dlc-dto';
-import { RequeteCreationModificationDlcDTO } from '../models/dlc/requete-creation-modification-dlc-dto';
-import { DlcLegerDTO } from '../models/dlc/dlc-leger-dto';
+import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
+import { ReponseListeGestionDlcDTO } from '../../models/dlc/reponse-liste-gestion-dlc-dto';
+import { TypeDlcDTO } from '../../models/dlc/type-dlc-dto';
+import { RequeteCreationModificationDlcDTO } from '../../models/dlc/requete-creation-modification-dlc-dto';
+import { DlcLegerDTO } from '../../models/dlc/dlc-leger-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -54,5 +54,19 @@ export class DlcService {
 
   public deleteDlcById(id: number): void {
     this.http.delete<void>(`${this.apiGestionUrl}/${id}`).subscribe(() => this.refresh());
+  }
+
+  public saveDlcGestionV2(dlcDTO: RequeteCreationModificationDlcDTO) {
+    if (!dlcDTO.id) {
+      return this.http.post<any>(this.apiGestionUrl, dlcDTO).pipe(tap(() => this.refresh()));
+    } else {
+      return this.http
+        .put<any>(`${this.apiGestionUrl}/${dlcDTO.id}`, dlcDTO)
+        .pipe(tap(() => this.refresh()));
+    }
+  }
+
+  public deleteDlcByIdV2(id: number) {
+    return this.http.delete<void>(`${this.apiGestionUrl}/${id}`).pipe(tap(() => this.refresh()));
   }
 }

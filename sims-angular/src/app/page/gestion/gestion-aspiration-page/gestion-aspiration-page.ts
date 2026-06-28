@@ -18,7 +18,7 @@ import { ButtonGroupModule } from 'primeng/buttongroup';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TraitService } from '../../../services/trait-service';
 import { AspirationMapper } from '../../../mapper/aspiration-mapper';
-import { DlcService } from '../../../services/dlc-service';
+import { DlcService } from '../../../services/dlc/dlc-service';
 import { AspirationService } from '../../../services/aspiration-service';
 import { ReponseListeGestionAspirationDTO } from '../../../models/aspiration/reponse-liste-gestion-aspiration-dto';
 import { RequeteCreationModificationAspirationDTO } from '../../../models/aspiration/requete-creation-modification-aspiration-dto';

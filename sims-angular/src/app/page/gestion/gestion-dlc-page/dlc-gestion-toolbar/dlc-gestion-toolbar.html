@@ -1,0 +1,20 @@
+<p-toolbar class="mb-6">
+  <ng-template #start>
+    <p-button label="Nouveau" class="mr-2" icon="pi pi-plus" (onClick)="onNouveauButton()" />
+    <p-button
+      severity="danger"
+      label="Supprimer"
+      icon="pi pi-trash"
+      (onClick)="onSupprimerButton()"
+      [disabled]="isSupprimerButtonDisabled()"
+    />
+  </ng-template>
+  <ng-template #end>
+    <p-button
+      label="Exporter"
+      icon="pi pi-upload"
+      severity="secondary"
+      (onClick)="onExporterButton()"
+    />
+  </ng-template>
+</p-toolbar>
