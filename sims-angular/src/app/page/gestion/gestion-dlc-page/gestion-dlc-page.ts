@@ -16,8 +16,6 @@ import { DlcService } from '../../../services/dlc/dlc-service';
 import { ReponseListeGestionDlcDTO } from '../../../models/dlc/reponse-liste-gestion-dlc-dto';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { DlcMapper } from '../../../mapper/dlc-mapper';
-import { DlcFormService } from '../../../services/dlc/dlc-form-service';
 import { DlcGestionTableau } from './dlc-gestion-tableau/dlc-gestion-tableau';
 import { DlcGestionToolbar } from './dlc-gestion-toolbar/dlc-gestion-toolbar';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -48,8 +46,6 @@ export class GestionDlcPage implements OnInit {
   isToolbarSupprimerButtonDisabled = computed(() => !this.selectedDlcsV2()?.length);
 
   dlcService = inject(DlcService);
-  dlcFormService = inject(DlcFormService);
-  dlcMapper = inject(DlcMapper);
   messageService = inject(MessageService);
   dialogService = inject(DialogService);
   cd = inject(ChangeDetectorRef);

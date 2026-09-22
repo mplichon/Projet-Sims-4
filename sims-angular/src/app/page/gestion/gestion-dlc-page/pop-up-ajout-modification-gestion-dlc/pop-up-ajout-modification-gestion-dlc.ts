@@ -53,7 +53,7 @@ export class PopUpAjoutModificationGestionDlc implements OnInit {
   onSubmit(): void {
     this.isLoading.set(true);
     this.gestionDlcPageService
-      .addDlc(this.formGroup)
+      .updateDlc(this.formGroup)
       .pipe(
         take(1),
         tap(() => this.ref.close(true)),

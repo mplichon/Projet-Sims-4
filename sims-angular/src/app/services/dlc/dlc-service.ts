@@ -42,21 +42,7 @@ export class DlcService {
     );
   }
 
-  public saveDlcGestion(dlcDTO: RequeteCreationModificationDlcDTO): void {
-    if (!dlcDTO.id) {
-      this.http.post<any>(this.apiGestionUrl, dlcDTO).subscribe(() => this.refresh());
-    } else {
-      this.http
-        .put<any>(`${this.apiGestionUrl}/${dlcDTO.id}`, dlcDTO)
-        .subscribe(() => this.refresh());
-    }
-  }
-
-  public deleteDlcById(id: number): void {
-    this.http.delete<void>(`${this.apiGestionUrl}/${id}`).subscribe(() => this.refresh());
-  }
-
-  public saveDlcGestionV2(dlcDTO: RequeteCreationModificationDlcDTO) {
+  public saveDlcGestion(dlcDTO: RequeteCreationModificationDlcDTO): Observable<any> {
     if (!dlcDTO.id) {
       return this.http.post<any>(this.apiGestionUrl, dlcDTO).pipe(tap(() => this.refresh()));
     } else {
@@ -66,7 +52,7 @@ export class DlcService {
     }
   }
 
-  public deleteDlcByIdV2(id: number) {
+  public deleteDlcById(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiGestionUrl}/${id}`).pipe(tap(() => this.refresh()));
   }
 }

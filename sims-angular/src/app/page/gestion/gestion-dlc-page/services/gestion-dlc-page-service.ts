@@ -25,15 +25,15 @@ export class GestionDlcPageService {
     });
   }
 
-  addDlc(formGroup: DlcFormGroup) {
+  updateDlc(formGroup: DlcFormGroup) {
     const requeteDTO: RequeteCreationModificationDlcDTO =
       this._buildRequeteCreationModificationDlcDTO(formGroup);
 
-    return this.dlcService.saveDlcGestionV2(requeteDTO);
+    return this.dlcService.saveDlcGestion(requeteDTO);
   }
 
   deleteDlc(dlcId: number) {
-    return this.dlcService.deleteDlcByIdV2(dlcId);
+    return this.dlcService.deleteDlcById(dlcId);
   }
 
   private _buildRequeteCreationModificationDlcDTO(
