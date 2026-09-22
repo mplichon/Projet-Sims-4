@@ -1,20 +1,21 @@
 <sims-section>
   <sims-titre-section [titre]="sectionTitle()" />
-  <p-toast />
 
-  @if (dlcs.hasValue()) {
-    <sims-dlc-gestion-toolbar
-      (exportDlcsCsv)="exportDlcsCsv()"
-      (ouvrirNouveauDlcPopUp)="ouvrirPopUpNouveauDlc()"
-      (supprimerDlcsSelectionnes)="ouvrirPopUpSuppressionDlcsSelectionnes()"
+  <div class="flex flex-col gap-6">
+    <sims-gestion-toolbar
+      (exportCsv)="exportDlcsCsv()"
+      (ouvrirNouveauPopUp)="ouvrirPopUpNouveauDlc()"
+      (supprimerSelection)="ouvrirPopUpSuppressionDlcsSelectionnes()"
       [isSupprimerButtonDisabled]="isToolbarSupprimerButtonDisabled()"
     />
 
-    <sims-dlc-gestion-tableau
-      (dlcToUpdate)="ouvrirPopUpModifierDlc($event)"
-      (dlcToDelete)="ouvrirPopUpSuppressionDlc($event)"
-      [(selectedDlcs)]="selectedDlcsV2"
-      [dlcs]="dlcs.value()"
-    />
-  }
+    @if (dlcs.hasValue()) {
+      <sims-dlc-gestion-tableau
+        (dlcToUpdate)="ouvrirPopUpModifierDlc($event)"
+        (dlcToDelete)="ouvrirPopUpSuppressionDlc($event)"
+        [(selectedDlcs)]="selectedDlcs"
+        [dlcs]="dlcs.value()"
+      />
+    }
+  </div>
 </sims-section>

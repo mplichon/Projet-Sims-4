@@ -1,9 +1,9 @@
 import { TypeDlcDTO } from './type-dlc-dto';
 
-export interface RequeteCreationModificationDlcWithDateDTO {
-  id?: number;
+export interface DlcGestionDTO {
+  id: number | null;
   nom: string;
-  dateSortie?: Date;
+  dateSortie: string;
   description: string;
   img: string;
   type: TypeDlcDTO;

@@ -1,0 +1,17 @@
+.bg-primary-green {
+  background-color: var(--p-primary-color) !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+:host ::ng-deep .p-datatable-sort-icon {
+  color: white;
+  border-color: white;
+}
+
+:host ::ng-deep .sort-icon-green-hover:hover .p-datatable-sort-icon {
+  color: #35985c !important;
+  border-color: #35985c !important;
+}

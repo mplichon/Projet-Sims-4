@@ -4,12 +4,12 @@
       <img
         [src]="formGroup.controls.img.value"
         [alt]="'Logo ' + formGroup.controls.nom.value"
-        class="block w-24 m-auto pb-4"
+        class="w-24 m-auto"
       />
     }
     <!-- Nom -->
-    <div>
-      <label for="nom" class="block font-semibold mb-3">Nom</label>
+    <div class="flex flex-col gap-3">
+      <label for="nom" class="font-semibold">Nom</label>
       <input type="text" id="nom" pInputText formControlName="nom" autofocus [fluid]="true" />
       @if (formGroup.controls.nom.invalid && formGroup.controls.nom.touched) {
         <small>Le nom est requis.</small>
@@ -17,8 +17,8 @@
     </div>
     <div class="grid grid-cols-2 gap-4">
       <!-- Date de sortie -->
-      <div>
-        <label for="date-sortie" class="block font-semibold mb-3">Date de sortie</label>
+      <div class="flex flex-col gap-3">
+        <label for="date-sortie" class="font-semibold">Date de sortie</label>
         <p-datepicker
           formControlName="dateSortie"
           [iconDisplay]="'input'"
@@ -35,8 +35,8 @@
         }
       </div>
       <!-- Type de DLC -->
-      <div>
-        <label for="type" class="block font-semibold mb-3">Type de DLC</label>
+      <div class="flex flex-col gap-3">
+        <label for="type" class="font-semibold">Type de DLC</label>
         <p-select
           formControlName="type"
           inputId="type"
@@ -44,19 +44,17 @@
           optionLabel="nom"
           placeholder="Sélectionne un type"
           appendTo="body"
-          required
           [fluid]="true"
         />
       </div>
     </div>
     <!-- Description -->
-    <div>
-      <label for="description" class="block font-semibold mb-3">Description</label>
+    <div class="flex flex-col gap-3">
+      <label for="description" class="font-semibold">Description</label>
       <textarea
         id="description"
         pTextarea
         formControlName="description"
-        required
         rows="2"
         [fluid]="true"
       ></textarea>
@@ -65,20 +63,21 @@
       }
     </div>
     <!-- Logo -->
-    <div>
-      <label for="img" class="block font-semibold mb-3">Logo</label>
+    <div class="flex flex-col gap-3">
+      <label for="img" class="font-semibold">Logo</label>
       <input type="text" pInputText id="img" formControlName="img" [fluid]="true" />
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex justify-between gap-2">
+      <p-button (onClick)="onCancel()" icon="pi pi-times" label="Annuler" variant="text" />
+      <p-button
+        (onClick)="onSubmit()"
+        [disabled]="formGroup.invalid"
+        [loading]="isLoading()"
+        icon="pi pi-check"
+        label="Enregistrer"
+      />
     </div>
   </div>
 </form>
-
-<div class="flex justify-between gap-2 mt-3">
-  <p-button (click)="onCancel()" icon="pi pi-times" label="Annuler" variant="text" />
-  <p-button
-    (click)="onSubmit()"
-    [disabled]="formGroup.invalid"
-    [loading]="isLoading()"
-    icon="pi pi-check"
-    label="Enregistrer"
-  />
-</div>

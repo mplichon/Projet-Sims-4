@@ -10,7 +10,7 @@ import { TypeDlcDTO } from '../../../../models/dlc/type-dlc-dto';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { GestionDlcPageService } from '../services/gestion-dlc-page-service';
 import { finalize, take, tap } from 'rxjs';
-import { ReponseListeGestionDlcDTO } from '../../../../models/dlc/reponse-liste-gestion-dlc-dto';
+import { DlcGestionDTO } from '../../../../models/dlc/dlc-gestion-dto';
 
 @Component({
   selector: 'sims-pop-up-ajout-modification-gestion-dlc',
@@ -28,7 +28,7 @@ import { ReponseListeGestionDlcDTO } from '../../../../models/dlc/reponse-liste-
 export class PopUpAjoutModificationGestionDlc implements OnInit {
   types!: Signal<TypeDlcDTO[]>;
   isModeEdition!: Signal<boolean>;
-  dlc!: Signal<ReponseListeGestionDlcDTO>;
+  dlc!: Signal<DlcGestionDTO>;
 
   isLoading: WritableSignal<boolean> = signal(false);
 
@@ -53,7 +53,7 @@ export class PopUpAjoutModificationGestionDlc implements OnInit {
   onSubmit(): void {
     this.isLoading.set(true);
     this.gestionDlcPageService
-      .addDlc(this.formGroup)
+      .updateDlc(this.formGroup)
       .pipe(
         take(1),
         tap(() => this.ref.close(true)),

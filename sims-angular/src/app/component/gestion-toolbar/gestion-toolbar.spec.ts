@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DlcGestionToolbar } from './dlc-gestion-toolbar';
+import { GestionToolbar } from './gestion-toolbar';
 
-describe('DlcGestionToolbar', () => {
-  let component: DlcGestionToolbar;
-  let fixture: ComponentFixture<DlcGestionToolbar>;
+describe('GestionToolbar', () => {
+  let component: GestionToolbar;
+  let fixture: ComponentFixture<GestionToolbar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DlcGestionToolbar]
+      imports: [GestionToolbar]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DlcGestionToolbar);
+    fixture = TestBed.createComponent(GestionToolbar);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

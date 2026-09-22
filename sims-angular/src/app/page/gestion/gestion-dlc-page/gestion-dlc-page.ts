@@ -10,26 +10,21 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { TitreSection } from '../../../component/titre-section/titre-section';
-import { CommonModule } from '@angular/common';
 import { Section } from '../../../component/section/section';
 import { DlcService } from '../../../services/dlc/dlc-service';
-import { ReponseListeGestionDlcDTO } from '../../../models/dlc/reponse-liste-gestion-dlc-dto';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { DlcMapper } from '../../../mapper/dlc-mapper';
-import { DlcFormService } from '../../../services/dlc/dlc-form-service';
 import { DlcGestionTableau } from './dlc-gestion-tableau/dlc-gestion-tableau';
-import { DlcGestionToolbar } from './dlc-gestion-toolbar/dlc-gestion-toolbar';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { PopUpAjoutModificationGestionDlc } from './pop-up-ajout-modification-gestion-dlc/pop-up-ajout-modification-gestion-dlc';
 import { PopUpSuppressionDlcsSelectionnes } from './pop-up-suppression-dlcs-selectionnes/pop-up-suppression-dlcs-selectionnes';
 import { PopUpSuppressionDlc } from './pop-up-suppression-dlc/pop-up-suppression-dlc';
+import { GestionToolbar } from '../../../component/gestion-toolbar/gestion-toolbar';
+import { DlcGestionDTO } from '../../../models/dlc/dlc-gestion-dto';
 
 @Component({
   selector: 'sims-gestion-dlc-page',
-  imports: [TitreSection, CommonModule, Section, ToastModule, DlcGestionTableau, DlcGestionToolbar],
-  providers: [MessageService, DialogService],
+  imports: [TitreSection, Section, DlcGestionTableau, GestionToolbar],
+  providers: [DialogService],
   templateUrl: './gestion-dlc-page.html',
   styleUrl: './gestion-dlc-page.css',
 })
@@ -43,16 +38,13 @@ export class GestionDlcPage implements OnInit {
 
   readonly dlcTableau: Signal<DlcGestionTableau> = viewChild.required(DlcGestionTableau);
   sectionTitle: Signal<string> = signal('Gestion des DLCs');
-  selectedDlcsV2: WritableSignal<ReponseListeGestionDlcDTO[]> = signal([]);
+  selectedDlcs: WritableSignal<DlcGestionDTO[]> = signal([]);
 
-  isToolbarSupprimerButtonDisabled = computed(() => !this.selectedDlcsV2()?.length);
+  isToolbarSupprimerButtonDisabled = computed(() => !this.selectedDlcs()?.length);
 
-  dlcService = inject(DlcService);
-  dlcFormService = inject(DlcFormService);
-  dlcMapper = inject(DlcMapper);
-  messageService = inject(MessageService);
-  dialogService = inject(DialogService);
-  cd = inject(ChangeDetectorRef);
+  private readonly dlcService = inject(DlcService);
+  private readonly dialogService = inject(DialogService);
+  private readonly cd = inject(ChangeDetectorRef);
 
   ref!: DynamicDialogRef | null;
 
@@ -79,7 +71,7 @@ export class GestionDlcPage implements OnInit {
     });
   }
 
-  ouvrirPopUpModifierDlc(dlc: ReponseListeGestionDlcDTO): void {
+  ouvrirPopUpModifierDlc(dlc: DlcGestionDTO): void {
     this.ref = this.dialogService.open(PopUpAjoutModificationGestionDlc, {
       header: "Modification d'un DLC",
       closable: true,
@@ -94,7 +86,7 @@ export class GestionDlcPage implements OnInit {
     });
   }
 
-  ouvrirPopUpSuppressionDlc(dlc: ReponseListeGestionDlcDTO): void {
+  ouvrirPopUpSuppressionDlc(dlc: DlcGestionDTO): void {
     this.ref = this.dialogService.open(PopUpSuppressionDlc, {
       header: 'Confirmation',
       modal: true,
@@ -111,9 +103,9 @@ export class GestionDlcPage implements OnInit {
       header: 'Confirmation',
       modal: true,
       draggable: false,
-      width: '37%',
+      width: 'auto',
       data: {
-        selectedDlcs: this.selectedDlcsV2,
+        selectedDlcs: this.selectedDlcs,
       },
     });
   }
