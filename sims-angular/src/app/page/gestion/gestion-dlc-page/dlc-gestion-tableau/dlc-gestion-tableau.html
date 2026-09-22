@@ -1,0 +1,105 @@
+<p-table
+  #dt
+  [value]="dlcs()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['nom']"
+  [(selection)]="selectedDlcs"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="{first} à {last} sur {totalRecords} DLCs"
+  [showCurrentPageReport]="true"
+  [pt]="tablePt"
+>
+  <ng-template #caption>
+    <div class="flex flex-row-reverse">
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Recherche..."
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th
+        style="width: 3rem; background-color: var(--p-primary-color); border-top-left-radius: 10px"
+      >
+        <p-tableHeaderCheckbox />
+      </th>
+      <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
+      <th
+        class="dlc-colonne-nom"
+        pSortableColumn="nom"
+        style="width: 5rem; background-color: var(--p-primary-color); color: white"
+      >
+        <div class="flex items-center gap-2">
+          Nom
+          <p-sortIcon field="nom" />
+        </div>
+      </th>
+      <th
+        class="dlc-colonne-sortie"
+        pSortableColumn="dateSortie"
+        style="width: 5rem; background-color: var(--p-primary-color); color: white"
+      >
+        <div class="flex items-center gap-2">
+          Sortie
+          <p-sortIcon field="dateSortie" />
+        </div>
+      </th>
+      <th style="width: 27rem; background-color: var(--p-primary-color); color: white">
+        Description
+      </th>
+      <th
+        class="dlc-colonne-type"
+        pSortableColumn="type.nom"
+        style="width: 5rem; background-color: var(--p-primary-color); color: white"
+      >
+        <div class="flex items-center gap-2">
+          Type
+          <p-sortIcon field="type.nom" />
+        </div>
+      </th>
+      <th
+        style="width: 8rem; background-color: var(--p-primary-color); border-top-right-radius: 10px"
+      ></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-dlc>
+    <tr>
+      <td>
+        <p-tableCheckbox [value]="dlc" />
+      </td>
+      <td>
+        <img [src]="dlc.img" [alt]="'Logo ' + dlc.nom" style="width: 64px" />
+      </td>
+      <td>{{ dlc.nom }}</td>
+      <td>{{ dlc.dateSortie | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <div class="overflow-hidden h-16">{{ dlc.description }}</div>
+      </td>
+      <td>
+        <p-tag
+          class="text-center w-full"
+          [value]="dlc.type.nom"
+          [style]="{ backgroundColor: dlc.type.couleur }"
+        />
+      </td>
+      <td style="width: 8rem">
+        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" (click)="modifierDlc(dlc)" />
+        <p-button
+          icon="pi pi-trash"
+          severity="danger"
+          [rounded]="true"
+          (click)="supprimerDlc(dlc)"
+        />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

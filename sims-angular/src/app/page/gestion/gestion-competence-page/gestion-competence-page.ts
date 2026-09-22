@@ -24,7 +24,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { DlcLegerDTO } from '../../../models/dlc/dlc-leger-dto';
-import { DlcService } from '../../../services/dlc-service';
+import { DlcService } from '../../../services/dlc/dlc-service';
 
 @Component({
   selector: 'sims-gestion-competence-page',

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CarriereMapper } from '../../../mapper/carriere-mapper';
-import { DlcService } from '../../../services/dlc-service';
+import { DlcService } from '../../../services/dlc/dlc-service';
 import { CarriereService } from '../../../services/carriere-service';
 import { TitreSection } from '../../../component/titre-section/titre-section';
 import { Table, TableModule, TablePassThrough } from 'primeng/table';

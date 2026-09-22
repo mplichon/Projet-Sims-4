@@ -23,7 +23,7 @@ import { TypeTraitDTO } from '../../../models/trait/type-trait-dto';
 import { RequeteCreationModificationTraitDTO } from '../../../models/trait/requete-creation-modification-trait-dto';
 import { CategorieSimDTO } from '../../../models/categorie-sim-dto';
 import { SimService } from '../../../services/sim-service';
-import { DlcService } from '../../../services/dlc-service';
+import { DlcService } from '../../../services/dlc/dlc-service';
 import { DlcLegerDTO } from '../../../models/dlc/dlc-leger-dto';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonGroupModule } from 'primeng/buttongroup';
