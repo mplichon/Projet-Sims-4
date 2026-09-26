@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, startWith, Subject, switchMap } from 'rxjs';
-import { ReponseListeGestionCompetenceDTO } from '../models/competence/reponse-liste-gestion-competence-dto';
-import { RequeteCreationModificationCompetenceDTO } from '../models/competence/requete-creation-modification-competence-dto';
+import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
 import { ReponseGestionCompetenceDTO } from '../models/competence/reponse-gestion-competence-dto';
+import { CompetenceGestionDTO } from '../models/competence/competence-gestion-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +18,10 @@ export class CompetenceService {
     this.refresh$.next();
   }
 
-  public getAllCompetenceGestion(): Observable<ReponseListeGestionCompetenceDTO[]> {
+  public getAllCompetenceGestion(): Observable<CompetenceGestionDTO[]> {
     return this.refresh$.pipe(
       startWith(null),
-      switchMap(() => this.http.get<ReponseListeGestionCompetenceDTO[]>(this.apiGestionUrl)),
+      switchMap(() => this.http.get<CompetenceGestionDTO[]>(this.apiGestionUrl)),
     );
   }
 
@@ -30,17 +29,21 @@ export class CompetenceService {
     return this.http.get<ReponseGestionCompetenceDTO>(`${this.apiGestionUrl}/${id}`);
   }
 
-  public saveCompetenceGestion(competenceDTO: RequeteCreationModificationCompetenceDTO): void {
+  public saveCompetenceGestion(
+    competenceDTO: CompetenceGestionDTO,
+  ): Observable<CompetenceGestionDTO> {
     if (!competenceDTO.id) {
-      this.http.post<any>(this.apiGestionUrl, competenceDTO).subscribe(() => this.refresh());
+      return this.http
+        .post<CompetenceGestionDTO>(this.apiGestionUrl, competenceDTO)
+        .pipe(tap(() => this.refresh()));
     } else {
-      this.http
-        .put<any>(`${this.apiGestionUrl}/${competenceDTO.id}`, competenceDTO)
-        .subscribe(() => this.refresh());
+      return this.http
+        .put<CompetenceGestionDTO>(`${this.apiGestionUrl}/${competenceDTO.id}`, competenceDTO)
+        .pipe(tap(() => this.refresh()));
     }
   }
 
-  public deleteCompetenceById(id: number): void {
-    this.http.delete<void>(`${this.apiGestionUrl}/${id}`).subscribe(() => this.refresh());
+  public deleteCompetenceById(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiGestionUrl}/${id}`).pipe(tap(() => this.refresh()));
   }
 }

@@ -1,0 +1,110 @@
+<form [formGroup]="formGroup">
+  <div class="flex flex-col gap-6">
+    @if (formGroup.controls.img.value) {
+      <img
+        [src]="formGroup.controls.img.value"
+        [alt]="'Logo ' + formGroup.controls.nom.value"
+        class="w-24 m-auto"
+      />
+    }
+
+    <!-- Nom -->
+    <div class="flex flex-col gap-3">
+      <label for="nom" class="font-semibold">Nom</label>
+      <input type="text" pInputText id="nom" formControlName="nom" autofocus [fluid]="true" />
+      @if (formGroup.controls.nom.invalid && formGroup.controls.nom.touched) {
+        <small>Le nom est requis.</small>
+      }
+    </div>
+    <!-- Description -->
+    <div class="flex flex-col gap-3">
+      <label for="description" class="font-semibold">Description</label>
+      <textarea
+        id="description"
+        pTextarea
+        formControlName="description"
+        rows="2"
+        [fluid]="true"
+      ></textarea>
+      @if (formGroup.controls.description.invalid && formGroup.controls.description.touched) {
+        <small>La description est requise.</small>
+      }
+    </div>
+    <!-- Logo -->
+    <div class="flex flex-col gap-3">
+      <label for="img" class="font-semibold">Logo</label>
+      <input type="text" pInputText id="img" formControlName="img" [fluid]="true" />
+    </div>
+    <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+      <!-- Niveau max -->
+      <div class="flex flex-col gap-3">
+        <label for="niveau-max" class="font-semibold">Niveau max</label>
+        <p-inputnumber
+          inputId="niveau-max"
+          type="text"
+          id="niveau-max"
+          formControlName="niveauMax"
+          [min]="0"
+          [showButtons]="true"
+          [fluid]="true"
+        />
+        @if (formGroup.controls.niveauMax.invalid && formGroup.controls.niveauMax.touched) {
+          <small>Le niveau max est requis.</small>
+        }
+      </div>
+      <!-- Catégorie -->
+      <div class="flex flex-col gap-3">
+        <label for="categories" class="font-semibold">Catégorie de Sim</label>
+        <p-select
+          formControlName="categorieSim"
+          inputId="categories"
+          [options]="categoriesSims()"
+          optionLabel="nom"
+          placeholder="Sélectionne une catégorie"
+          appendTo="body"
+          [fluid]="true"
+        />
+      </div>
+    </div>
+    <!-- DLC -->
+    <div class="flex flex-col gap-3">
+      <label for="dlcs" class="font-semibold">DLC</label>
+      <p-select
+        formControlName="dlc"
+        inputId="dlcs"
+        [options]="dlcs()"
+        optionLabel="nom"
+        placeholder="Sélectionne un DLC"
+        appendTo="body"
+        [fluid]="true"
+      >
+        <ng-template #selectedItem let-selectedOption>
+          @if (selectedOption) {
+            <div class="flex items-center gap-3">
+              <img [src]="selectedOption.img" class="w-7" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          }
+        </ng-template>
+        <ng-template let-dlc #item>
+          <div class="flex items-center gap-3">
+            <img [src]="dlc.img" class="w-7" />
+            <div>{{ dlc.nom }}</div>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex justify-between gap-2 mt-3">
+      <p-button (onClick)="onCancel()" icon="pi pi-times" label="Annuler" variant="text" />
+      <p-button
+        (onClick)="onSubmit()"
+        [disabled]="formGroup.invalid"
+        [loading]="isLoading()"
+        icon="pi pi-check"
+        label="Enregistrer"
+      />
+    </div>
+  </div>
+</form>

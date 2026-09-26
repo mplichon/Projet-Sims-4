@@ -15,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sims.dto.competence.ReponseListeGestionCompetenceDTO;
-import sims.dto.competence.ReponseCreationCompetenceDTO;
+import sims.dto.competence.CompetenceGestionDTO;
 import sims.dto.competence.ReponseGestionCompetenceDTO;
-import sims.dto.competence.ReponseModificationCompetenceDTO;
-import sims.dto.competence.RequeteCreationCompetenceDTO;
-import sims.dto.competence.RequeteModificationCompetenceDTO;
 import sims.mapper.CompetenceMapper;
 import sims.model.Competence;
 import sims.service.CompetenceService;
@@ -38,11 +34,11 @@ public class CompetenceRestController {
     CompetenceMapper mapper;
 
     @GetMapping("/gestion")
-    public List<ReponseListeGestionCompetenceDTO> getAllCompetenceGestion() {
+    public List<CompetenceGestionDTO> getAllCompetenceGestion() {
         log.info("GET /api/competence/gestion - getAllCompetenceGestion() called");
         return service.getAllOrderByNomAsc()
             .stream()
-            .map(mapper::toReponseListeGestionCompetenceDTO)
+            .map(mapper::toCompetenceGestionDTO)
             .toList();
     }
 
@@ -53,24 +49,24 @@ public class CompetenceRestController {
     }
 
     @PostMapping("/gestion")
-	public ReponseCreationCompetenceDTO addCompetence(@RequestBody RequeteCreationCompetenceDTO requeteCompetence) {
+	public CompetenceGestionDTO addCompetence(@RequestBody CompetenceGestionDTO requeteCompetence) {
         log.info("POST /api/competence/gestion - addCompetence() called");
         Competence competence = mapper.toCompetence(requeteCompetence);
 
         Competence competenceCree = service.create(competence);
 
-        return mapper.toReponseCreationCompetenceDTO(competenceCree);
+        return mapper.toCompetenceGestionDTO(competenceCree);
 	}
     
     @PutMapping("/gestion/{id}")
-	public ReponseModificationCompetenceDTO updateCompetence(@PathVariable Integer id, @RequestBody RequeteModificationCompetenceDTO requeteCompetence) {
+	public CompetenceGestionDTO updateCompetence(@PathVariable Integer id, @RequestBody CompetenceGestionDTO requeteCompetence) {
         log.info("PUT /api/competence/gestion/{} - updateCompetence() called, id");
         Competence competence = mapper.toCompetence(requeteCompetence);
         competence.setId(id);
 
         Competence competenceModifie = service.update(competence);
 
-        return mapper.toReponseModificationCompetenceDTO(competenceModifie);
+        return mapper.toCompetenceGestionDTO(competenceModifie);
 	}
 
     @DeleteMapping("/gestion/{id}")
