@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, startWith, Subject, switchMap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
 import { TypeAspirationDTO } from '../models/aspiration/type-aspiration-dto';
 import { AspirationLegerDTO } from '../models/aspiration/aspiration-leger-dto';
 import { ReponseGestionAspirationDTO } from '../models/aspiration/reponse-gestion-aspiration-dto';
 import { RequeteCreationModificationAspirationDTO } from '../models/aspiration/requete-creation-modification-aspiration-dto';
-import { ReponseListeGestionAspirationDTO } from '../models/aspiration/reponse-liste-gestion-aspiration-dto';
+import { AspirationGestionDTO } from '../models/aspiration/aspiration-gestion-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class AspirationService {
   private apiSelectionUrl = this.apiUrl + '/selection';
   private refresh$: Subject<void> = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public refresh() {
     this.refresh$.next();
@@ -29,10 +29,10 @@ export class AspirationService {
     );
   }
 
-  public getAllAspirationGestion(): Observable<ReponseListeGestionAspirationDTO[]> {
+  public getAllAspirationGestion(): Observable<AspirationGestionDTO[]> {
     return this.refresh$.pipe(
       startWith(null),
-      switchMap(() => this.http.get<ReponseListeGestionAspirationDTO[]>(this.apiGestionUrl)),
+      switchMap(() => this.http.get<AspirationGestionDTO[]>(this.apiGestionUrl)),
     );
   }
 
@@ -59,5 +59,23 @@ export class AspirationService {
 
   public deleteAspirationById(id: number): void {
     this.http.delete<void>(`${this.apiGestionUrl}/${id}`).subscribe(() => this.refresh());
+  }
+
+  public saveAspirationGestionV2(
+    aspirationDTO: AspirationGestionDTO,
+  ): Observable<AspirationGestionDTO> {
+    if (!aspirationDTO.id) {
+      return this.http
+        .post<AspirationGestionDTO>(this.apiGestionUrl, aspirationDTO)
+        .pipe(tap(() => this.refresh()));
+    } else {
+      return this.http
+        .put<AspirationGestionDTO>(`${this.apiGestionUrl}/${aspirationDTO.id}`, aspirationDTO)
+        .pipe(tap(() => this.refresh()));
+    }
+  }
+
+  public deleteAspirationByIdV2(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiGestionUrl}/${id}`).pipe(tap(() => this.refresh()));
   }
 }

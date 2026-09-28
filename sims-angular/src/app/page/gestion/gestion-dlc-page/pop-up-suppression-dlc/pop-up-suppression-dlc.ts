@@ -1,4 +1,4 @@
-import { Component, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { GestionDlcPageService } from '../services/gestion-dlc-page-service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -11,7 +11,7 @@ import { DlcGestionDTO } from '../../../../models/dlc/dlc-gestion-dto';
   templateUrl: './pop-up-suppression-dlc.html',
   styleUrl: './pop-up-suppression-dlc.css',
 })
-export class PopUpSuppressionDlc {
+export class PopUpSuppressionDlc implements OnInit {
   dlc!: Signal<DlcGestionDTO>;
 
   isLoading: WritableSignal<boolean> = signal(false);

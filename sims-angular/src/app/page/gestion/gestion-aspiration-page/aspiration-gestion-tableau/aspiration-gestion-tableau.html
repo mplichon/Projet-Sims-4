@@ -1,0 +1,99 @@
+<p-table
+  #dt
+  [value]="aspirations()"
+  [rows]="10"
+  [columns]="cols"
+  [paginator]="true"
+  [globalFilterFields]="['nom']"
+  [(selection)]="selectedAspirations"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="{first} à {last} sur {totalRecords} aspirations"
+  [showCurrentPageReport]="true"
+  [pt]="tablePt"
+>
+  <ng-template #caption>
+    <div class="flex flex-row-reverse">
+      <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          (input)="dt.filterGlobal($event.target.value, 'contains')"
+          placeholder="Recherche..."
+        />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <!-- Checkbox -->
+      <th class="w-12 bg-primary-green rounded-tl-xl">
+        <p-tableHeaderCheckbox />
+      </th>
+      <!-- Logo -->
+      <th class="w-12 bg-primary-green text-white">Logo</th>
+      <!-- Nom -->
+      <th class="sort-icon-green-hover w-20 bg-primary-green text-white" pSortableColumn="nom">
+        <div class="flex items-center gap-2">
+          Nom
+          <p-sortIcon field="nom" />
+        </div>
+      </th>
+      <!-- Description -->
+      <th class="bg-primary-green text-white w-auto">Description</th>
+      <!-- Type -->
+      <th class="sort-icon-green-hover w-40 bg-primary-green text-white" pSortableColumn="type.nom">
+        <div class="flex items-center gap-2">
+          Type
+          <p-sortIcon field="type.nom" />
+        </div>
+      </th>
+      <!-- DLC -->
+      <th class="w-12 bg-primary-green text-white">DLC</th>
+      <!-- Boutons -->
+      <th class="w-32 bg-primary-green rounded-tr-xl"></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-aspiration>
+    <tr>
+      <!-- Checkbox -->
+      <td>
+        <p-tableCheckbox [value]="aspiration" />
+      </td>
+      <!-- Logo -->
+      <td>
+        <img [src]="aspiration.img" [alt]="'Logo ' + aspiration.nom" class="w-16" />
+      </td>
+      <!-- Nom -->
+      <td>{{ aspiration.nom }}</td>
+      <!-- Description -->
+      <td>
+        <div class="overflow-hidden h-16">{{ aspiration.description }}</div>
+      </td>
+      <!-- Type -->
+      <td>{{ aspiration.type.nom }}</td>
+      <!-- DLC -->
+      <td>
+        <img
+          [src]="aspiration.dlc.img"
+          [alt]="'Logo ' + aspiration.dlc.nom"
+          [title]="aspiration.dlc.nom"
+          class="w-16"
+        />
+      </td>
+      <!-- Boutons -->
+      <td>
+        <div class="flex gap-2">
+          <p-button icon="pi pi-pencil" [rounded]="true" (click)="modifierAspiration(aspiration)" />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            (click)="supprimerAspiration(aspiration)"
+          />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -22,10 +22,11 @@ import { PopUpAjoutModificationGestionCompetence } from './pop-up-ajout-modifica
 import { PopUpSuppressionCompetence } from './pop-up-suppression-competence/pop-up-suppression-competence';
 import { PopUpSuppressionCompetencesSelectionnes } from './pop-up-suppression-competences-selectionnes/pop-up-suppression-competences-selectionnes';
 import { CompetenceGestionDTO } from '../../../models/competence/competence-gestion-dto';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'sims-gestion-competence-page',
-  imports: [Section, TitreSection, GestionToolbar, CompetenceGestionTableau],
+  imports: [Section, TitreSection, GestionToolbar, CompetenceGestionTableau, SkeletonModule],
   providers: [DialogService],
   templateUrl: './gestion-competence-page.html',
   styleUrl: './gestion-competence-page.css',

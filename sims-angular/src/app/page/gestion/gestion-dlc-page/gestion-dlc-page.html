@@ -16,6 +16,26 @@
         [(selectedDlcs)]="selectedDlcs"
         [dlcs]="dlcs.value()"
       />
+    } @else {
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-row-reverse">
+          <p-skeleton height="3rem" width="16rem" />
+        </div>
+        <div class="flex flex-col gap-1">
+          <p-skeleton height="3rem" />
+
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+        </div>
+      </div>
     }
   </div>
 </sims-section>

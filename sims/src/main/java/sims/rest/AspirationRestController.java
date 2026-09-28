@@ -15,13 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sims.dto.aspiration.AspirationGestionDTO;
 import sims.dto.aspiration.AspirationLegerDTO;
-import sims.dto.aspiration.ReponseCreationAspirationDTO;
 import sims.dto.aspiration.ReponseGestionAspirationDTO;
-import sims.dto.aspiration.ReponseListeGestionAspirationDTO;
-import sims.dto.aspiration.ReponseModificationAspirationDTO;
-import sims.dto.aspiration.RequeteCreationAspirationDTO;
-import sims.dto.aspiration.RequeteModificationAspirationDTO;
 import sims.dto.aspiration.TypeAspirationDTO;
 import sims.mapper.AspirationMapper;
 import sims.model.Aspiration;
@@ -54,11 +50,11 @@ public class AspirationRestController {
     }
 
     @GetMapping("/gestion")
-    public List<ReponseListeGestionAspirationDTO> getAllAspirationGestion() {
+    public List<AspirationGestionDTO> getAllAspirationGestion() {
         log.info("GET /api/aspiration/gestion - getAllAspirationGestion() called");
         return service.getAllOrderByNomAsc()
             .stream()
-            .map(mapper::toReponseListeGestionAspirationDTO)
+            .map(mapper::toAspirationGestionDTO)
             .toList();
     }
 
@@ -78,24 +74,24 @@ public class AspirationRestController {
     }
 
     @PostMapping("/gestion")
-	public ReponseCreationAspirationDTO addAspiration(@RequestBody RequeteCreationAspirationDTO requeteAspiration) {
+	public AspirationGestionDTO addAspiration(@RequestBody AspirationGestionDTO requeteAspiration) {
         log.info("POST /api/aspiration/gestion - addAspiration() called");
         Aspiration aspiration = mapper.toAspiration(requeteAspiration);
 
         Aspiration aspirationCreee = service.create(aspiration);
 
-        return mapper.toReponseCreationAspirationDTO(aspirationCreee);
+        return mapper.toAspirationGestionDTO(aspirationCreee);
 	}
     
     @PutMapping("/gestion/{id}")
-	public ReponseModificationAspirationDTO updateAspiration(@PathVariable Integer id, @RequestBody RequeteModificationAspirationDTO requeteAspiration) {
+	public AspirationGestionDTO updateAspiration(@PathVariable Integer id, @RequestBody AspirationGestionDTO requeteAspiration) {
         log.info("PUT /api/aspiration/gestion/{} - updateAspiration() called", id);
         Aspiration aspiration = mapper.toAspiration(requeteAspiration);
         aspiration.setId(id);
 
         Aspiration aspirationModifiee = service.update(aspiration);
 
-        return mapper.toReponseModificationAspirationDTO(aspirationModifiee);
+        return mapper.toAspirationGestionDTO(aspirationModifiee);
 	}
 
     @DeleteMapping("/gestion/{id}")

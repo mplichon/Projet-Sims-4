@@ -9,7 +9,7 @@ export interface ReponseGestionAspirationDTO {
   description: string;
   img: string;
   type: TypeAspirationDTO;
-  dlc?: DlcLegerDTO;
-  trait?: TraitLegerDTO;
+  dlc: DlcLegerDTO;
+  trait: TraitLegerDTO;
   etapes: ReponseGestionEtapeAspirationDTO[];
 }

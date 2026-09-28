@@ -20,10 +20,11 @@ import { PopUpSuppressionDlcsSelectionnes } from './pop-up-suppression-dlcs-sele
 import { PopUpSuppressionDlc } from './pop-up-suppression-dlc/pop-up-suppression-dlc';
 import { GestionToolbar } from '../../../component/gestion-toolbar/gestion-toolbar';
 import { DlcGestionDTO } from '../../../models/dlc/dlc-gestion-dto';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'sims-gestion-dlc-page',
-  imports: [TitreSection, Section, DlcGestionTableau, GestionToolbar],
+  imports: [TitreSection, Section, DlcGestionTableau, GestionToolbar, SkeletonModule],
   providers: [DialogService],
   templateUrl: './gestion-dlc-page.html',
   styleUrl: './gestion-dlc-page.css',
