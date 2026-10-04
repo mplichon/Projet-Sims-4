@@ -32,25 +32,25 @@ import { AspirationGestionDTO } from '../../../models/aspiration/aspiration-gest
   styleUrl: './gestion-aspiration-page.css',
 })
 export class GestionAspirationPage implements OnInit {
-  aspirationsV2 = rxResource({
+  aspirations = rxResource({
     stream: () => this.aspirationService.getAllAspirationGestion(),
   });
-  typesV2 = rxResource({
+  types = rxResource({
     stream: () => this.aspirationService.getAllTypeAspirationSelection(),
   });
-  dlcsV2 = rxResource({
+  dlcs = rxResource({
     stream: () => this.dlcService.getAllDlcSelection(),
   });
-  traitsAspirationV2 = rxResource({
+  traitsAspiration = rxResource({
     stream: () => this.traitService.getAllTraitAspirationSelection(),
   });
 
   readonly aspirationTableau: Signal<AspirationGestionTableau> =
     viewChild.required(AspirationGestionTableau);
   sectionTitle: Signal<string> = signal('Gestion des aspirations');
-  selectedAspirationsV2: WritableSignal<AspirationGestionDTO[]> = signal([]);
+  selectedAspirations: WritableSignal<AspirationGestionDTO[]> = signal([]);
 
-  isToolbarSupprimerButtonDisabled = computed(() => !this.selectedAspirationsV2()?.length);
+  isToolbarSupprimerButtonDisabled = computed(() => !this.selectedAspirations()?.length);
 
   private readonly aspirationService = inject(AspirationService);
   private readonly dlcService = inject(DlcService);
@@ -76,11 +76,11 @@ export class GestionAspirationPage implements OnInit {
       draggable: false,
       width: '40%',
       data: {
-        types: this.typesV2.value,
-        dlcs: this.dlcsV2.value,
-        traitsAspiration: this.traitsAspirationV2.value,
+        types: this.types.value,
+        dlcs: this.dlcs.value,
+        traitsAspiration: this.traitsAspiration.value,
         isModeEdition: false,
-        aspirationId: null,
+        aspiration: null,
       },
     });
   }
@@ -93,9 +93,9 @@ export class GestionAspirationPage implements OnInit {
       draggable: false,
       width: '40%',
       data: {
-        types: this.typesV2.value,
-        dlcs: this.dlcsV2.value,
-        traitsAspiration: this.traitsAspirationV2.value,
+        types: this.types.value,
+        dlcs: this.dlcs.value,
+        traitsAspiration: this.traitsAspiration.value,
         isModeEdition: true,
         aspiration: aspiration,
       },
@@ -121,7 +121,7 @@ export class GestionAspirationPage implements OnInit {
       draggable: false,
       width: 'auto',
       data: {
-        selectedAspirations: this.selectedAspirationsV2,
+        selectedAspirations: this.selectedAspirations,
       },
     });
   }

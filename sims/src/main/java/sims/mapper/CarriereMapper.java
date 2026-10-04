@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sims.dto.carriere.BrancheCarriereGestionDTO;
+import sims.dto.carriere.CarriereGestionDTO;
+import sims.dto.carriere.RangCarriereGestionDTO;
 import sims.dto.carriere.ReponseCreationBrancheCarriereDTO;
 import sims.dto.carriere.ReponseCreationCarriereDTO;
 import sims.dto.carriere.ReponseCreationRangCarriereDTO;
@@ -50,6 +53,34 @@ public class CarriereMapper {
     }
 
     // Carriere vers CarriereDTO
+    public CarriereGestionDTO toCarriereGestionDTO(Carriere carriere) {
+        CarriereGestionDTO dto = new CarriereGestionDTO();
+        dto.setId(carriere.getId());
+        dto.setNom(carriere.getNom());
+        dto.setDescription(carriere.getDescription());
+        dto.setImg(carriere.getImg());
+
+        TypeCarriereDTO typeCarriereDTO = this.toTypeCarriereDTO(carriere.getType());
+        dto.setType(typeCarriereDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(carriere.getDlc());
+        dto.setDlc(dlcDTO);
+
+        List<RangCarriereGestionDTO> rangsDTO = carriere.getRangs()
+            .stream()
+            .map(this.rangCarriereMapper::toRangCarriereGestionDTO)
+            .toList();
+        dto.setRangs(rangsDTO);
+
+        List<BrancheCarriereGestionDTO> branchesDTO = carriere.getBranches()
+            .stream()
+            .map(this.brancheCarriereMapper::toBrancheCarriereGestionDTO)
+            .toList();
+        dto.setBranches(branchesDTO);
+
+        return dto;
+    }
+
     public ReponseListeGestionCarriereDTO toReponseListeGestionCarriereDTO(Carriere carriere) {
         ReponseListeGestionCarriereDTO dto = new ReponseListeGestionCarriereDTO();
         dto.setId(carriere.getId());
@@ -151,6 +182,34 @@ public class CarriereMapper {
     }
 
     // CarriereDTO vers Carriere
+    public Carriere toCarriere(CarriereGestionDTO dto) {
+        Carriere carriere = new Carriere();
+        carriere.setId(dto.getId());
+        carriere.setNom(dto.getNom());
+        carriere.setDescription(dto.getDescription());
+        carriere.setImg(dto.getImg());
+
+        TypeCarriere typeCarriere = this.toTypeCarriere(dto.getType());
+        carriere.setType(typeCarriere);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        carriere.setDlc(dlc);
+
+        List<RangCarriere> rangs = dto.getRangs()
+            .stream()
+            .map(this.rangCarriereMapper::toRangCarriere)
+            .toList();
+        carriere.setRangs(rangs);
+
+        List<BrancheCarriere> branches = dto.getBranches()
+            .stream()
+            .map(this.brancheCarriereMapper::toBrancheCarriere)
+            .toList();
+        carriere.setBranches(branches);
+
+        return carriere;
+    }
+
     public Carriere toCarriere(RequeteCreationCarriereDTO dto) {
         Carriere carriere = new Carriere();
         carriere.setNom(dto.getNom());

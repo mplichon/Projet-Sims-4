@@ -24,7 +24,6 @@ import { EtapeAspirationGestionDTO } from '../../../../models/aspiration/etape-a
 export class GestionAspirationPageService {
   private readonly aspirationService = inject(AspirationService);
 
-  // TODO: gérer le cas null
   buildAspirationFormGroup(aspiration: AspirationGestionDTO): AspirationFormGroup {
     const etapes: EtapeAspirationFormGroup[] = aspiration?.etapes
       ? aspiration?.etapes.map((etape) => this.buildEtapeAspirationFormGroup(etape))
@@ -83,22 +82,19 @@ export class GestionAspirationPageService {
   }
 
   updateAspiration(formGroup: AspirationFormGroup): Observable<AspirationGestionDTO> {
-    const requeteDTO: AspirationGestionDTO =
-      this._buildRequeteCreationModificationAspirationDTO(formGroup);
+    const requeteDTO: AspirationGestionDTO = this._buildAspirationGestionDTO(formGroup);
 
-    return this.aspirationService.saveAspirationGestionV2(requeteDTO);
+    return this.aspirationService.saveAspirationGestion(requeteDTO);
   }
 
   deleteAspiration(id: number): Observable<void> {
-    return this.aspirationService.deleteAspirationByIdV2(id);
+    return this.aspirationService.deleteAspirationById(id);
   }
 
-  private _buildRequeteCreationModificationAspirationDTO(
-    formGroup: AspirationFormGroup,
-  ): AspirationGestionDTO {
+  private _buildAspirationGestionDTO(formGroup: AspirationFormGroup): AspirationGestionDTO {
     const etapesFormArray: FormArray<EtapeAspirationFormGroup> = formGroup.controls.etapes;
-    const etapes: EtapeAspirationGestionDTO[] = etapesFormArray.controls.map((etapeFormGroup) =>
-      this._buildRequeteCreationModificationEtapeAspirationDTO(etapeFormGroup),
+    const etapes: EtapeAspirationGestionDTO[] = etapesFormArray.controls.map(
+      (etapeFormGroup, index) => this._buildEtapeAspirationGestionDTO(etapeFormGroup, index),
     );
 
     return {
@@ -113,8 +109,9 @@ export class GestionAspirationPageService {
     };
   }
 
-  private _buildRequeteCreationModificationEtapeAspirationDTO(
+  private _buildEtapeAspirationGestionDTO(
     formGroup: EtapeAspirationFormGroup,
+    index: number,
   ): EtapeAspirationGestionDTO {
     const sousEtapesFormArray: FormArray<SousEtapeAspirationFormGroup> =
       formGroup.controls.sousEtapes;
@@ -124,7 +121,7 @@ export class GestionAspirationPageService {
 
     return {
       id: formGroup.controls.id.value,
-      numero: formGroup.controls.numero.value ?? 0,
+      numero: index + 1,
       nom: formGroup.controls.nom.value ?? '',
       sousEtapes: sousEtapes,
     };

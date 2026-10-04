@@ -1,6 +1,6 @@
-import { Component, effect, inject, Signal, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { FormArray, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule, ButtonPassThrough } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
@@ -10,11 +10,12 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { GestionAspirationPageService } from '../services/gestion-aspiration-page-service';
 import { TraitLegerDTO } from '../../../../models/trait/trait-leger-dto';
 import { DlcLegerDTO } from '../../../../models/dlc/dlc-leger-dto';
-import { ButtonGroup } from 'primeng/buttongroup';
 import { EtapeAspirationFormGroup } from '../../../../models/forms/etape-aspiration-form';
 import { SousEtapeAspirationFormGroup } from '../../../../models/forms/sous-etape-aspiration-form';
 import { finalize, take, tap } from 'rxjs';
 import { AspirationGestionDTO } from '../../../../models/aspiration/aspiration-gestion-dto';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'sims-pop-up-ajout-modification-gestion-aspiration',
@@ -24,12 +25,13 @@ import { AspirationGestionDTO } from '../../../../models/aspiration/aspiration-g
     TextareaModule,
     SelectModule,
     ButtonModule,
-    ButtonGroup,
+    InputGroupModule,
+    InputGroupAddonModule,
   ],
   templateUrl: './pop-up-ajout-modification-gestion-aspiration.html',
   styleUrl: './pop-up-ajout-modification-gestion-aspiration.css',
 })
-export class PopUpAjoutModificationGestionAspiration {
+export class PopUpAjoutModificationGestionAspiration implements OnInit {
   types!: Signal<TypeAspirationDTO[]>;
   dlcs!: Signal<DlcLegerDTO[]>;
   traitsAspiration!: Signal<TraitLegerDTO[]>;
@@ -51,7 +53,6 @@ export class PopUpAjoutModificationGestionAspiration {
     this.isModeEdition = signal(this.config?.data?.isModeEdition);
     this.aspiration = signal(this.config?.data?.aspiration);
 
-    console.warn('aspiration', this.config?.data?.aspiration);
     this.formGroup = this.gestionAspirationPageService.buildAspirationFormGroup(this.aspiration());
   }
 
@@ -77,9 +78,8 @@ export class PopUpAjoutModificationGestionAspiration {
     this.etapesFormArray().push(etapeFormGroup);
   }
 
-  removeEtape(): void {
-    const lastIndex: number = this.etapesFormArray().length - 1;
-    this.etapesFormArray().removeAt(lastIndex);
+  removeEtape(index: number): void {
+    this.etapesFormArray().removeAt(index);
   }
 
   addSousEtape(index: number): void {
@@ -88,23 +88,13 @@ export class PopUpAjoutModificationGestionAspiration {
     this.sousEtapesFormArray(index).push(sousEtapeFormGroup);
   }
 
-  removeSousEtape(index: number): void {
-    const lastIndex: number = this.sousEtapesFormArray(index).length - 1;
-    this.sousEtapesFormArray(index).removeAt(lastIndex);
+  removeSousEtape(indexEtape: number, indexSousEtape: number): void {
+    this.sousEtapesFormArray(indexEtape).removeAt(indexSousEtape);
   }
 
   onCancel(): void {
     this.ref.close(false);
   }
-
-  sousEtapeButtonPt: ButtonPassThrough = {
-    root: {
-      style: {
-        height: '20px',
-        width: '20px',
-      },
-    },
-  };
 
   onSubmit(): void {
     this.isLoading.set(true);

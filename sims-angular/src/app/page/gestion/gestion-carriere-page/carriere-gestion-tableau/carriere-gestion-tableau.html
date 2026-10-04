@@ -1,14 +1,14 @@
 <p-table
   #dt
-  [value]="aspirations()"
+  [value]="carrieres()"
   [rows]="10"
   [columns]="cols"
   [paginator]="true"
   [globalFilterFields]="['nom']"
-  [(selection)]="selectedAspirations"
+  [(selection)]="selectedCarrieres"
   [rowHover]="true"
   dataKey="id"
-  currentPageReportTemplate="{first} à {last} sur {totalRecords} aspirations"
+  currentPageReportTemplate="{first} à {last} sur {totalRecords} carrières"
   [showCurrentPageReport]="true"
   [pt]="tablePt"
 >
@@ -55,46 +55,42 @@
       <th class="w-32 bg-primary-green rounded-tr-xl"></th>
     </tr>
   </ng-template>
-  <ng-template #body let-aspiration>
+  <ng-template #body let-carriere>
     <tr>
       <!-- Checkbox -->
       <td>
-        <p-tableCheckbox [value]="aspiration" />
+        <p-tableCheckbox [value]="carriere" />
       </td>
       <!-- Logo -->
       <td>
-        <img [src]="aspiration.img" [alt]="'Logo ' + aspiration.nom" class="w-16" />
+        <img [src]="carriere.img" [alt]="'Logo ' + carriere.nom" class="w-16" />
       </td>
       <!-- Nom -->
-      <td>{{ aspiration.nom }}</td>
+      <td>{{ carriere.nom }}</td>
       <!-- Description -->
       <td>
-        <div class="overflow-hidden h-16">{{ aspiration.description }}</div>
+        <div class="overflow-hidden h-16">{{ carriere.description }}</div>
       </td>
       <!-- Type -->
-      <td>{{ aspiration.type.nom }}</td>
+      <td>{{ carriere.type.nom }}</td>
       <!-- DLC -->
       <td>
         <img
-          [src]="aspiration.dlc.img"
-          [alt]="'Logo ' + aspiration.dlc.nom"
-          [title]="aspiration.dlc.nom"
+          [src]="carriere.dlc.img"
+          [alt]="'Logo ' + carriere.dlc.nom"
+          [title]="carriere.dlc.nom"
           class="w-16"
         />
       </td>
       <!-- Boutons -->
       <td>
         <div class="flex gap-2">
-          <p-button
-            icon="pi pi-pencil"
-            [rounded]="true"
-            (onClick)="modifierAspiration(aspiration)"
-          />
+          <p-button icon="pi pi-pencil" [rounded]="true" (onClick)="modifierCarriere(carriere)" />
           <p-button
             icon="pi pi-trash"
             severity="danger"
             [rounded]="true"
-            (onClick)="supprimerAspiration(aspiration)"
+            (onClick)="supprimerCarriere(carriere)"
           />
         </div>
       </td>

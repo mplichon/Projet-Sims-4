@@ -9,12 +9,12 @@
       [isSupprimerButtonDisabled]="isToolbarSupprimerButtonDisabled()"
     />
 
-    @if (aspirationsV2.hasValue()) {
+    @if (aspirations.hasValue()) {
       <sims-aspiration-gestion-tableau
         (aspirationToUpdate)="ouvrirPopUpModifierAspiration($event)"
         (aspirationToDelete)="ouvrirPopUpSuppressionAspiration($event)"
-        [(selectedAspirations)]="selectedAspirationsV2"
-        [aspirations]="aspirationsV2.value()"
+        [(selectedAspirations)]="selectedAspirations"
+        [aspirations]="aspirations.value()"
       />
     } @else {
       <div class="flex flex-col gap-3">

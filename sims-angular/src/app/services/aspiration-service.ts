@@ -4,7 +4,6 @@ import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
 import { TypeAspirationDTO } from '../models/aspiration/type-aspiration-dto';
 import { AspirationLegerDTO } from '../models/aspiration/aspiration-leger-dto';
 import { ReponseGestionAspirationDTO } from '../models/aspiration/reponse-gestion-aspiration-dto';
-import { RequeteCreationModificationAspirationDTO } from '../models/aspiration/requete-creation-modification-aspiration-dto';
 import { AspirationGestionDTO } from '../models/aspiration/aspiration-gestion-dto';
 
 @Injectable({
@@ -47,21 +46,7 @@ export class AspirationService {
     return this.http.get<ReponseGestionAspirationDTO>(`${this.apiGestionUrl}/${id}`);
   }
 
-  public saveAspirationGestion(aspirationDTO: RequeteCreationModificationAspirationDTO): void {
-    if (!aspirationDTO.id) {
-      this.http.post<any>(this.apiGestionUrl, aspirationDTO).subscribe(() => this.refresh());
-    } else {
-      this.http
-        .put<any>(`${this.apiGestionUrl}/${aspirationDTO.id}`, aspirationDTO)
-        .subscribe(() => this.refresh());
-    }
-  }
-
-  public deleteAspirationById(id: number): void {
-    this.http.delete<void>(`${this.apiGestionUrl}/${id}`).subscribe(() => this.refresh());
-  }
-
-  public saveAspirationGestionV2(
+  public saveAspirationGestion(
     aspirationDTO: AspirationGestionDTO,
   ): Observable<AspirationGestionDTO> {
     if (!aspirationDTO.id) {
@@ -75,7 +60,7 @@ export class AspirationService {
     }
   }
 
-  public deleteAspirationByIdV2(id: number): Observable<void> {
+  public deleteAspirationById(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiGestionUrl}/${id}`).pipe(tap(() => this.refresh()));
   }
 }

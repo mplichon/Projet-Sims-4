@@ -1,0 +1,417 @@
+<form [formGroup]="formGroup">
+  <div class="flex flex-col gap-6">
+    @if (formGroup.controls.img.value) {
+      <img
+        [src]="formGroup.controls.img.value"
+        [alt]="'Logo ' + formGroup.controls.nom.value"
+        class="w-24 m-auto"
+      />
+    }
+    <!-- Nom -->
+    <div class="flex flex-col gap-3">
+      <label for="nom" class="font-semibold">Nom</label>
+      <input type="text" pInputText id="nom" formControlName="nom" autofocus [fluid]="true" />
+      @if (formGroup.controls.nom.invalid && formGroup.controls.nom.touched) {
+        <small>Le nom est requis.</small>
+      }
+    </div>
+    <!-- Description -->
+    <div class="flex flex-col gap-3">
+      <label for="description" class="font-semibold">Description</label>
+      <textarea
+        id="description"
+        pTextarea
+        formControlName="description"
+        rows="2"
+        [fluid]="true"
+      ></textarea>
+      @if (formGroup.controls.description.invalid && formGroup.controls.description.touched) {
+        <small>La description est requise.</small>
+      }
+    </div>
+    <!-- Logo -->
+    <div class="flex flex-col gap-3">
+      <label for="img" class="font-semibold">Logo</label>
+      <input type="text" pInputText id="img" formControlName="img" [fluid]="true" />
+    </div>
+    <!-- Type -->
+    <div class="flex flex-col gap-3">
+      <label for="type" class="font-semibold">Type de carrière</label>
+      <p-select
+        formControlName="type"
+        inputId="type"
+        [options]="types()"
+        optionLabel="nom"
+        placeholder="Sélectionne un type"
+        appendTo="body"
+        [fluid]="true"
+      />
+    </div>
+    <!-- DLC -->
+    <div class="flex flex-col gap-3">
+      <label for="dlcs" class="font-semibold">DLC</label>
+      <p-select
+        formControlName="dlc"
+        inputId="dlcs"
+        [options]="dlcs()"
+        optionLabel="nom"
+        placeholder="Sélectionne un DLC"
+        appendTo="body"
+        [fluid]="true"
+      >
+        <ng-template #selectedItem let-selectedOption>
+          @if (selectedOption) {
+            <div class="flex items-center gap-3">
+              <img [src]="selectedOption.img" class="w-7" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          }
+        </ng-template>
+        <ng-template let-dlc #item>
+          <div class="flex items-center gap-3">
+            <img [src]="dlc.img" class="w-7" />
+            <div>{{ dlc.nom }}</div>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+    <!-- Rangs -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="rangs">Rangs</label>
+      <div class="flex flex-col gap-3 ml-2" formArrayName="rangs">
+        @for (rang of rangsFormArray().controls; track rang; let i = $index) {
+          <div [formGroupName]="i" class="flex flex-col gap-2">
+            <div class="flex justify-between items-center">
+              <label [for]="'rang-' + i" class="font-medium">{{ 'Rang ' + (i + 1) }}</label>
+              <p-button
+                (onClick)="removeRang(i)"
+                [disabled]="isSupprimerRangButtonDisabled()"
+                [outlined]="true"
+                [rounded]="true"
+                icon="pi pi-trash"
+                severity="danger"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <!-- Titre -->
+              <div class="flex flex-col gap-1">
+                <label [for]="'rang-' + i + '-titre'" class="font-normal">Titre</label>
+                <input
+                  [fluid]="true"
+                  [id]="'rang-' + i + '-titre'"
+                  [name]="'rang-' + i + '-titre'"
+                  formControlName="titre"
+                  type="text"
+                  pInputText
+                />
+              </div>
+              <!-- Salaire -->
+              <div class="flex flex-col gap-1">
+                <label [for]="'rang-' + i + '-salaire'" class="font-normal">Salaire</label>
+                <p-inputnumber
+                  [fluid]="true"
+                  [inputId]="'rang-' + i + '-salaire'"
+                  [min]="0"
+                  [name]="'rang-' + i + '-salaire'"
+                  [showButtons]="true"
+                  formControlName="salaire"
+                />
+              </div>
+              <!-- Tâche du jour -->
+              <div class="flex flex-col gap-1">
+                <label [for]="'rang-' + i + '-tache'" class="font-normal">Tâche du jour</label>
+                <input
+                  [fluid]="true"
+                  [id]="'rang-' + i + '-tache'"
+                  [name]="'rang-' + i + '-tache'"
+                  formControlName="tacheDuJour"
+                  type="text"
+                  pInputText
+                />
+              </div>
+              <!-- Exigences -->
+              <div class="flex flex-col gap-1">
+                <label [for]="'rang-' + i + '-exigence'" class="font-normal">
+                  Exigences pour promotion
+                </label>
+                <div class="flex flex-col gap-1" formArrayName="exigencesPourPromotion">
+                  @for (
+                    exigence of exigencesRangFormArray(i).controls;
+                    track exigence;
+                    let j = $index
+                  ) {
+                    <p-inputgroup [formGroupName]="j">
+                      <input
+                        [fluid]="true"
+                        [id]="'rang-' + i + '-exigence-' + j"
+                        [name]="'rang-' + i + '-exigence-' + j"
+                        formControlName="exigencePourPromotion"
+                        type="text"
+                        pInputText
+                      />
+                      <p-inputgroup-addon>
+                        <p-button
+                          (onClick)="removeExigenceRang(i, j)"
+                          [disabled]="isSupprimerExigenceRangButtonDisabled(i)"
+                          class="flex justify-center"
+                          icon="pi pi-times-circle"
+                          severity="danger"
+                          variant="text"
+                        />
+                      </p-inputgroup-addon>
+                    </p-inputgroup>
+                  }
+                </div>
+                <p-button
+                  (onClick)="addExigenceRang(i)"
+                  [rounded]="true"
+                  class="flex justify-center"
+                  icon="pi pi-plus-circle"
+                  label="Ajouter une exigence"
+                  severity="info"
+                  size="small"
+                  styleClass="h-8"
+                  variant="text"
+                />
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <p-button
+        (onClick)="addRang()"
+        [rounded]="true"
+        class="flex justify-center"
+        icon="pi pi-plus-circle"
+        label="Ajouter un rang"
+        severity="info"
+        variant="text"
+      />
+    </div>
+
+    <!-- Branches -->
+    <div class="flex flex-col gap-3">
+      <div class="flex justify-between items-center">
+        <label for="branches" class="font-semibold">Branches</label>
+        <p-checkbox [binary]="true" formControlName="hasBranches" />
+      </div>
+      @if (formGroup.controls.hasBranches.value) {
+        <p-tabs [value]="0">
+          <p-tablist>
+            @for (branche of branchesFormArray().controls; track branche; let b = $index) {
+              <p-tab [value]="b" class="flex items-center !gap-2">
+                @if (branche.controls.img.value) {
+                  <p-avatar [image]="branche.controls.img.value" />
+                }
+                <span>Branche {{ b + 1 }}</span>
+              </p-tab>
+            }
+          </p-tablist>
+          <p-tabpanels formArrayName="branches">
+            @for (branche of branchesFormArray().controls; track branche; let b = $index) {
+              <p-tabpanel [formGroupName]="b" [value]="b" class="flex flex-col gap-5">
+                <!-- Nom branche -->
+                <div class="flex flex-col gap-3">
+                  <label [for]="'branche-' + b + '-nom'" class="font-semibold">Nom</label>
+                  <input
+                    [fluid]="true"
+                    [id]="'branche-' + b + '-nom'"
+                    [name]="'branche-' + b + '-nom'"
+                    formControlName="nom"
+                    type="text"
+                    pInputText
+                  />
+                  @if (
+                    branchesFormArray().at(b).controls.nom.invalid &&
+                    branchesFormArray().at(b).controls.nom.touched
+                  ) {
+                    <small>Le nom est requis.</small>
+                  }
+                </div>
+                <!-- Description branche -->
+                <div class="flex flex-col gap-3">
+                  <label [for]="'branche-' + b + '-description'" class="font-semibold">
+                    Description
+                  </label>
+                  <textarea
+                    [fluid]="true"
+                    [id]="'branche-' + b + '-description'"
+                    [name]="'branche-' + b + '-description'"
+                    formControlName="description"
+                    rows="2"
+                    pTextarea
+                  ></textarea>
+                  @if (
+                    branchesFormArray().at(b).controls.description.invalid &&
+                    branchesFormArray().at(b).controls.description.touched
+                  ) {
+                    <small>La description est requise.</small>
+                  }
+                </div>
+                <!-- Logo branche -->
+                <div class="flex flex-col gap-3">
+                  <label [for]="'branche-' + b + '-img'" class="font-semibold">Logo</label>
+                  <input
+                    [fluid]="true"
+                    [id]="'branche-' + b + '-img'"
+                    formControlName="img"
+                    type="text"
+                    pInputText
+                  />
+                </div>
+                <!-- Rangs branche -->
+                <div class="flex flex-col gap-3">
+                  <label [for]="'branche-' + b + '-rangs'" class="font-semibold">Rangs</label>
+                  <div class="flex flex-col gap-3 ml-2" formArrayName="rangs">
+                    @for (rang of rangsBrancheFormArray(b).controls; track rang; let r = $index) {
+                      <div [formGroupName]="r" class="flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                          <label [for]="'branche-' + b + '-rang-' + r" class="font-medium">
+                            <!-- les indices commencent à zéro -->
+                            {{ 'Rang ' + (r + 1 + rangsFormArray().length) }}
+                          </label>
+                          <p-button
+                            (onClick)="removeRangBranche(b, r)"
+                            [disabled]="isSupprimerRangBrancheButtonDisabled(b)"
+                            [outlined]="true"
+                            [rounded]="true"
+                            icon="pi pi-trash"
+                            severity="danger"
+                          />
+                        </div>
+                        <div class="flex flex-col gap-2">
+                          <!-- Titre branche -->
+                          <div class="flex flex-col gap-1">
+                            <label
+                              [for]="'branche-' + b + '-rang-' + r + '-titre'"
+                              class="font-normal"
+                            >
+                              Titre
+                            </label>
+                            <input
+                              [fluid]="true"
+                              [id]="'branche-' + b + '-rang-' + r + '-titre'"
+                              [name]="'branche-' + b + '-rang-' + r + '-titre'"
+                              formControlName="titre"
+                              type="text"
+                              pInputText
+                            />
+                          </div>
+                          <!-- Salaire branche -->
+                          <div class="flex flex-col gap-1">
+                            <label
+                              [for]="'branche-' + b + '-rang-' + r + '-salaire'"
+                              class="font-normal"
+                            >
+                              Salaire
+                            </label>
+                            <p-inputnumber
+                              [fluid]="true"
+                              [inputId]="'branche-' + b + '-rang-' + r + '-salaire'"
+                              [min]="0"
+                              [name]="'branche-' + b + '-rang-' + r + '-salaire'"
+                              [showButtons]="true"
+                              formControlName="salaire"
+                            />
+                          </div>
+                          <!-- Tâche du jour branche -->
+                          <div class="flex flex-col gap-1">
+                            <label
+                              [for]="'branche-' + b + '-rang-' + r + '-tache'"
+                              class="font-normal"
+                            >
+                              Tâche du jour
+                            </label>
+                            <input
+                              [fluid]="true"
+                              [id]="'branche-' + b + '-rang-' + r + '-tache'"
+                              [name]="'branche-' + b + '-rang-' + r + '-tache'"
+                              formControlName="tacheDuJour"
+                              type="text"
+                              pInputText
+                            />
+                          </div>
+                          <!-- Exigences branche -->
+                          <div class="flex flex-col gap-1">
+                            <label
+                              [for]="'branche-' + b + '-rang-' + r + '-exigences'"
+                              class="font-normal"
+                            >
+                              Exigences pour promotion
+                            </label>
+                            <div class="flex flex-col gap-1" formArrayName="exigencesPourPromotion">
+                              @for (
+                                exigence of exigencesRangBrancheFormArray(b, r).controls;
+                                track exigence;
+                                let e = $index
+                              ) {
+                                <p-inputgroup [formGroupName]="e">
+                                  <input
+                                    [fluid]="true"
+                                    [id]="'branche-' + b + '-rang-' + r + '-exigence-' + e"
+                                    [name]="'branche-' + b + '-rang-' + r + '-exigence-' + e"
+                                    formControlName="exigencePourPromotion"
+                                    type="text"
+                                    pInputText
+                                  />
+                                  <p-inputgroup-addon>
+                                    <p-button
+                                      (onClick)="removeExigenceRangBranche(b, r, e)"
+                                      [disabled]="
+                                        isSupprimerExigenceRangBrancheButtonDisabled(b, r)
+                                      "
+                                      class="flex justify-center"
+                                      icon="pi pi-times-circle"
+                                      severity="danger"
+                                      variant="text"
+                                    />
+                                  </p-inputgroup-addon>
+                                </p-inputgroup>
+                              }
+                            </div>
+                            <p-button
+                              (onClick)="addExigenceRangBranche(b, r)"
+                              [rounded]="true"
+                              class="flex justify-center"
+                              icon="pi pi-plus-circle"
+                              label="Ajouter une exigence"
+                              severity="info"
+                              size="small"
+                              styleClass="h-8"
+                              variant="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                  <p-button
+                    (onClick)="addRangBranche(b)"
+                    [rounded]="true"
+                    class="flex justify-center"
+                    icon="pi pi-plus-circle"
+                    label="Ajouter un rang"
+                    severity="info"
+                    variant="text"
+                  />
+                </div>
+              </p-tabpanel>
+            }
+          </p-tabpanels>
+        </p-tabs>
+      }
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex justify-between gap-2">
+      <p-button (onClick)="onCancel()" icon="pi pi-times" label="Annuler" variant="text" />
+      <p-button
+        (onClick)="onSubmit()"
+        [disabled]="formGroup.invalid"
+        [loading]="isLoading()"
+        icon="pi pi-check"
+        label="Enregistrer"
+      />
+    </div>
+  </div>
+</form>

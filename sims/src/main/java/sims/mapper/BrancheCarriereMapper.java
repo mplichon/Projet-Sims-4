@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sims.dto.carriere.BrancheCarriereGestionDTO;
+import sims.dto.carriere.RangCarriereGestionDTO;
 import sims.dto.carriere.ReponseCreationBrancheCarriereDTO;
 import sims.dto.carriere.ReponseCreationRangCarriereDTO;
 import sims.dto.carriere.ReponseGestionBrancheCarriereDTO;
@@ -23,6 +25,22 @@ public class BrancheCarriereMapper {
     private RangCarriereMapper rangCarriereMapper;
 
     // BrancheCarriere vers BrancheCarriereDTO
+    public BrancheCarriereGestionDTO toBrancheCarriereGestionDTO(BrancheCarriere brancheCarriere) {
+        BrancheCarriereGestionDTO dto = new BrancheCarriereGestionDTO();
+        dto.setId(brancheCarriere.getId());
+        dto.setNom(brancheCarriere.getNom());
+        dto.setDescription(brancheCarriere.getDescription());
+        dto.setImg(brancheCarriere.getImg());
+
+        List<RangCarriereGestionDTO> rangsDTO = brancheCarriere.getRangs()
+            .stream()
+            .map(this.rangCarriereMapper::toRangCarriereGestionDTO)
+            .toList();
+        dto.setRangs(rangsDTO);
+
+        return dto;
+    }
+
     public ReponseGestionBrancheCarriereDTO toReponseGestionBrancheCarriereDTO(BrancheCarriere brancheCarriere) {
         ReponseGestionBrancheCarriereDTO dto = new ReponseGestionBrancheCarriereDTO();
         dto.setId(brancheCarriere.getId());
@@ -72,6 +90,22 @@ public class BrancheCarriereMapper {
     }
 
     // BrancheCarriereDTO vers BrancheCarriere
+    public BrancheCarriere toBrancheCarriere(BrancheCarriereGestionDTO dto) {
+        BrancheCarriere brancheCarriere = new BrancheCarriere();
+        brancheCarriere.setId(dto.getId());
+        brancheCarriere.setNom(dto.getNom());
+        brancheCarriere.setDescription(dto.getDescription());
+        brancheCarriere.setImg(dto.getImg());
+
+        List<RangCarriere> rangs = dto.getRangs()
+            .stream()
+            .map(this.rangCarriereMapper::toRangCarriere)
+            .toList();
+        brancheCarriere.setRangs(rangs);
+
+        return brancheCarriere;
+    }
+
     public BrancheCarriere toBrancheCarriere(RequeteCreationBrancheCarriereDTO dto) {
         BrancheCarriere brancheCarriere = new BrancheCarriere();
         brancheCarriere.setNom(dto.getNom());
