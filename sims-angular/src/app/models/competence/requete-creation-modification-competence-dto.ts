@@ -6,7 +6,7 @@ export interface RequeteCreationModificationCompetenceDTO {
   nom: string;
   description: string;
   img: string;
-  niveauMax?: number;
+  niveauMax: number;
   categorieSim: CategorieSimDTO;
   dlc?: DlcLegerDTO;
 }

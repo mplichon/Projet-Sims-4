@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sims.dto.CategorieSimDTO;
+import sims.dto.competence.CompetenceGestionDTO;
 import sims.dto.competence.ReponseCreationCompetenceDTO;
 import sims.dto.competence.ReponseGestionCompetenceDTO;
 import sims.dto.competence.ReponseListeGestionCompetenceDTO;
@@ -25,6 +26,23 @@ public class CompetenceMapper {
     DlcMapper dlcMapper;
 
     // Competence vers CompetenceDTO
+    public CompetenceGestionDTO toCompetenceGestionDTO(Competence competence) {
+        CompetenceGestionDTO dto = new CompetenceGestionDTO();
+        dto.setId(competence.getId());
+        dto.setNom(competence.getNom());
+        dto.setDescription(competence.getDescription());
+        dto.setImg(competence.getImg());
+        dto.setNiveauMax(competence.getNiveauMax());
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(competence.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+        
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(competence.getDlc());
+        dto.setDlc(dlcDTO);
+
+        return dto;
+    }
+
     public ReponseListeGestionCompetenceDTO toReponseListeGestionCompetenceDTO(Competence competence) {
         ReponseListeGestionCompetenceDTO dto = new ReponseListeGestionCompetenceDTO();
         dto.setId(competence.getId());
@@ -93,6 +111,23 @@ public class CompetenceMapper {
     }
 
     // CompetenceDTO vers Competence
+    public Competence toCompetence(CompetenceGestionDTO dto) {
+        Competence competence = new Competence();
+        competence.setId(dto.getId());
+        competence.setNom(dto.getNom());
+        competence.setDescription(dto.getDescription());
+        competence.setImg(dto.getImg());
+        competence.setNiveauMax(dto.getNiveauMax());
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        competence.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        competence.setDlc(dlc);
+
+        return competence;
+    }
+
     public Competence toCompetence(RequeteCreationCompetenceDTO dto) {
         Competence competence = new Competence();
         competence.setNom(dto.getNom());

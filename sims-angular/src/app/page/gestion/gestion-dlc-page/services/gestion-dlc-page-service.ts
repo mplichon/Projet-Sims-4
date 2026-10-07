@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { DlcForm, DlcFormGroup } from '../../../../models/forms/dlc-form';
-import { RequeteCreationModificationDlcDTO } from '../../../../models/dlc/requete-creation-modification-dlc-dto';
 import { DlcService } from '../../../../services/dlc/dlc-service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TypeDlcDTO } from '../../../../models/dlc/type-dlc-dto';
-import { ReponseListeGestionDlcDTO } from '../../../../models/dlc/reponse-liste-gestion-dlc-dto';
+import { Observable } from 'rxjs';
+import { DlcGestionDTO } from '../../../../models/dlc/dlc-gestion-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +12,11 @@ import { ReponseListeGestionDlcDTO } from '../../../../models/dlc/reponse-liste-
 export class GestionDlcPageService {
   private readonly dlcService = inject(DlcService);
 
-  buildFormGroup(dlc: ReponseListeGestionDlcDTO): DlcFormGroup {
+  buildFormGroup(dlc: DlcGestionDTO): DlcFormGroup {
     const dateSortie: Date | null = dlc?.dateSortie ? new Date(dlc?.dateSortie) : null;
 
     return new FormGroup<DlcForm>({
-      id: new FormControl<number | null>(dlc?.id),
+      id: new FormControl<number | null>({ value: dlc?.id, disabled: true }),
       nom: new FormControl<string | null>(dlc?.nom, Validators.required),
       dateSortie: new FormControl<Date | null>(dateSortie, Validators.required),
       description: new FormControl<string | null>(dlc?.description, Validators.required),
@@ -25,22 +25,19 @@ export class GestionDlcPageService {
     });
   }
 
-  addDlc(formGroup: DlcFormGroup) {
-    const requeteDTO: RequeteCreationModificationDlcDTO =
-      this._buildRequeteCreationModificationDlcDTO(formGroup);
+  updateDlc(formGroup: DlcFormGroup): Observable<DlcGestionDTO> {
+    const requeteDTO: DlcGestionDTO = this._buildRequeteCreationModificationDlcDTO(formGroup);
 
-    return this.dlcService.saveDlcGestionV2(requeteDTO);
+    return this.dlcService.saveDlcGestion(requeteDTO);
   }
 
-  deleteDlc(dlcId: number) {
-    return this.dlcService.deleteDlcByIdV2(dlcId);
+  deleteDlc(dlcId: number): Observable<void> {
+    return this.dlcService.deleteDlcById(dlcId);
   }
 
-  private _buildRequeteCreationModificationDlcDTO(
-    formGroup: DlcFormGroup,
-  ): RequeteCreationModificationDlcDTO {
+  private _buildRequeteCreationModificationDlcDTO(formGroup: DlcFormGroup): DlcGestionDTO {
     return {
-      id: formGroup.controls.id.value ?? undefined,
+      id: formGroup.controls.id.value ?? null,
       nom: formGroup.controls.nom.value ?? '',
       dateSortie: this.formatDate(formGroup.controls.dateSortie.value),
       description: formGroup.controls.description.value ?? '',

@@ -1,0 +1,224 @@
+<form [formGroup]="formGroup">
+  <div class="flex flex-col gap-6">
+    @if (formGroup.controls.img.value) {
+      <img
+        [alt]="'Logo ' + formGroup.controls.nom.value"
+        [src]="formGroup.controls.img.value"
+        class="w-24 m-auto"
+      />
+    }
+    <!-- Nom -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="nom">Nom</label>
+      <input [fluid]="true" formControlName="nom" id="nom" type="text" autofocus pInputText />
+      @if (formGroup.controls.nom.invalid && formGroup.controls.nom.touched) {
+        <small>Le nom est requis.</small>
+      }
+    </div>
+    <!-- Description -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="description">Description</label>
+      <textarea
+        [fluid]="true"
+        formControlName="description"
+        id="description"
+        rows="2"
+        pTextarea
+      ></textarea>
+      @if (formGroup.controls.description.invalid && formGroup.controls.description.touched) {
+        <small>La description est requise.</small>
+      }
+    </div>
+    <!-- Logo -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="img">Logo</label>
+      <input [fluid]="true" formControlName="img" id="img" type="text" pInputText />
+    </div>
+    <!-- Type -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="type">Type d'aspiration</label>
+      <p-select
+        [fluid]="true"
+        [options]="types()"
+        appendTo="body"
+        formControlName="type"
+        inputId="type"
+        optionLabel="nom"
+        placeholder="Sélectionne un type"
+      >
+        <ng-template #selectedItem let-selectedOption>
+          @if (selectedOption) {
+            <div class="flex items-center gap-3">
+              <img [src]="selectedOption.img" class="w-7" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          }
+        </ng-template>
+        <ng-template let-type #item>
+          <div class="flex items-center gap-3">
+            <img [src]="type.img" class="w-7" />
+            <div>{{ type.nom }}</div>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+    <!-- DLC -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="dlcs">DLC</label>
+      <p-select
+        [fluid]="true"
+        [options]="dlcs()"
+        appendTo="body"
+        formControlName="dlc"
+        inputId="dlcs"
+        optionLabel="nom"
+        placeholder="Sélectionne un DLC"
+      >
+        <ng-template #selectedItem let-selectedOption>
+          @if (selectedOption) {
+            <div class="flex items-center gap-3">
+              <img [src]="selectedOption.img" class="w-7" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          }
+        </ng-template>
+        <ng-template let-dlc #item>
+          <div class="flex items-center gap-3">
+            <img [src]="dlc.img" class="w-7" />
+            <div>{{ dlc.nom }}</div>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+    <!-- Trait -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="traits-aspiration">Trait de récompense</label>
+      <p-select
+        [fluid]="true"
+        [options]="traitsAspiration()"
+        appendTo="body"
+        formControlName="trait"
+        inputId="traits-aspiration"
+        optionLabel="nom"
+        placeholder="Sélectionne un trait"
+      >
+        <ng-template #selectedItem let-selectedOption>
+          @if (selectedOption) {
+            <div class="flex items-center gap-3">
+              <img [src]="selectedOption.img" class="w-7" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          }
+        </ng-template>
+        <ng-template let-trait #item>
+          <div class="flex items-center gap-3">
+            <img [src]="trait.img" class="w-7" />
+            <div>{{ trait.nom }}</div>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+    <!-- Etapes -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="etapes">Étapes</label>
+      <div class="flex flex-col gap-3 ml-2" formArrayName="etapes">
+        @for (etape of etapesFormArray().controls; track etape; let i = $index) {
+          <div [formGroupName]="i" class="flex flex-col gap-2">
+            <div class="flex justify-between items-center">
+              <label [for]="'etape-' + i" class="font-medium">
+                {{ 'Étape ' + (i + 1) }}
+              </label>
+              <p-button
+                (onClick)="removeEtape(i)"
+                [disabled]="isSupprimerEtapeButtonDisabled()"
+                [outlined]="true"
+                [rounded]="true"
+                icon="pi pi-trash"
+                severity="danger"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-col gap-1">
+                <label [for]="'etape-' + i + '-nom'" class="font-normal">Nom</label>
+                <input
+                  [fluid]="true"
+                  [id]="'etape-' + i + '-nom'"
+                  [name]="'etape-' + i + '-nom'"
+                  formControlName="nom"
+                  type="text"
+                  pInputText
+                />
+              </div>
+              <!-- Sous-étapes -->
+              <div class="flex flex-col gap-1">
+                <label [for]="'etape-' + i + '-sous-etapes'" class="font-normal">
+                  Sous-étapes
+                </label>
+                <div class="flex flex-col gap-1" formArrayName="sousEtapes">
+                  @for (
+                    sousEtape of sousEtapesFormArray(i).controls;
+                    track sousEtape;
+                    let j = $index
+                  ) {
+                    <p-inputgroup [formGroupName]="j">
+                      <input
+                        [fluid]="true"
+                        [id]="'etape-' + i + '-sousEtape' + j"
+                        [name]="'etape-' + i + '-sousEtape' + j"
+                        formControlName="sousEtape"
+                        type="text"
+                        pInputText
+                      />
+                      <p-inputgroup-addon>
+                        <p-button
+                          (onClick)="removeSousEtape(i, j)"
+                          [disabled]="isSupprimerSousEtapeButtonDisabled(i)"
+                          class="flex justify-center"
+                          icon="pi pi-times-circle"
+                          severity="danger"
+                          variant="text"
+                        />
+                      </p-inputgroup-addon>
+                    </p-inputgroup>
+                  }
+                </div>
+                <p-button
+                  (onClick)="addSousEtape(i)"
+                  [rounded]="true"
+                  class="flex justify-center"
+                  icon="pi pi-plus-circle"
+                  label="Ajouter une sous-étape"
+                  severity="info"
+                  size="small"
+                  styleClass="h-8"
+                  variant="text"
+                />
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+      <p-button
+        (onClick)="addEtape()"
+        [rounded]="true"
+        class="flex justify-center"
+        icon="pi pi-plus-circle"
+        label="Ajouter une étape"
+        severity="info"
+        variant="text"
+      />
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex justify-between gap-2">
+      <p-button (onClick)="onCancel()" icon="pi pi-times" label="Annuler" variant="text" />
+      <p-button
+        (onClick)="onSubmit()"
+        [disabled]="formGroup.invalid"
+        [loading]="isLoading()"
+        icon="pi pi-check"
+        label="Enregistrer"
+      />
+    </div>
+  </div>
+</form>

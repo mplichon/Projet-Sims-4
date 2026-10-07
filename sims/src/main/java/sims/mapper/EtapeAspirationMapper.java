@@ -2,6 +2,7 @@ package sims.mapper;
 
 import org.springframework.stereotype.Component;
 
+import sims.dto.aspiration.EtapeAspirationGestionDTO;
 import sims.dto.aspiration.ReponseCreationEtapeAspirationDTO;
 import sims.dto.aspiration.ReponseGestionEtapeAspirationDTO;
 import sims.dto.aspiration.ReponseModificationEtapeAspirationDTO;
@@ -14,6 +15,16 @@ public class EtapeAspirationMapper {
 
 
     // EtapeAspiration vers EtapeAspirationDTO
+    public EtapeAspirationGestionDTO toEtapeAspirationGestionDTO(EtapeAspiration etapeAspiration) {
+        EtapeAspirationGestionDTO dto = new EtapeAspirationGestionDTO();
+        dto.setId(etapeAspiration.getId());
+        dto.setNom(etapeAspiration.getNom());
+        dto.setNumero(etapeAspiration.getNumero());
+        dto.setSousEtapes(etapeAspiration.getSousEtapes());
+
+        return dto;
+    }
+
     public ReponseGestionEtapeAspirationDTO toReponseGestionEtapeAspirationDTO(EtapeAspiration etapeAspiration) {
         ReponseGestionEtapeAspirationDTO dto = new ReponseGestionEtapeAspirationDTO();
         dto.setId(etapeAspiration.getId());
@@ -45,6 +56,16 @@ public class EtapeAspirationMapper {
     }
 
     // EtapeAspirationDTO vers EtapeAspiration
+    public EtapeAspiration toEtapeAspiration(EtapeAspirationGestionDTO dto) {
+        EtapeAspiration etapeAspiration = new EtapeAspiration();
+        etapeAspiration.setId(dto.getId());
+        etapeAspiration.setNom(dto.getNom());
+        etapeAspiration.setNumero(dto.getNumero());
+        etapeAspiration.setSousEtapes(dto.getSousEtapes());
+
+        return etapeAspiration;
+    }
+
     public EtapeAspiration toEtapeAspiration(RequeteCreationEtapeAspirationDTO dto) {
         EtapeAspiration etapeAspiration = new EtapeAspiration();
         etapeAspiration.setNom(dto.getNom());

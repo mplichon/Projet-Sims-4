@@ -1,20 +1,41 @@
 <sims-section>
   <sims-titre-section [titre]="sectionTitle()" />
-  <p-toast />
 
-  @if (dlcs.hasValue()) {
-    <sims-dlc-gestion-toolbar
-      (exportDlcsCsv)="exportDlcsCsv()"
-      (ouvrirNouveauDlcPopUp)="ouvrirPopUpNouveauDlc()"
-      (supprimerDlcsSelectionnes)="ouvrirPopUpSuppressionDlcsSelectionnes()"
+  <div class="flex flex-col gap-6">
+    <sims-gestion-toolbar
+      (exportCsv)="exportDlcsCsv()"
+      (ouvrirNouveauPopUp)="ouvrirPopUpNouveauDlc()"
+      (supprimerSelection)="ouvrirPopUpSuppressionDlcsSelectionnes()"
       [isSupprimerButtonDisabled]="isToolbarSupprimerButtonDisabled()"
     />
 
-    <sims-dlc-gestion-tableau
-      (dlcToUpdate)="ouvrirPopUpModifierDlc($event)"
-      (dlcToDelete)="ouvrirPopUpSuppressionDlc($event)"
-      [(selectedDlcs)]="selectedDlcsV2"
-      [dlcs]="dlcs.value()"
-    />
-  }
+    @if (dlcs.hasValue()) {
+      <sims-dlc-gestion-tableau
+        (dlcToUpdate)="ouvrirPopUpModifierDlc($event)"
+        (dlcToDelete)="ouvrirPopUpSuppressionDlc($event)"
+        [(selectedDlcs)]="selectedDlcs"
+        [dlcs]="dlcs.value()"
+      />
+    } @else {
+      <div class="flex flex-col gap-3">
+        <div class="flex flex-row-reverse">
+          <p-skeleton height="3rem" width="16rem" />
+        </div>
+        <div class="flex flex-col gap-1">
+          <p-skeleton height="3rem" />
+
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+          <p-skeleton height="5rem" />
+        </div>
+      </div>
+    }
+  </div>
 </sims-section>

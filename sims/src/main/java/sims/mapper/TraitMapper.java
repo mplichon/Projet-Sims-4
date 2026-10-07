@@ -12,6 +12,7 @@ import sims.dto.trait.ReponseListeGestionTraitDTO;
 import sims.dto.trait.ReponseModificationTraitDTO;
 import sims.dto.trait.RequeteCreationTraitDTO;
 import sims.dto.trait.RequeteModificationTraitDTO;
+import sims.dto.trait.TraitGestionDTO;
 import sims.dto.trait.TraitLegerDTO;
 import sims.dto.trait.TypeTraitDTO;
 import sims.model.Aspiration;
@@ -62,6 +63,25 @@ public class TraitMapper {
         dto.setId(trait.getId());
         dto.setNom(trait.getNom());
         dto.setImg(trait.getImg());
+
+        return dto;
+    }
+
+    public TraitGestionDTO toTraitGestionDTO(TraitDeCaractere trait) {
+        TraitGestionDTO dto = new TraitGestionDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setDescription(trait.getDescription());
+        dto.setImg(trait.getImg());
+
+        TypeTraitDTO typeTraitDTO = this.toTypeTraitDTO(trait.getType());
+        dto.setType(typeTraitDTO);
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(trait.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(trait.getDlc());
+        dto.setDlc(dlcDTO);
 
         return dto;
     }
@@ -124,6 +144,26 @@ public class TraitMapper {
     }
 
     // TraitBoutique vers TraitDTO
+    public TraitGestionDTO toTraitGestionDTO(TraitBoutique trait) {
+        TraitGestionDTO dto = new TraitGestionDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setDescription(trait.getDescription());
+        dto.setImg(trait.getImg());
+        dto.setCout(trait.getCout());
+
+        TypeTraitDTO typeTraitDTO = this.toTypeTraitDTO(trait.getType());
+        dto.setType(typeTraitDTO);
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(trait.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(trait.getDlc());
+        dto.setDlc(dlcDTO);
+
+        return dto;
+    }
+
     public ReponseCreationTraitDTO toReponseCreationTraitDTO(TraitBoutique trait) {
         ReponseCreationTraitDTO dto = new ReponseCreationTraitDTO();
         dto.setId(trait.getId());
@@ -165,6 +205,26 @@ public class TraitMapper {
     }
 
     // TraitEducation vers TraitDTO
+    public TraitGestionDTO toTraitGestionDTO(TraitEducation trait) {
+        TraitGestionDTO dto = new TraitGestionDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setDescription(trait.getDescription());
+        dto.setImg(trait.getImg());
+        dto.setQualite(trait.getQualite());
+
+        TypeTraitDTO typeTraitDTO = this.toTypeTraitDTO(trait.getType());
+        dto.setType(typeTraitDTO);
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(trait.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(trait.getDlc());
+        dto.setDlc(dlcDTO);
+
+        return dto;
+    }
+
     public ReponseCreationTraitDTO toReponseCreationTraitDTO(TraitEducation trait) {
         ReponseCreationTraitDTO dto = new ReponseCreationTraitDTO();
         dto.setId(trait.getId());
@@ -206,6 +266,26 @@ public class TraitMapper {
     }
 
     // TraitACondition vers TraitDTO
+    public TraitGestionDTO toTraitGestionDTO(TraitACondition trait) {
+        TraitGestionDTO dto = new TraitGestionDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setDescription(trait.getDescription());
+        dto.setImg(trait.getImg());
+        dto.setCondition(trait.getConditionTrait());
+
+        TypeTraitDTO typeTraitDTO = this.toTypeTraitDTO(trait.getType());
+        dto.setType(typeTraitDTO);
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(trait.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(trait.getDlc());
+        dto.setDlc(dlcDTO);
+
+        return dto;
+    }
+
     public ReponseCreationTraitDTO toReponseCreationTraitDTO(TraitACondition trait) {
         ReponseCreationTraitDTO dto = new ReponseCreationTraitDTO();
         dto.setId(trait.getId());
@@ -247,6 +327,27 @@ public class TraitMapper {
     }
 
     // TraitAEffets vers TraitDTO
+    public TraitGestionDTO toTraitGestionDTO(TraitAEffets trait) {
+        TraitGestionDTO dto = new TraitGestionDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setDescription(trait.getDescription());
+        dto.setImg(trait.getImg());
+        dto.setCondition(trait.getConditionTrait());
+        dto.setEffets(trait.getEffets());
+
+        TypeTraitDTO typeTraitDTO = this.toTypeTraitDTO(trait.getType());
+        dto.setType(typeTraitDTO);
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(trait.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(trait.getDlc());
+        dto.setDlc(dlcDTO);
+
+        return dto;
+    }
+
     public ReponseCreationTraitDTO toReponseCreationTraitDTO(TraitAEffets trait) {
         ReponseCreationTraitDTO dto = new ReponseCreationTraitDTO();
         dto.setId(trait.getId());
@@ -290,6 +391,28 @@ public class TraitMapper {
     }
 
     // TraitBonus vers TraitDTO
+    public TraitGestionDTO toTraitGestionDTO(TraitBonus trait) {
+        TraitGestionDTO dto = new TraitGestionDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setDescription(trait.getDescription());
+        dto.setImg(trait.getImg());
+
+        TypeTraitDTO typeTraitDTO = this.toTypeTraitDTO(trait.getType());
+        dto.setType(typeTraitDTO);
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(trait.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(trait.getDlc());
+        dto.setDlc(dlcDTO);
+
+        TypeAspirationDTO typeAspirationDTO = aspirationMapper.toTypeAspirationDTO(trait.getTypeAspiration());
+        dto.setTypeAspiration(typeAspirationDTO);
+
+        return dto;
+    }
+
     public ReponseCreationTraitDTO toReponseCreationTraitDTO(TraitBonus trait) {
         ReponseCreationTraitDTO dto = new ReponseCreationTraitDTO();
         dto.setId(trait.getId());
@@ -335,6 +458,28 @@ public class TraitMapper {
     }
 
     // TraitAspiration vers TraitDTO
+    public TraitGestionDTO toTraitGestionDTO(TraitAspiration trait) {
+        TraitGestionDTO dto = new TraitGestionDTO();
+        dto.setId(trait.getId());
+        dto.setNom(trait.getNom());
+        dto.setDescription(trait.getDescription());
+        dto.setImg(trait.getImg());
+
+        TypeTraitDTO typeTraitDTO = this.toTypeTraitDTO(trait.getType());
+        dto.setType(typeTraitDTO);
+
+        CategorieSimDTO categorieSimDTO = simMapper.toCategorieSimDTO(trait.getCategorieSim());
+        dto.setCategorieSim(categorieSimDTO);
+
+        DlcLegerDTO dlcDTO = dlcMapper.toDlcLegerDTO(trait.getDlc());
+        dto.setDlc(dlcDTO);
+
+        AspirationLegerDTO aspirationDTO = aspirationMapper.toAspirationLegerDTO(trait.getAspiration());
+        dto.setAspiration(aspirationDTO);
+
+        return dto;
+    }
+
     public ReponseCreationTraitDTO toReponseCreationTraitDTO(TraitAspiration trait) {
         ReponseCreationTraitDTO dto = new ReponseCreationTraitDTO();
         dto.setId(trait.getId());
@@ -384,6 +529,25 @@ public class TraitMapper {
         return service.getById(dto.getId());
     }
 
+    public TraitDeCaractere toTraitDeCaractere(TraitGestionDTO dto) {
+        TraitDeCaractere trait = new TraitDeCaractere();
+        trait.setId(dto.getId());
+        trait.setNom(dto.getNom());
+        trait.setDescription(dto.getDescription());
+        trait.setImg(dto.getImg());
+
+        TypeTrait typeTrait = this.toTypeTrait(dto.getType());
+        trait.setType(typeTrait);
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        trait.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        trait.setDlc(dlc);
+
+        return trait;
+    }
+
     public TraitDeCaractere toTraitDeCaractere(RequeteCreationTraitDTO dto) {
         TraitDeCaractere trait = new TraitDeCaractere();
         trait.setNom(dto.getNom());
@@ -422,6 +586,26 @@ public class TraitMapper {
     }
 
     // TraitDTO vers TraitBoutique
+    public TraitBoutique toTraitBoutique(TraitGestionDTO dto) {
+        TraitBoutique trait = new TraitBoutique();
+        trait.setId(dto.getId());
+        trait.setNom(dto.getNom());
+        trait.setDescription(dto.getDescription());
+        trait.setImg(dto.getImg());
+        trait.setCout(dto.getCout());
+
+        TypeTrait typeTrait = this.toTypeTrait(dto.getType());
+        trait.setType(typeTrait);
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        trait.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        trait.setDlc(dlc);
+
+        return trait;
+    }
+    
     public TraitBoutique toTraitBoutique(RequeteCreationTraitDTO dto) {
         TraitBoutique trait = new TraitBoutique();
         trait.setNom(dto.getNom());
@@ -462,6 +646,26 @@ public class TraitMapper {
     }
 
     // TraitDTO vers TraitEducation
+    public TraitEducation toTraitEducation(TraitGestionDTO dto) {
+        TraitEducation trait = new TraitEducation();
+        trait.setId(dto.getId());
+        trait.setNom(dto.getNom());
+        trait.setDescription(dto.getDescription());
+        trait.setImg(dto.getImg());
+        trait.setQualite(dto.getQualite());
+
+        TypeTrait typeTrait = this.toTypeTrait(dto.getType());
+        trait.setType(typeTrait);
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        trait.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        trait.setDlc(dlc);
+
+        return trait;
+    }
+    
     public TraitEducation toTraitEducation(RequeteCreationTraitDTO dto) {
         TraitEducation trait = new TraitEducation();
         trait.setNom(dto.getNom());
@@ -502,6 +706,26 @@ public class TraitMapper {
     }
 
     // TraitDTO vers TraitACondition
+    public TraitACondition toTraitACondition(TraitGestionDTO dto) {
+        TraitACondition trait = new TraitACondition();
+        trait.setId(dto.getId());
+        trait.setNom(dto.getNom());
+        trait.setDescription(dto.getDescription());
+        trait.setImg(dto.getImg());
+        trait.setConditionTrait(dto.getCondition());
+
+        TypeTrait typeTrait = this.toTypeTrait(dto.getType());
+        trait.setType(typeTrait);
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        trait.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        trait.setDlc(dlc);
+
+        return trait;
+    }
+
     public TraitACondition toTraitACondition(RequeteCreationTraitDTO dto) {
         TraitACondition trait = new TraitACondition();
         trait.setNom(dto.getNom());
@@ -542,6 +766,27 @@ public class TraitMapper {
     }
 
     // TraitDTO vers TraitAEffets
+    public TraitAEffets toTraitAEffets(TraitGestionDTO dto) {
+        TraitAEffets trait = new TraitAEffets();
+        trait.setId(dto.getId());
+        trait.setNom(dto.getNom());
+        trait.setDescription(dto.getDescription());
+        trait.setImg(dto.getImg());
+        trait.setConditionTrait(dto.getCondition());
+        trait.setEffets(dto.getEffets());
+
+        TypeTrait typeTrait = this.toTypeTrait(dto.getType());
+        trait.setType(typeTrait);
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        trait.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        trait.setDlc(dlc);
+
+        return trait;
+    }
+
     public TraitAEffets toTraitAEffets(RequeteCreationTraitDTO dto) {
         TraitAEffets trait = new TraitAEffets();
         trait.setNom(dto.getNom());
@@ -584,6 +829,28 @@ public class TraitMapper {
     }
 
     // TraitDTO vers TraitBonus
+    public TraitBonus toTraitBonus(TraitGestionDTO dto) {
+        TraitBonus trait = new TraitBonus();
+        trait.setId(dto.getId());
+        trait.setNom(dto.getNom());
+        trait.setDescription(dto.getDescription());
+        trait.setImg(dto.getImg());
+
+        TypeTrait typeTrait = this.toTypeTrait(dto.getType());
+        trait.setType(typeTrait);
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        trait.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        trait.setDlc(dlc);
+
+        TypeAspiration typeAspiration = aspirationMapper.toTypeAspiration(dto.getTypeAspiration());
+        trait.setTypeAspiration(typeAspiration);
+
+        return trait;
+    }
+
     public TraitBonus toTraitBonus(RequeteCreationTraitDTO dto) {
         TraitBonus trait = new TraitBonus();
         trait.setNom(dto.getNom());
@@ -628,6 +895,28 @@ public class TraitMapper {
     }
 
     // TraitDTO vers TraitAspiration
+    public TraitAspiration toTraitAspiration(TraitGestionDTO dto) {
+        TraitAspiration trait = new TraitAspiration();
+        trait.setId(dto.getId());
+        trait.setNom(dto.getNom());
+        trait.setDescription(dto.getDescription());
+        trait.setImg(dto.getImg());
+
+        TypeTrait typeTrait = this.toTypeTrait(dto.getType());
+        trait.setType(typeTrait);
+
+        CategorieSim categorieSim = simMapper.toCategorieSim(dto.getCategorieSim());
+        trait.setCategorieSim(categorieSim);
+
+        DLC dlc = dlcMapper.toDlc(dto.getDlc());
+        trait.setDlc(dlc);
+
+        Aspiration aspiration = aspirationMapper.toAspiration(dto.getAspiration());
+        trait.setAspiration(aspiration);
+
+        return trait;
+    }
+    
     public TraitAspiration toTraitAspiration(RequeteCreationTraitDTO dto) {
         TraitAspiration trait = new TraitAspiration();
         trait.setNom(dto.getNom());

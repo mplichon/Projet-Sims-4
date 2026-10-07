@@ -1,9 +1,9 @@
 import { Component, inject, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ReponseListeGestionDlcDTO } from '../../../../models/dlc/reponse-liste-gestion-dlc-dto';
 import { GestionDlcPageService } from '../services/gestion-dlc-page-service';
 import { finalize, forkJoin, tap } from 'rxjs';
+import { DlcGestionDTO } from '../../../../models/dlc/dlc-gestion-dto';
 
 @Component({
   selector: 'sims-pop-up-suppression-dlcs-selectionnes',
@@ -12,7 +12,7 @@ import { finalize, forkJoin, tap } from 'rxjs';
   styleUrl: './pop-up-suppression-dlcs-selectionnes.css',
 })
 export class PopUpSuppressionDlcsSelectionnes implements OnInit {
-  selectedDlcs!: Signal<ReponseListeGestionDlcDTO[]>;
+  selectedDlcs!: Signal<DlcGestionDTO[]>;
 
   isLoading: WritableSignal<boolean> = signal(false);
 
@@ -30,7 +30,7 @@ export class PopUpSuppressionDlcsSelectionnes implements OnInit {
 
   onSubmit(): void {
     this.isLoading.set(true);
-    forkJoin(this.selectedDlcs().map((dlc) => this.gestionDlcPageService.deleteDlc(dlc.id)))
+    forkJoin(this.selectedDlcs().map((dlc) => this.gestionDlcPageService.deleteDlc(dlc.id ?? 0)))
       .pipe(
         tap(() => this.ref.close(true)),
         finalize(() => this.isLoading.set(false)),

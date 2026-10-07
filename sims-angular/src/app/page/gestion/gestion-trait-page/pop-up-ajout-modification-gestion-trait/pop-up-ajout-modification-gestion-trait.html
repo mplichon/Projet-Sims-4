@@ -1,0 +1,230 @@
+<form [formGroup]="formGroup">
+  <div class="flex flex-col gap-6">
+    @if (formGroup.controls.img.value) {
+      <img
+        [src]="formGroup.controls.img.value"
+        [alt]="'Logo ' + formGroup.controls.nom.value"
+        class="w-24 m-auto"
+      />
+    }
+    <!-- Nom -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="nom">Nom</label>
+      <input [fluid]="true" formControlName="nom" id="nom" type="text" autofocus pInputText />
+      @if (formGroup.controls.nom.invalid && formGroup.controls.nom.touched) {
+        <small>Le nom est requis.</small>
+      }
+    </div>
+    <!-- Description -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="description">Description</label>
+      <textarea
+        [fluid]="true"
+        formControlName="description"
+        id="description"
+        rows="2"
+        pTextarea
+      ></textarea>
+      @if (formGroup.controls.description.invalid && formGroup.controls.description.touched) {
+        <small>La description est requise.</small>
+      }
+    </div>
+    <!-- Logo -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="img">Logo</label>
+      <input [fluid]="true" formControlName="img" id="img" type="text" pInputText />
+    </div>
+    <!-- Type -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="type">Type de trait</label>
+      <p-select
+        [fluid]="true"
+        [options]="types()"
+        appendTo="body"
+        formControlName="type"
+        inputId="type"
+        optionLabel="nom"
+        placeholder="Sélectionne un type"
+      />
+    </div>
+    <!-- Catégorie -->
+    <div class="flex flex-col gap-3">
+      <label class="font-semibold" for="categorieSim">Catégorie de Sim</label>
+      <p-select
+        [fluid]="true"
+        [options]="categories()"
+        appendTo="body"
+        formControlName="categorieSim"
+        inputId="type"
+        optionLabel="nom"
+        placeholder="Sélectionne une catégorie"
+      />
+    </div>
+    <!-- DLC -->
+    <div class="flex flex-col gap-3">
+      <label for="dlcs" class="font-semibold">DLC</label>
+      <p-select
+        formControlName="dlc"
+        inputId="dlcs"
+        [options]="dlcs()"
+        optionLabel="nom"
+        placeholder="Sélectionne un DLC"
+        appendTo="body"
+        [fluid]="true"
+      >
+        <ng-template #selectedItem let-selectedOption>
+          @if (selectedOption) {
+            <div class="flex items-center gap-3">
+              <img [src]="selectedOption.img" class="w-7" />
+              <div>{{ selectedOption.nom }}</div>
+            </div>
+          }
+        </ng-template>
+        <ng-template let-dlc #item>
+          <div class="flex items-center gap-3">
+            <img [src]="dlc.img" class="w-7" />
+            <div>{{ dlc.nom }}</div>
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
+    <!-- Coût -->
+    @if (isTypeBoutique()) {
+      <div class="flex flex-col gap-3">
+        <label class="font-semibold" for="cout">Coût</label>
+        <p-inputnumber
+          [fluid]="true"
+          [min]="0"
+          [showButtons]="true"
+          formControlName="cout"
+          inputId="cout"
+        />
+      </div>
+    }
+    <!-- Qualité -->
+    @if (isTypeEducation()) {
+      <div class="flex flex-col gap-3">
+        <label class="font-semibold" for="qualite">Qualité</label>
+        <input [fluid]="true" formControlName="qualite" id="qualite" type="text" pInputText />
+      </div>
+    }
+    <!-- Condition -->
+    @if (isTypeACondition() || isTypeAEffets()) {
+      <div class="flex flex-col gap-3">
+        <label class="font-semibold" for="condition">Condition</label>
+        <input [fluid]="true" formControlName="condition" id="condition" type="text" pInputText />
+      </div>
+    }
+    <!-- Effets -->
+    @if (isTypeAEffets()) {
+      <div class="flex flex-col gap-3">
+        <label for="effets" class="font-semibold">Effets</label>
+        <div class="flex flex-col gap-1" formArrayName="effets">
+          @for (effet of formGroup.controls.effets.controls; track effet; let i = $index) {
+            <p-inputgroup [formGroupName]="i">
+              <input
+                [fluid]="true"
+                [id]="'effet-' + i"
+                [name]="'effet-' + i"
+                formControlName="effet"
+                type="text"
+                pInputText
+              />
+              <p-inputgroup-addon>
+                <p-button
+                  (onClick)="removeEffet(i)"
+                  [disabled]="isSupprimerEffetButtonDisabled()"
+                  class="flex justify-center"
+                  icon="pi pi-times-circle"
+                  severity="danger"
+                  variant="text"
+                />
+              </p-inputgroup-addon>
+            </p-inputgroup>
+          }
+        </div>
+        <p-button
+          (onClick)="addEffet()"
+          [rounded]="true"
+          class="flex justify-center"
+          icon="pi pi-plus-circle"
+          label="Ajouter un effet"
+          severity="info"
+          variant="text"
+        />
+      </div>
+    }
+    <!-- Type d'aspiration -->
+    @if (isTypeBonus()) {
+      <div class="flex flex-col gap-3">
+        <label for="typeAspiration" class="font-semibold">Type d'aspiration</label>
+        <p-select
+          [fluid]="true"
+          [options]="typesAspiration()"
+          appendTo="body"
+          formControlName="typeAspiration"
+          inputId="typeAspiration"
+          optionLabel="nom"
+          placeholder="Sélectionne un type d'aspiration"
+        >
+          <ng-template #selectedItem let-selectedOption>
+            @if (selectedOption) {
+              <div class="flex items-center gap-3">
+                <img [src]="selectedOption.img" class="w-7" />
+                <div>{{ selectedOption.nom }}</div>
+              </div>
+            }
+          </ng-template>
+          <ng-template let-type #item>
+            <div class="flex items-center gap-3">
+              <img [src]="type.img" class="w-7" />
+              <div>{{ type.nom }}</div>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+    }
+    <!-- Aspiration -->
+    @if (isTypeAspiration()) {
+      <div class="flex flex-col gap-3">
+        <label for="aspiration" class="font-semibold">Aspiration</label>
+        <p-select
+          [fluid]="true"
+          [options]="aspirations()"
+          appendTo="body"
+          formControlName="aspiration"
+          inputId="aspiration"
+          optionLabel="nom"
+          placeholder="Sélectionne une aspiration"
+        >
+          <ng-template #selectedItem let-selectedOption>
+            @if (selectedOption) {
+              <div class="flex items-center gap-3">
+                <img [src]="selectedOption.img" class="w-7" />
+                <div>{{ selectedOption.nom }}</div>
+              </div>
+            }
+          </ng-template>
+          <ng-template let-aspiration #item>
+            <div class="flex items-center gap-3">
+              <img [src]="aspiration.img" class="w-7" />
+              <div>{{ aspiration.nom }}</div>
+            </div>
+          </ng-template>
+        </p-select>
+      </div>
+    }
+
+    <!-- Boutons -->
+    <div class="flex justify-between gap-2">
+      <p-button (onClick)="onCancel()" icon="pi pi-times" label="Annuler" variant="text" />
+      <p-button
+        (onClick)="onSubmit()"
+        [disabled]="formGroup.invalid"
+        [loading]="isLoading()"
+        icon="pi pi-check"
+        label="Enregistrer"
+      />
+    </div>
+  </div>
+</form>

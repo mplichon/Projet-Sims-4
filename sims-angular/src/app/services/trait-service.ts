@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, startWith, Subject, switchMap } from 'rxjs';
+import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
 import { TypeTraitDTO } from '../models/trait/type-trait-dto';
 import { ReponseListeGestionTraitDTO } from '../models/trait/reponse-liste-gestion-trait-dto';
 import { RequeteCreationModificationTraitDTO } from '../models/trait/requete-creation-modification-trait-dto';
 import { ReponseModificationTraitDTO } from '../models/trait/reponse-modification-trait-dto';
 import { TraitLegerDTO } from '../models/trait/trait-leger-dto';
+import { TraitGestionDTO } from '../models/trait/trait-gestion-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -29,10 +30,10 @@ export class TraitService {
     );
   }
 
-  public getAllTraitGestion(): Observable<ReponseListeGestionTraitDTO[]> {
+  public getAllTraitGestion(): Observable<TraitGestionDTO[]> {
     return this.refresh$.pipe(
       startWith(null),
-      switchMap(() => this.http.get<ReponseListeGestionTraitDTO[]>(this.apiGestionUrl)),
+      switchMap(() => this.http.get<TraitGestionDTO[]>(this.apiGestionUrl)),
     );
   }
 
@@ -47,17 +48,19 @@ export class TraitService {
     return this.http.get<ReponseModificationTraitDTO>(`${this.apiGestionUrl}/${id}`);
   }
 
-  public saveTraitGestion(traitDTO: RequeteCreationModificationTraitDTO): void {
+  public saveTraitGestion(traitDTO: TraitGestionDTO): Observable<TraitGestionDTO> {
     if (!traitDTO.id) {
-      this.http.post<any>(this.apiGestionUrl, traitDTO).subscribe(() => this.refresh());
+      return this.http
+        .post<TraitGestionDTO>(this.apiGestionUrl, traitDTO)
+        .pipe(tap(() => this.refresh()));
     } else {
-      this.http
-        .put<any>(`${this.apiGestionUrl}/${traitDTO.id}`, traitDTO)
-        .subscribe(() => this.refresh());
+      return this.http
+        .put<TraitGestionDTO>(`${this.apiGestionUrl}/${traitDTO.id}`, traitDTO)
+        .pipe(tap(() => this.refresh()));
     }
   }
 
-  public deleteTraitById(id: number): void {
-    this.http.delete<void>(`${this.apiGestionUrl}/${id}`).subscribe(() => this.refresh());
+  public deleteTraitById(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiGestionUrl}/${id}`).pipe(tap(() => this.refresh()));
   }
 }

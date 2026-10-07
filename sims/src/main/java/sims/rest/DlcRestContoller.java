@@ -15,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import sims.dto.dlc.DlcGestionDTO;
 import sims.dto.dlc.DlcLegerDTO;
-import sims.dto.dlc.ReponseCreationDlcDTO;
-import sims.dto.dlc.ReponseListeGestionDlcDTO;
-import sims.dto.dlc.ReponseModificationDlcDTO;
-import sims.dto.dlc.RequeteCreationDlcDTO;
-import sims.dto.dlc.RequeteModificationDlcDTO;
 import sims.dto.dlc.TypeDlcDTO;
 import sims.mapper.DlcMapper;
 import sims.model.DLC;
@@ -48,11 +44,11 @@ public class DlcRestContoller {
     }
 
     @GetMapping("/gestion")
-    public List<ReponseListeGestionDlcDTO> getAllDlcGestion() {
+    public List<DlcGestionDTO> getAllDlcGestion() {
         log.info("GET /api/dlc/gestion - getAllDlcGestion() called");
         return service.getAllOrderByDateSortieAsc()
             .stream()
-            .map(mapper::toReponseListeGestionDlcDTO)
+            .map(mapper::toDlcGestionDTO)
             .toList();
     }
 
@@ -66,24 +62,24 @@ public class DlcRestContoller {
     }
 
     @PostMapping("/gestion")
-	public ReponseCreationDlcDTO addDlc(@RequestBody RequeteCreationDlcDTO requeteDlc) {
+	public DlcGestionDTO addDlc(@RequestBody DlcGestionDTO requeteDlc) {
         log.info("POST /api/dlc/gestion - addDlc() called");
         DLC dlc = mapper.toDlc(requeteDlc);
 
         DLC dlcCree = service.create(dlc);
 
-        return mapper.toReponseCreationDlcDTO(dlcCree);
+        return mapper.toDlcGestionDTO(dlcCree);
 	}
     
     @PutMapping("/gestion/{id}")
-	public ReponseModificationDlcDTO updateDlc(@PathVariable Integer id, @RequestBody RequeteModificationDlcDTO requeteDlc) {
+	public DlcGestionDTO updateDlc(@PathVariable Integer id, @RequestBody DlcGestionDTO requeteDlc) {
         log.info("PUT /api/dlc/gestion/{} - updateDlc() called", id);
         DLC dlc = mapper.toDlc(requeteDlc);
         dlc.setId(id);
 
         DLC dlcModifie = service.update(dlc);
 
-        return mapper.toReponseModificationDlcDTO(dlcModifie);
+        return mapper.toDlcGestionDTO(dlcModifie);
 	}
 
     @DeleteMapping("/gestion/{id}")

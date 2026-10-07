@@ -3,6 +3,7 @@ package sims.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import sims.dto.dlc.DlcGestionDTO;
 import sims.dto.dlc.DlcLegerDTO;
 import sims.dto.dlc.ReponseCreationDlcDTO;
 import sims.dto.dlc.ReponseListeGestionDlcDTO;
@@ -44,6 +45,20 @@ public class DlcMapper {
         return dto;
     }
 
+    public DlcGestionDTO toDlcGestionDTO(DLC dlc) {
+        DlcGestionDTO dto = new DlcGestionDTO();
+        dto.setId(dlc.getId());
+        dto.setNom(dlc.getNom());
+        dto.setDateSortie(dlc.getDateSortie());
+        dto.setDescription(dlc.getDescription());
+        dto.setImg(dlc.getImg());
+
+        TypeDlcDTO typeDlcDTO = this.toTypeDlcDTO(dlc.getType());
+        dto.setType(typeDlcDTO);
+
+        return dto;
+    }
+    
     public ReponseListeGestionDlcDTO toReponseListeGestionDlcDTO(DLC dlc) {
         ReponseListeGestionDlcDTO dto = new ReponseListeGestionDlcDTO();
         dto.setId(dlc.getId());
@@ -91,6 +106,20 @@ public class DlcMapper {
         return service.getById(dto.getId());
     }
 
+    public DLC toDlc(DlcGestionDTO dto) {
+        DLC dlc = new DLC();
+        dlc.setId(dto.getId());
+        dlc.setNom(dto.getNom());
+        dlc.setDateSortie(dto.getDateSortie());
+        dlc.setDescription(dto.getDescription());
+        dlc.setImg(dto.getImg());
+
+        TypeDLC typeDlc = this.toTypeDlc(dto.getType());
+        dlc.setType(typeDlc);
+
+        return dlc;
+    }
+    
     public DLC toDlc(RequeteCreationDlcDTO dto) {
         DLC dlc = new DLC();
         dlc.setNom(dto.getNom());

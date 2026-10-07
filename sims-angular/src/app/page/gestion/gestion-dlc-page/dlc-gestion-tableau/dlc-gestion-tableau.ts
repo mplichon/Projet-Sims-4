@@ -1,6 +1,5 @@
 import { Component, input, model, OnInit, output, viewChild } from '@angular/core';
 import { Table, TableModule, TablePassThrough } from 'primeng/table';
-import { ReponseListeGestionDlcDTO } from '../../../../models/dlc/reponse-liste-gestion-dlc-dto';
 import { Column } from '../../../../models/table-models';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -8,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
+import { DlcGestionDTO } from '../../../../models/dlc/dlc-gestion-dto';
 
 @Component({
   selector: 'sims-dlc-gestion-tableau',
@@ -24,12 +24,12 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './dlc-gestion-tableau.css',
 })
 export class DlcGestionTableau implements OnInit {
-  dlcs = input<ReponseListeGestionDlcDTO[]>([]);
+  dlcs = input<DlcGestionDTO[]>([]);
 
-  dlcToUpdate = output<ReponseListeGestionDlcDTO>();
-  dlcToDelete = output<ReponseListeGestionDlcDTO>();
+  dlcToUpdate = output<DlcGestionDTO>();
+  dlcToDelete = output<DlcGestionDTO>();
 
-  selectedDlcs = model<ReponseListeGestionDlcDTO[]>();
+  selectedDlcs = model<DlcGestionDTO[]>();
 
   private readonly dt = viewChild.required<Table>('dt');
 
@@ -45,11 +45,11 @@ export class DlcGestionTableau implements OnInit {
     ];
   }
 
-  modifierDlc(dlc: ReponseListeGestionDlcDTO) {
+  modifierDlc(dlc: DlcGestionDTO) {
     this.dlcToUpdate.emit(dlc);
   }
 
-  supprimerDlc(dlc: ReponseListeGestionDlcDTO) {
+  supprimerDlc(dlc: DlcGestionDTO) {
     this.dlcToDelete.emit(dlc);
   }
 

@@ -27,78 +27,79 @@
   </ng-template>
   <ng-template #header>
     <tr>
-      <th
-        style="width: 3rem; background-color: var(--p-primary-color); border-top-left-radius: 10px"
-      >
+      <!-- Checkbox -->
+      <th class="w-12 bg-primary-green rounded-tl-xl">
         <p-tableHeaderCheckbox />
       </th>
-      <th style="width: 3rem; background-color: var(--p-primary-color); color: white">Logo</th>
-      <th
-        class="dlc-colonne-nom"
-        pSortableColumn="nom"
-        style="width: 5rem; background-color: var(--p-primary-color); color: white"
-      >
+      <!-- Logo -->
+      <th class="w-12 bg-primary-green text-white">Logo</th>
+      <!-- Nom -->
+      <th class="sort-icon-green-hover w-20 bg-primary-green text-white" pSortableColumn="nom">
         <div class="flex items-center gap-2">
           Nom
           <p-sortIcon field="nom" />
         </div>
       </th>
+      <!-- Date de sortie -->
       <th
-        class="dlc-colonne-sortie"
+        class="sort-icon-green-hover w-20 bg-primary-green text-white"
         pSortableColumn="dateSortie"
-        style="width: 5rem; background-color: var(--p-primary-color); color: white"
       >
         <div class="flex items-center gap-2">
           Sortie
           <p-sortIcon field="dateSortie" />
         </div>
       </th>
-      <th style="width: 27rem; background-color: var(--p-primary-color); color: white">
-        Description
-      </th>
-      <th
-        class="dlc-colonne-type"
-        pSortableColumn="type.nom"
-        style="width: 5rem; background-color: var(--p-primary-color); color: white"
-      >
+      <!-- Description -->
+      <th class="bg-primary-green text-white w-auto">Description</th>
+      <!-- Type -->
+      <th class="sort-icon-green-hover w-20 bg-primary-green text-white" pSortableColumn="type.nom">
         <div class="flex items-center gap-2">
           Type
           <p-sortIcon field="type.nom" />
         </div>
       </th>
-      <th
-        style="width: 8rem; background-color: var(--p-primary-color); border-top-right-radius: 10px"
-      ></th>
+      <!-- Boutons -->
+      <th class="w-32 bg-primary-green rounded-tr-xl"></th>
     </tr>
   </ng-template>
   <ng-template #body let-dlc>
     <tr>
+      <!-- Checkbox -->
       <td>
         <p-tableCheckbox [value]="dlc" />
       </td>
+      <!-- Logo -->
       <td>
-        <img [src]="dlc.img" [alt]="'Logo ' + dlc.nom" style="width: 64px" />
+        <img [src]="dlc.img" [alt]="'Logo ' + dlc.nom" class="w-16" />
       </td>
+      <!-- Nom -->
       <td>{{ dlc.nom }}</td>
+      <!-- Date de sortie -->
       <td>{{ dlc.dateSortie | date: 'dd/MM/yyyy' }}</td>
+      <!-- Description -->
       <td>
         <div class="overflow-hidden h-16">{{ dlc.description }}</div>
       </td>
+      <!-- Type -->
       <td>
         <p-tag
-          class="text-center w-full"
+          class="text-center"
           [value]="dlc.type.nom"
           [style]="{ backgroundColor: dlc.type.couleur }"
         />
       </td>
-      <td style="width: 8rem">
-        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" (click)="modifierDlc(dlc)" />
-        <p-button
-          icon="pi pi-trash"
-          severity="danger"
-          [rounded]="true"
-          (click)="supprimerDlc(dlc)"
-        />
+      <!-- Boutons -->
+      <td>
+        <div class="flex gap-2">
+          <p-button icon="pi pi-pencil" [rounded]="true" (click)="modifierDlc(dlc)" />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            (click)="supprimerDlc(dlc)"
+          />
+        </div>
       </td>
     </tr>
   </ng-template>
