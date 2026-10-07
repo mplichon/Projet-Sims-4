@@ -12,13 +12,12 @@ import { ExigencePourPromotionFormGroup } from '../../../../models/forms/exigenc
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { SelectModule } from 'primeng/select';
-import { ButtonGroupModule } from 'primeng/buttongroup';
 import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TabsModule } from 'primeng/tabs';
 import { AvatarModule } from 'primeng/avatar';
-import { filter, finalize, take, tap } from 'rxjs';
+import { finalize, take, tap } from 'rxjs';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
@@ -29,7 +28,6 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
     InputTextModule,
     TextareaModule,
     SelectModule,
-    ButtonGroupModule,
     ButtonModule,
     InputNumberModule,
     CheckboxModule,

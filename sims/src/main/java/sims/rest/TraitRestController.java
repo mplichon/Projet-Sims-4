@@ -15,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sims.dto.trait.ReponseCreationTraitDTO;
-import sims.dto.trait.ReponseListeGestionTraitDTO;
-import sims.dto.trait.ReponseModificationTraitDTO;
-import sims.dto.trait.RequeteCreationTraitDTO;
-import sims.dto.trait.RequeteModificationTraitDTO;
+import sims.dto.trait.TraitGestionDTO;
 import sims.dto.trait.TraitLegerDTO;
 import sims.dto.trait.TypeTraitDTO;
 import sims.manager.TraitManager;
@@ -54,11 +50,18 @@ public class TraitRestController {
     }
 
     @GetMapping("/gestion")
-    public List<ReponseListeGestionTraitDTO> getAllTraitGestion() {
+    public List<TraitGestionDTO> getAllTraitGestion() {
         log.info("GET /api/trait/gestion - getAllTraitGestion() called");
+
         return service.getAllOrderByNomAsc()
             .stream()
-            .map(mapper::toReponseListeGestionTraitDTO)
+            .map(trait -> managers.stream()
+                .filter(manager -> manager.canManage(mapper.toTypeTraitDTO(trait.getType())))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                    "Aucun manager trouvé pour le type : " + trait.getType().toString()
+                ))
+                .toTraitGestionDTO(trait))
             .toList();
     }
 
@@ -81,9 +84,9 @@ public class TraitRestController {
     }
 
     @GetMapping("/gestion/{id}")
-    public ReponseModificationTraitDTO getTraitById(@PathVariable Integer id) {
+    public TraitGestionDTO getTraitById(@PathVariable Integer id) {
         log.info("GET /api/trait/gestion/{} - getTraitById() called", id);
-        ReponseModificationTraitDTO trait = mapper.toReponseModificationTraitDTO(service.getById(id));
+        TraitGestionDTO trait = mapper.toTraitGestionDTO(service.getById(id));
 
         return managers.stream()
             .filter(manager -> manager.canManage(trait.getType()))
@@ -93,7 +96,7 @@ public class TraitRestController {
     }
 
     @PostMapping("/gestion")
-	public ReponseCreationTraitDTO addTrait(@RequestBody RequeteCreationTraitDTO requeteTrait) {
+	public TraitGestionDTO addTrait(@RequestBody TraitGestionDTO requeteTrait) {
         log.info("POST /api/trait/gestion - addTrait() called");
         return managers.stream()
             .filter(manager -> manager.canManage(requeteTrait.getType()))
@@ -103,7 +106,7 @@ public class TraitRestController {
 	}
 
     @PutMapping("/gestion/{id}")
-    public ReponseModificationTraitDTO updateTrait(@PathVariable Integer id, @RequestBody RequeteModificationTraitDTO requeteTrait) {
+    public TraitGestionDTO updateTrait(@PathVariable Integer id, @RequestBody TraitGestionDTO requeteTrait) {
         log.info("POST /api/trait/gestion/{} - updateTrait() called", id);
         return managers.stream()
             .filter(manager -> manager.canManage(requeteTrait.getType()))

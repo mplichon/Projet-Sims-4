@@ -3,18 +3,18 @@
 
   <div class="flex flex-col gap-6">
     <sims-gestion-toolbar
-      (exportCsv)="exportDlcsCsv()"
+      (exportCsv)="exportCarrieresCsv()"
       (ouvrirNouveauPopUp)="ouvrirPopUpNouveauCarriere()"
       (supprimerSelection)="ouvrirPopUpSuppressionCarrieresSelectionnes()"
       [isSupprimerButtonDisabled]="isToolbarSupprimerButtonDisabled()"
     />
 
-    @if (carrieresV2.hasValue()) {
+    @if (carrieres.hasValue()) {
       <sims-carriere-gestion-tableau
         (carriereToUpdate)="ouvrirPopUpModifierCarriere($event)"
         (carriereToDelete)="ouvrirPopUpSuppressionCarriere($event)"
-        [(selectedCarrieres)]="selectedCarrieresV2"
-        [carrieres]="carrieresV2.value()"
+        [(selectedCarrieres)]="selectedCarrieres"
+        [carrieres]="carrieres.value()"
       />
     } @else {
       <div class="flex flex-col gap-3">

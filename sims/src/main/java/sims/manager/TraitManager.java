@@ -1,18 +1,18 @@
 package sims.manager;
 
-import sims.dto.trait.ReponseCreationTraitDTO;
-import sims.dto.trait.ReponseModificationTraitDTO;
-import sims.dto.trait.RequeteCreationTraitDTO;
-import sims.dto.trait.RequeteModificationTraitDTO;
+import sims.dto.trait.TraitGestionDTO;
 import sims.dto.trait.TypeTraitDTO;
+import sims.model.TraitDeCaractere;
 
 public interface TraitManager {
 
     boolean canManage(TypeTraitDTO typeDTO);
 
-    ReponseCreationTraitDTO addTrait(RequeteCreationTraitDTO requeteCreationDTO);
+    TraitGestionDTO addTrait(TraitGestionDTO requeteCreationDTO);
 
-    ReponseModificationTraitDTO updateTrait(Integer id, RequeteModificationTraitDTO requeteModificationDTO);
+    TraitGestionDTO updateTrait(Integer id, TraitGestionDTO requeteModificationDTO);
 
-    ReponseModificationTraitDTO getTraitById(Integer id);
+    TraitGestionDTO getTraitById(Integer id);
+
+    TraitGestionDTO toTraitGestionDTO(TraitDeCaractere trait);
 }

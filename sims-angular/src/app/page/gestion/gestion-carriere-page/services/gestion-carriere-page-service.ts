@@ -125,7 +125,7 @@ export class GestionCarrierePageService {
   patchBranchesDisable(
     formArray: FormArray<BrancheCarriereFormGroup>,
     hasBranches: boolean | null,
-  ) {
+  ): void {
     if (hasBranches) {
       formArray?.controls?.map((brancheFormGroup) => brancheFormGroup.enable());
     } else {
@@ -136,11 +136,11 @@ export class GestionCarrierePageService {
   updateCarriere(formGroup: CarriereFormGroup): Observable<CarriereGestionDTO> {
     const requeteDTO: CarriereGestionDTO = this._buildCarriereGestionDTO(formGroup);
 
-    return this.carriereService.saveCarriereGestionV2(requeteDTO);
+    return this.carriereService.saveCarriereGestion(requeteDTO);
   }
 
   deleteCarriere(id: number): Observable<void> {
-    return this.carriereService.deleteCarriereByIdV2(id);
+    return this.carriereService.deleteCarriereById(id);
   }
 
   private _buildCarriereGestionDTO(formGroup: CarriereFormGroup): CarriereGestionDTO {

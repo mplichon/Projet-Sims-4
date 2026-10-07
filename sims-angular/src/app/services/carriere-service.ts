@@ -39,21 +39,7 @@ export class CarriereService {
     return this.http.get<ReponseGestionCarriereDTO>(`${this.apiGestionUrl}/${id}`);
   }
 
-  public saveCarriereGestion(carriereDTO: RequeteCreationModificationCarriereDTO): void {
-    if (!carriereDTO.id) {
-      this.http.post<any>(this.apiGestionUrl, carriereDTO).subscribe(() => this.refresh());
-    } else {
-      this.http
-        .put<any>(`${this.apiGestionUrl}/${carriereDTO.id}`, carriereDTO)
-        .subscribe(() => this.refresh());
-    }
-  }
-
-  public deleteCarriereById(id: number): void {
-    this.http.delete<void>(`${this.apiGestionUrl}/${id}`).subscribe(() => this.refresh());
-  }
-
-  public saveCarriereGestionV2(carriereDTO: CarriereGestionDTO): Observable<CarriereGestionDTO> {
+  public saveCarriereGestion(carriereDTO: CarriereGestionDTO): Observable<CarriereGestionDTO> {
     if (!carriereDTO.id) {
       return this.http
         .post<CarriereGestionDTO>(this.apiGestionUrl, carriereDTO)
@@ -65,7 +51,7 @@ export class CarriereService {
     }
   }
 
-  public deleteCarriereByIdV2(id: number): Observable<void> {
+  public deleteCarriereById(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiGestionUrl}/${id}`).pipe(tap(() => this.refresh()));
   }
 }

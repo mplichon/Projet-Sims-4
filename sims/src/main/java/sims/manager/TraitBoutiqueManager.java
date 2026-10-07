@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sims.constant.Constantes;
-import sims.dto.trait.ReponseCreationTraitDTO;
-import sims.dto.trait.ReponseModificationTraitDTO;
-import sims.dto.trait.RequeteCreationTraitDTO;
-import sims.dto.trait.RequeteModificationTraitDTO;
+import sims.dto.trait.TraitGestionDTO;
 import sims.dto.trait.TypeTraitDTO;
 import sims.mapper.TraitMapper;
 import sims.model.TraitBoutique;
+import sims.model.TraitDeCaractere;
 import sims.model.TypeTrait;
 import sims.service.TraitDeCaractereService;
 
@@ -31,23 +29,28 @@ public class TraitBoutiqueManager implements TraitManager {
     }
 
     @Override
-    public ReponseCreationTraitDTO addTrait(RequeteCreationTraitDTO requeteCreationDTO) {
+    public TraitGestionDTO addTrait(TraitGestionDTO requeteCreationDTO) {
         TraitBoutique trait = mapper.toTraitBoutique(requeteCreationDTO);
         TraitBoutique traitCree = (TraitBoutique) service.create(trait);
-        return mapper.toReponseCreationTraitDTO(traitCree);
+        return mapper.toTraitGestionDTO(traitCree);
     }
 
     @Override
-    public ReponseModificationTraitDTO updateTrait(Integer id, RequeteModificationTraitDTO requeteModificationDTO) {
+    public TraitGestionDTO updateTrait(Integer id, TraitGestionDTO requeteModificationDTO) {
         TraitBoutique trait = mapper.toTraitBoutique(requeteModificationDTO);
         trait.setId(id);
         TraitBoutique traitModifie = (TraitBoutique) service.create(trait);
-        return mapper.toReponseModificationTraitDTO(traitModifie);
+        return mapper.toTraitGestionDTO(traitModifie);
     }
 
     @Override
-    public ReponseModificationTraitDTO getTraitById(Integer id) {
+    public TraitGestionDTO getTraitById(Integer id) {
         TraitBoutique trait = (TraitBoutique) service.getById(id);
-        return mapper.toReponseModificationTraitDTO(trait);
+        return mapper.toTraitGestionDTO(trait);
     }
+
+    @Override
+    public TraitGestionDTO toTraitGestionDTO(TraitDeCaractere trait) {
+        return mapper.toTraitGestionDTO((TraitBoutique) trait);
+    };
 }

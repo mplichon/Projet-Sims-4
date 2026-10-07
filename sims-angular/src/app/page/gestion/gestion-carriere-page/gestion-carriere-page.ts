@@ -32,21 +32,22 @@ import { filter, take, tap } from 'rxjs';
   styleUrl: './gestion-carriere-page.css',
 })
 export class GestionCarrierePage implements OnInit {
-  carrieresV2 = rxResource({
+  carrieres = rxResource({
     stream: () => this.carriereService.getAllCarriereGestion(),
   });
-  typesV2 = rxResource({
+  types = rxResource({
     stream: () => this.carriereService.getAllTypeCarriereSelection(),
   });
-  dlcsV2 = rxResource({
+  dlcs = rxResource({
     stream: () => this.dlcService.getAllDlcSelection(),
   });
 
-  readonly dlcTableau: Signal<CarriereGestionTableau> = viewChild.required(CarriereGestionTableau);
+  readonly carriereTableau: Signal<CarriereGestionTableau> =
+    viewChild.required(CarriereGestionTableau);
   sectionTitle: Signal<string> = signal('Gestion des carrières');
-  selectedCarrieresV2: WritableSignal<CarriereGestionDTO[]> = signal([]);
+  selectedCarrieres: WritableSignal<CarriereGestionDTO[]> = signal([]);
 
-  isToolbarSupprimerButtonDisabled = computed(() => !this.selectedCarrieresV2()?.length);
+  isToolbarSupprimerButtonDisabled = computed(() => !this.selectedCarrieres()?.length);
 
   private readonly carriereService = inject(CarriereService);
   private readonly dlcService = inject(DlcService);
@@ -59,8 +60,8 @@ export class GestionCarrierePage implements OnInit {
     this.cd.markForCheck();
   }
 
-  exportDlcsCsv(): void {
-    this.dlcTableau().exportTable();
+  exportCarrieresCsv(): void {
+    this.carriereTableau().exportTable();
   }
 
   ouvrirPopUpNouveauCarriere(): void {
@@ -71,8 +72,8 @@ export class GestionCarrierePage implements OnInit {
       draggable: false,
       width: '40%',
       data: {
-        types: this.typesV2.value,
-        dlcs: this.dlcsV2.value,
+        types: this.types.value,
+        dlcs: this.dlcs.value,
         isModeEdition: false,
         carriere: null,
       },
@@ -89,8 +90,8 @@ export class GestionCarrierePage implements OnInit {
       draggable: false,
       width: '40%',
       data: {
-        types: this.typesV2.value,
-        dlcs: this.dlcsV2.value,
+        types: this.types.value,
+        dlcs: this.dlcs.value,
         isModeEdition: true,
         carriere: carriere,
       },
@@ -120,7 +121,7 @@ export class GestionCarrierePage implements OnInit {
       draggable: false,
       width: 'auto',
       data: {
-        selectedCarrieres: this.selectedCarrieresV2,
+        selectedCarrieres: this.selectedCarrieres,
       },
     });
 
@@ -131,7 +132,7 @@ export class GestionCarrierePage implements OnInit {
     this.ref!.onClose.pipe(
       take(1),
       filter((reponse: boolean) => reponse),
-      tap(() => this.carrieresV2.reload()),
+      tap(() => this.carrieres.reload()),
     ).subscribe();
   }
 }

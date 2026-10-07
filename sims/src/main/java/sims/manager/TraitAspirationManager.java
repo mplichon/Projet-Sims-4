@@ -4,13 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import sims.constant.Constantes;
-import sims.dto.trait.ReponseCreationTraitDTO;
-import sims.dto.trait.ReponseModificationTraitDTO;
-import sims.dto.trait.RequeteCreationTraitDTO;
-import sims.dto.trait.RequeteModificationTraitDTO;
+import sims.dto.trait.TraitGestionDTO;
 import sims.dto.trait.TypeTraitDTO;
 import sims.mapper.TraitMapper;
 import sims.model.TraitAspiration;
+import sims.model.TraitDeCaractere;
 import sims.model.TypeTrait;
 import sims.service.TraitDeCaractereService;
 
@@ -31,23 +29,28 @@ public class TraitAspirationManager implements TraitManager {
     }
 
     @Override
-    public ReponseCreationTraitDTO addTrait(RequeteCreationTraitDTO requeteCreationDTO) {
+    public TraitGestionDTO addTrait(TraitGestionDTO requeteCreationDTO) {
         TraitAspiration trait = mapper.toTraitAspiration(requeteCreationDTO);
         TraitAspiration traitCree = (TraitAspiration) service.create(trait);
-        return mapper.toReponseCreationTraitDTO(traitCree);
+        return mapper.toTraitGestionDTO(traitCree);
     }
 
     @Override
-    public ReponseModificationTraitDTO updateTrait(Integer id, RequeteModificationTraitDTO requeteModificationDTO) {
+    public TraitGestionDTO updateTrait(Integer id, TraitGestionDTO requeteModificationDTO) {
         TraitAspiration trait = mapper.toTraitAspiration(requeteModificationDTO);
         trait.setId(id);
         TraitAspiration traitModifie = (TraitAspiration) service.create(trait);
-        return mapper.toReponseModificationTraitDTO(traitModifie);
+        return mapper.toTraitGestionDTO(traitModifie);
     }
 
     @Override
-    public ReponseModificationTraitDTO getTraitById(Integer id) {
+    public TraitGestionDTO getTraitById(Integer id) {
         TraitAspiration trait = (TraitAspiration) service.getById(id);
-        return mapper.toReponseModificationTraitDTO(trait);
+        return mapper.toTraitGestionDTO(trait);
     }
+
+    @Override
+    public TraitGestionDTO toTraitGestionDTO(TraitDeCaractere trait) {
+        return mapper.toTraitGestionDTO((TraitAspiration) trait);
+    };
 }
