@@ -13,8 +13,21 @@
     <a routerLink="/gestion/carriere">Carrières</a>
     <a routerLink="/gestion/aspiration">Aspirations</a>
     <a routerLink="/gestion/trait">Traits</a>
-    <a href="">
-      <p-avatar icon="pi pi-user" shape="circle" class="login-btn" />
-    </a>
+    <span (click)="userPopover.toggle($event)">
+      <p-avatar icon="pi pi-user" shape="circle" class="login-btn cursor-pointer" />
+      <p-popover #userPopover>
+        @if (currentUser.hasValue()) {
+          <div class="text-sm font-semibold">
+            {{ username() }}
+          </div>
+          <p-divider />
+          <span (click)="logout()" class="text-sm cursor-pointer" routerLink="/login">
+            Déconnexion
+          </span>
+        } @else {
+          <a class="text-sm" routerLink="/login">Connexion</a>
+        }
+      </p-popover>
+    </span>
   </nav>
 </header>

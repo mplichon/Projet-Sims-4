@@ -15,7 +15,7 @@ import sims.mapper.SimMapper;
 import sims.service.SimService;
 
 @RestController
-@RequestMapping("/api/sim")
+@RequestMapping("/api/admin/sim")
 @CrossOrigin("*")
 public class SimRestController {
     private static final Logger log = LoggerFactory.getLogger(SimRestController.class);

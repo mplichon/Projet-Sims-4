@@ -23,7 +23,7 @@ import sims.mapper.TraitMapper;
 import sims.service.TraitDeCaractereService;
 
 @RestController
-@RequestMapping("/api/trait")
+@RequestMapping("/api/admin/trait")
 @CrossOrigin("*")
 public class TraitRestController {
     private static final Logger log = LoggerFactory.getLogger(TraitRestController.class);

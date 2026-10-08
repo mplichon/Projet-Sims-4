@@ -1,0 +1,71 @@
+<sims-section>
+  <sims-titre-section titre="Connexion" />
+
+  <p-card>
+    <div class="grid grid-cols-2 gap-3">
+      <!-- Formulaire de connexion -->
+      <form [formGroup]="formGroup" class="col-span-1 flex flex-col gap-8 my-auto pl-4">
+        <div class="flex flex-col gap-1">
+          <div class="flex flex-col gap-4">
+            <label class="font-semibold" for="username">
+              Identifiant
+              <span class="text-sm text-red-400">*</span>
+            </label>
+            <input
+              id="username"
+              formControlName="username"
+              type="text"
+              autocomplete="username"
+              pInputText
+            />
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <div class="flex justify-between">
+              <label class="font-semibold my-auto" for="password">
+                Mot de passe
+                <span class="text-sm text-red-400">*</span>
+              </label>
+              <p-button
+                (onClick)="changeIsShownValue()"
+                [icon]="showButtonIcon()"
+                [label]="showButtonLabel()"
+                [style]="{ padding: 0 }"
+                size="small"
+                variant="text"
+              />
+            </div>
+            <input
+              [type]="passwordInputType()"
+              autocomplete="current-password"
+              formControlName="password"
+              id="password"
+              pInputText
+            />
+          </div>
+
+          @if (errorMessage()) {
+            <p class="text-sm text-red-400 italic mx-auto">{{ errorMessage() }}</p>
+          }
+        </div>
+
+        <p-button
+          (onClick)="onLogin()"
+          [disabled]="formGroup.invalid"
+          [label]="isLoading() ? 'Connexion...' : 'Se connecter'"
+          class="mx-auto"
+        />
+
+        <div>
+          Vous n'avez pas de compte ?
+          <a class="text-primary-green font-medium" routerLink="/register">Inscrivez-vous ici</a>
+        </div>
+      </form>
+
+      <!-- Image -->
+      <div class="col-span-1">
+        <p-image src="images/sims-debout-enjoues.png" />
+      </div>
+    </div>
+  </p-card>
+</sims-section>

@@ -23,7 +23,7 @@ import sims.model.DLC;
 import sims.service.DlcService;
 
 @RestController
-@RequestMapping("/api/dlc")
+@RequestMapping("/api/admin/dlc")
 @CrossOrigin("*")
 public class DlcRestContoller {
     private static final Logger log = LoggerFactory.getLogger(DlcRestContoller.class);

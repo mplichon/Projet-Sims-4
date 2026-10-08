@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
 import { ReponseGestionCompetenceDTO } from '../models/competence/reponse-gestion-competence-dto';
 import { CompetenceGestionDTO } from '../models/competence/competence-gestion-dto';
@@ -8,11 +8,12 @@ import { CompetenceGestionDTO } from '../models/competence/competence-gestion-dt
   providedIn: 'root',
 })
 export class CompetenceService {
+  private adminUrl = '/admin';
   private apiUrl = '/competence';
-  private apiGestionUrl = this.apiUrl + '/gestion';
+  private apiGestionUrl = this.adminUrl + this.apiUrl + '/gestion';
   private refresh$: Subject<void> = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public refresh() {
     this.refresh$.next();

@@ -22,7 +22,7 @@ import sims.model.Competence;
 import sims.service.CompetenceService;
 
 @RestController
-@RequestMapping("/api/competence")
+@RequestMapping("/api/admin/competence")
 @CrossOrigin("*")
 public class CompetenceRestController {
     private static final Logger log = LoggerFactory.getLogger(CompetenceRestController.class);
