@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, startWith, Subject, switchMap } from 'rxjs';
 import { CategorieSimDTO } from '../models/categorie-sim-dto';
 
@@ -7,11 +7,12 @@ import { CategorieSimDTO } from '../models/categorie-sim-dto';
   providedIn: 'root',
 })
 export class SimService {
+  private adminUrl = '/admin';
   private apiUrl = '/sim';
-  private apiGestionUrl = this.apiUrl + '/gestion';
+  private apiGestionUrl = this.adminUrl + this.apiUrl + '/gestion';
   private refresh$: Subject<void> = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public refresh() {
     this.refresh$.next();

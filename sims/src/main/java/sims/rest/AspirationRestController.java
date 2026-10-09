@@ -26,7 +26,7 @@ import sims.service.AspirationService;
 import sims.service.TraitDeCaractereService;
 
 @RestController
-@RequestMapping("/api/aspiration")
+@RequestMapping("/api/admin/aspiration")
 @CrossOrigin("*")
 public class AspirationRestController {
     private static final Logger log = LoggerFactory.getLogger(AspirationRestController.class);

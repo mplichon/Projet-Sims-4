@@ -2,5 +2,6 @@ package sims.model.user;
 
 public enum Role {
     USER,
-    ADMIN
+    ADMIN,
+    SUPER_ADMIN
 }

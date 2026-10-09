@@ -21,23 +21,19 @@ public class SecurityConfig {
             HttpSecurity http,
             JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
-
+        http.csrf(csrf -> csrf.disable())
             .cors(cors -> {})
-
             .sessionManagement(session ->
                 session.sessionCreationPolicy(
                     SessionCreationPolicy.STATELESS
                 )
             )
-
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/**").permitAll() // à changer
+                // .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                // .requestMatchers("/api/admin/**").hasRole("SUPER_ADMIN")
                 .anyRequest().authenticated()
             )
-
             .addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
@@ -52,10 +48,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration)
-            throws Exception {
-
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 }

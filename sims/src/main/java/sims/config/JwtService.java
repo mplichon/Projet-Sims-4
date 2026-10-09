@@ -1,23 +1,29 @@
 package sims.config;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service 
 public class JwtService {
 
-    private final String secret = "une-cle-secrete-tres-longue-et-securisee";
+    private final SecretKey key;
+
+    public JwtService(@Value("${app.jwt.secret}") String secret) {
+        this.key = Keys.hmacShaKeyFor(
+            Decoders.BASE64.decode(secret)
+        );
+    }
 
     public String generateToken(UserDetails userDetails) {
-
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date())
@@ -29,7 +35,6 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
-
         return Jwts.parser()
                 .verifyWith(getKey())
                 .build()
@@ -39,8 +44,6 @@ public class JwtService {
     }
 
     private SecretKey getKey() {
-        return Keys.hmacShaKeyFor(
-            secret.getBytes(StandardCharsets.UTF_8)
-        );
+        return key;
     }
 }
