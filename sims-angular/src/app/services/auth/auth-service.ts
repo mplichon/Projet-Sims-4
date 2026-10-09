@@ -1,27 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Observable, tap } from 'rxjs';
+import { LoginRequest } from '../../models/connexion/login-request';
+import { LoginResponse } from '../../models/connexion/login-response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private readonly apiUrl = '/auth';
+  private readonly tokenKey = 'token';
 
   private readonly http = inject(HttpClient);
 
-  login(username: string, password: string) {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, {
-      username,
-      password,
-    });
+  login(request: LoginRequest): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.apiUrl}/login`, request)
+      .pipe(tap((response) => localStorage.setItem(this.tokenKey, response.token)));
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem(this.tokenKey);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem(this.tokenKey);
   }
 
   isLoggedIn(): boolean {
