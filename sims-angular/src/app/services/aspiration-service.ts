@@ -10,9 +10,10 @@ import { AspirationGestionDTO } from '../models/aspiration/aspiration-gestion-dt
   providedIn: 'root',
 })
 export class AspirationService {
+  private adminUrl = '/admin';
   private apiUrl = '/aspiration';
-  private apiGestionUrl = this.apiUrl + '/gestion';
-  private apiSelectionUrl = this.apiUrl + '/selection';
+  private apiGestionUrl = this.adminUrl + this.apiUrl + '/gestion';
+  private apiSelectionUrl = this.adminUrl + this.apiUrl + '/selection';
   private refresh$: Subject<void> = new Subject<void>();
 
   private readonly http = inject(HttpClient);

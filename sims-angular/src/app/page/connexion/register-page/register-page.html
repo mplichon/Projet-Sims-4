@@ -1,0 +1,121 @@
+<sims-section>
+  <sims-titre-section titre="Inscription" />
+  <p-card>
+    <div class="grid grid-cols-2 gap-3">
+      <!-- Image -->
+      <div class="col-span-1">
+        <p-image src="images/sims-debout-enjoues.png" />
+      </div>
+
+      <!-- Formulaire d'inscription -->
+      <form [formGroup]="formGroup" class="col-span-1 flex flex-col gap-8 my-auto pl-4">
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1">
+            <label class="font-semibold" for="username">
+              Identifiant
+              <span class="text-sm text-red-400">*</span>
+            </label>
+            <input
+              id="username"
+              formControlName="username"
+              type="text"
+              autocomplete="username"
+              pInputText
+            />
+            @if (usernameControl.hasError('minlength') && usernameControl.touched) {
+              <p class="text-sm text-red-400 italic">
+                Le mot de passe doit faire au moins 3 caractères.
+              </p>
+            }
+            @if (usernameControl.hasError('maxlength') && usernameControl.touched) {
+              <p class="text-sm text-red-400 italic">
+                Le mot de passe doit faire au plus 50 caractères.
+              </p>
+            }
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <div class="flex justify-between">
+              <label class="font-semibold my-auto" for="password">
+                Mot de passe
+                <span class="text-sm text-red-400">*</span>
+              </label>
+              <p-button
+                (onClick)="changeIsPasswordShownValue()"
+                [icon]="showPasswordButtonIcon()"
+                [label]="showPasswordButtonLabel()"
+                [style]="{ padding: 0 }"
+                size="small"
+                variant="text"
+              />
+            </div>
+            <input
+              [type]="passwordInputType()"
+              autocomplete="current-password"
+              formControlName="password"
+              id="password"
+              pInputText
+            />
+            @if (passwordControl.hasError('minlength') && passwordControl.touched) {
+              <p class="text-sm text-red-400 italic">
+                Le mot de passe doit faire au moins 8 caractères.
+              </p>
+            }
+            @if (passwordControl.hasError('maxlength') && passwordControl.touched) {
+              <p class="text-sm text-red-400 italic">
+                Le mot de passe doit faire au plus 72 caractères.
+              </p>
+            }
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <div class="flex justify-between">
+              <label class="font-semibold my-auto" for="password">
+                Confirmation du mot de passe
+                <span class="text-sm text-red-400">*</span>
+              </label>
+              <p-button
+                (onClick)="changeIsConfirmationPasswordShownValue()"
+                [icon]="showConfirmationPasswordButtonIcon()"
+                [label]="showConfirmationPasswordButtonLabel()"
+                [style]="{ padding: 0 }"
+                size="small"
+                variant="text"
+              />
+            </div>
+            <input
+              [type]="confirmationPasswordInputType()"
+              autocomplete="current-password"
+              formControlName="confirmationPassword"
+              id="password"
+              pInputText
+            />
+            @if (formGroup.hasError('passwordMismatch') && confirmationPasswordControl.touched) {
+              <p class="text-sm text-red-400 italic">Les mots de passe doivent être identiques.</p>
+            }
+          </div>
+
+          @if (errorMessage()) {
+            <p class="text-sm text-red-400 italic mx-auto">{{ errorMessage() }}</p>
+          }
+
+          @if (successMessage()) {
+            <p class="text-sm text-green-400 italic mx-auto">{{ successMessage() }}</p>
+          }
+        </div>
+
+        <p-button
+          (onClick)="onRegister()"
+          [disabled]="formGroup.invalid"
+          [label]="isLoading() ? 'Création en cours...' : 'Créer mon compte'"
+          class="mx-auto"
+        />
+
+        <div>
+          Vous avez déjà un compte ?
+          <a class="text-primary-green font-medium" routerLink="/login">Connectez-vous ici</a>
+        </div>
+      </form>
+    </div>
+  </p-card>
+</sims-section>

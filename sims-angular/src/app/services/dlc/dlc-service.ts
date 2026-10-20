@@ -1,22 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
+import { DlcGestionDTO } from '../../models/dlc/dlc-gestion-dto';
+import { DlcLegerDTO } from '../../models/dlc/dlc-leger-dto';
 import { ReponseListeGestionDlcDTO } from '../../models/dlc/reponse-liste-gestion-dlc-dto';
 import { TypeDlcDTO } from '../../models/dlc/type-dlc-dto';
-import { RequeteCreationModificationDlcDTO } from '../../models/dlc/requete-creation-modification-dlc-dto';
-import { DlcLegerDTO } from '../../models/dlc/dlc-leger-dto';
-import { DlcGestionDTO } from '../../models/dlc/dlc-gestion-dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DlcService {
+  private adminUrl = '/admin';
   private apiUrl = '/dlc';
-  private apiGestionUrl = this.apiUrl + '/gestion';
-  private apiSelectionUrl = this.apiUrl + '/selection';
+  private apiGestionUrl = this.adminUrl + this.apiUrl + '/gestion';
+  private apiSelectionUrl = this.adminUrl + this.apiUrl + '/selection';
   private refresh$: Subject<void> = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public refresh() {
     this.refresh$.next();

@@ -11,6 +11,7 @@ import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiUrlInterceptor } from './interceptors/api-url-interceptor';
 import { SimsEncyclopediePreset } from './preset';
+import { authInterceptor } from './interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,6 @@ export const appConfig: ApplicationConfig = {
         preset: SimsEncyclopediePreset,
       },
     }),
-    provideHttpClient(withInterceptors([apiUrlInterceptor])),
+    provideHttpClient(withInterceptors([apiUrlInterceptor, authInterceptor])),
   ],
 };

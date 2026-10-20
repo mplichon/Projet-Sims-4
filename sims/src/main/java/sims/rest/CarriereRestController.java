@@ -23,7 +23,7 @@ import sims.model.Carriere;
 import sims.service.CarriereService;
 
 @RestController
-@RequestMapping("/api/carriere")
+@RequestMapping("/api/admin/carriere")
 @CrossOrigin("*")
 public class CarriereRestController {
     private static final Logger log = LoggerFactory.getLogger(CarriereRestController.class);

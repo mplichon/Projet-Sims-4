@@ -5,8 +5,23 @@ import { GestionCompetencePage } from './page/gestion/gestion-competence-page/ge
 import { GestionCarrierePage } from './page/gestion/gestion-carriere-page/gestion-carriere-page';
 import { GestionTraitPage } from './page/gestion/gestion-trait-page/gestion-trait-page';
 import { GestionAspirationPage } from './page/gestion/gestion-aspiration-page/gestion-aspiration-page';
+import { LoginPage } from './page/connexion/login-page/login-page';
+import { authGuard } from './guards/auth-guard';
+import { RegisterPage } from './page/connexion/register-page/register-page';
 
 export const routes: Routes = [
+  // Routes de connexion
+  {
+    path: 'login',
+    component: LoginPage,
+    title: 'Connexion | Sims 4 Encyclopédie',
+  },
+  {
+    path: 'register',
+    component: RegisterPage,
+    title: 'Inscription | Sims 4 Encyclopédie',
+  },
+
   // Routes de l'accueil
   {
     path: '',
@@ -19,25 +34,36 @@ export const routes: Routes = [
     path: 'gestion/dlc',
     component: GestionDlcPage,
     title: 'DLCs | Sims 4 Encyclopédie',
+    canMatch: [authGuard],
   },
   {
     path: 'gestion/competence',
     component: GestionCompetencePage,
     title: 'Compétences | Sims 4 Encyclopédie',
+    canMatch: [authGuard],
   },
   {
     path: 'gestion/carriere',
     component: GestionCarrierePage,
     title: 'Carrières | Sims 4 Encyclopédie',
+    canMatch: [authGuard],
   },
   {
     path: 'gestion/aspiration',
     component: GestionAspirationPage,
     title: 'Aspirations | Sims 4 Encyclopédie',
+    canMatch: [authGuard],
   },
   {
     path: 'gestion/trait',
     component: GestionTraitPage,
     title: 'Traits de caractère | Sims 4 Encyclopédie',
+    canMatch: [authGuard],
+  },
+
+  // Redirection par défaut
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];

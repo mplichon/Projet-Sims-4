@@ -1,23 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
-import { TypeTraitDTO } from '../models/trait/type-trait-dto';
-import { ReponseListeGestionTraitDTO } from '../models/trait/reponse-liste-gestion-trait-dto';
-import { RequeteCreationModificationTraitDTO } from '../models/trait/requete-creation-modification-trait-dto';
 import { ReponseModificationTraitDTO } from '../models/trait/reponse-modification-trait-dto';
-import { TraitLegerDTO } from '../models/trait/trait-leger-dto';
 import { TraitGestionDTO } from '../models/trait/trait-gestion-dto';
+import { TraitLegerDTO } from '../models/trait/trait-leger-dto';
+import { TypeTraitDTO } from '../models/trait/type-trait-dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TraitService {
+  private adminUrl = '/admin';
   private apiUrl = '/trait';
-  private apiGestionUrl = this.apiUrl + '/gestion';
-  private apiSelectionUrl = this.apiUrl + '/selection';
+  private apiGestionUrl = this.adminUrl + this.apiUrl + '/gestion';
+  private apiSelectionUrl = this.adminUrl + this.apiUrl + '/selection';
   private refresh$: Subject<void> = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public refresh() {
     this.refresh$.next();

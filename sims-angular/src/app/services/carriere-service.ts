@@ -1,21 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, startWith, Subject, switchMap, tap } from 'rxjs';
-import { TypeCarriereDTO } from '../models/carriere/type-carriere-dto';
-import { ReponseGestionCarriereDTO } from '../models/carriere/reponse-gestion-carriere-dto';
-import { RequeteCreationModificationCarriereDTO } from '../models/carriere/requete-creation-modification-carriere-dto';
 import { CarriereGestionDTO } from '../models/carriere/carriere-gestion-dto';
+import { ReponseGestionCarriereDTO } from '../models/carriere/reponse-gestion-carriere-dto';
+import { TypeCarriereDTO } from '../models/carriere/type-carriere-dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CarriereService {
+  private adminUrl = '/admin';
   private apiUrl = '/carriere';
-  private apiGestionUrl = this.apiUrl + '/gestion';
-  private apiSelectionUrl = this.apiUrl + '/selection';
+  private apiGestionUrl = this.adminUrl + this.apiUrl + '/gestion';
+  private apiSelectionUrl = this.adminUrl + this.apiUrl + '/selection';
   private refresh$: Subject<void> = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public refresh() {
     this.refresh$.next();
